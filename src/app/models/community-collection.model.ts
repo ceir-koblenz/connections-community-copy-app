@@ -15,6 +15,16 @@ export class CommunityCollection implements IEntityModel {
 
     public communityLinks: Array<EntityLink<Community>> = new Array<EntityLink<Community>>();
 
+    /**
+     * Lädt die CommunityCollection anhand der übergebenen Url von der Api und
+     * befüllt die Objektinstanz.
+     *
+     * @static
+     * @param {ApiClientService} client
+     * @param {EntityLink<CommunityCollection>} link
+     * @returns {Promise<CommunityCollection>}
+     * @memberof CommunityCollection
+     */
     static async load(client: ApiClientService, link: EntityLink<CommunityCollection>): Promise<CommunityCollection> {
         var xmlString = await client.loadXML(link.url); // Raw XML laden
 

@@ -9,6 +9,15 @@ Dazu die Datei "proxy.conf.json.template" kopieren, die Kopie "proxy.conf.json" 
 Authentifizierungstoken eintragen. Dazu bspw. https://www.blitter.se/utils/basic-authentication-header-generator/ verwenden
 (Nutzername+Passwort sind die, mit denen ihr euch auf https://c55.bas.uni-koblenz.de einloggt.)
 
+Gestartet wird der Entwicklungsserver mit `npm start`.
+
+## Projektstruktur
+
+Entwickelt wird im `src/app` Verzeichnis. Neu erstellte Komponenten (`ng generate component xyz`) sind in den entsprechenden Unterordner
+in `/components` zu verschieben. Hilfsklassen für bestimmte Funktionen (bspw. XML-Parser) sind im `/helpers` Verzeichnis untergebracht.
+Models, welche Entitäten der Connections-Api repräsentieren (bspw. eine Community), sind unter `/models` zu finden, Angular Services unter
+`/services`.
+
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
