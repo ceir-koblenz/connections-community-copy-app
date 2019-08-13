@@ -2,9 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
+## Projekt einrichten
+
+Um die Anwendung lokal laufen lassen zu können, muss der Entwicklungs-Proxyserver konfiguriert werden.
+Dazu die Datei "proxy.conf.json.template" kopieren, die Kopie "proxy.conf.json" nennen und ein gültiges 
+Authentifizierungstoken eintragen. Dazu bspw. https://www.blitter.se/utils/basic-authentication-header-generator/ verwenden
+(Nutzername+Passwort sind die, mit denen ihr euch auf https://c55.bas.uni-koblenz.de einloggt.)
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

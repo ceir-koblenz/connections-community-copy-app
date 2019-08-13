@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { XmlParserService } from './xml-parser.service';
+import { ConfigurationService } from './configuration.service';
 
-describe('XmlParserService', () => {
+describe('ConfigurationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: XmlParserService = TestBed.get(XmlParserService);
+    const service: ConfigurationService = TestBed.get(ConfigurationService);
     expect(service).toBeTruthy();
   });
 });
