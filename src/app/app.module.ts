@@ -8,11 +8,13 @@ import { AppComponent } from './components/app/app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ServiceDocumentComponent } from './components/service-document/service-document.component';
 import { DevHttpInterceptor } from './dev-http-interceptor';
+import { CommunityCollectionComponent } from './components/community-collection/community-collection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ServiceDocumentComponent
+    ServiceDocumentComponent,
+    CommunityCollectionComponent
   ],
   imports: [
     BrowserModule,

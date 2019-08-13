@@ -1,0 +1,12 @@
+<p>CommunityCollection Component</p>
+
+<div>Collection:
+    <p>{{collection.name}}</p>
+</div>
+
+<div *ngIf="collection.model">
+    <li *ngFor="let comm of collection.model.communityLinks" [class.bg-secondary]="comm === selectedCommunity"
+        (click)="onSelect(comm)">
+        <span>{{comm.name}}</span>
+    </li>
+</div>

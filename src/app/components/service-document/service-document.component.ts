@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { ConfigurationService } from 'src/app/services/configuration/configuration.service';
 import { ServiceDocument } from 'src/app/models/service-document.model';
+import { EntityLink } from 'src/app/helpers/entity-link';
+import { CommunityCollection } from 'src/app/models/community-collection.model';
 
 @Component({
   selector: 'app-service-document',
@@ -10,15 +12,23 @@ import { ServiceDocument } from 'src/app/models/service-document.model';
 })
 export class ServiceDocumentComponent implements OnInit {
 
+  serviceDoc: ServiceDocument;
+  selectedCommunityCollection: EntityLink<CommunityCollection>;
+
   constructor(private apiClient: ApiClientService,
     private configService: ConfigurationService) {
+  }
+
+  async ngOnInit() {
     var apiUrl = this.configService.getConfig().connectionsUrl;
 
+    // einzige Komponente, bei der die Url zusammengebaut werden muss, alles andere
+    // ergibt sich aus den Links.
     var serviceDocUrl = new URL(apiUrl + "/communities/service/atom/service")
-    ServiceDocument.load(apiClient, serviceDocUrl)
+    this.serviceDoc = await ServiceDocument.load(this.apiClient, serviceDocUrl)
   }
 
-  ngOnInit() {
+  onSelect(link: EntityLink<CommunityCollection>) {
+    this.selectedCommunityCollection = link;
   }
-
 }

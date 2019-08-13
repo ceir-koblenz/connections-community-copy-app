@@ -23,13 +23,14 @@ export class ServiceDocumentXmlParser extends EntityXmlParserAbstract<ServiceDoc
         var collections = json.service.workspace.collection;
 
         collections.forEach(element => {
-            if (element["atom:category"]["@_term"] === "public") {
-                entity.allCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], "") //TODO: name
-            } else if (element["atom:category"]["@_term"] === "personal") {
-                entity.myCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], "") //TODO: name
+            var term = element["atom:category"]["@_term"]
+            if (term === "public") {
+                entity.allCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], 
+                element["atom:title"]["#text"])
+            } else if (term === "personal") {
+                entity.myCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], 
+                element["atom:title"]["#text"])
             }
         });
-
-        console.log(entity);
     }
 }

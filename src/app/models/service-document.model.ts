@@ -1,4 +1,4 @@
-import { EntityModelAbstract } from './entity-model-abstract';
+import { IEntityModel } from './i-entity-model';
 import { EntityLink } from '../helpers/entity-link';
 import { CommunityCollection } from './community-collection.model';
 import { ApiClientService } from '../services/api-client/api-client.service';
@@ -10,9 +10,9 @@ import { ServiceDocumentXmlParser } from '../helpers/servicedocument-xml-parser'
  *
  * @export
  * @class ServiceDocument
- * @extends {EntityModelAbstract}
+ * @implements {IEntityModel}
  */
-export class ServiceDocument extends EntityModelAbstract {
+export class ServiceDocument implements IEntityModel {
     /**
      * Link, mit dem sich die Liste der Communities laden lassen, in
      * denen der aktuelle Nutzer Mitglied ist.
@@ -31,15 +31,6 @@ export class ServiceDocument extends EntityModelAbstract {
     allCommunitiesLink: EntityLink<CommunityCollection>
 
     /**
-     *Creates an instance of ServiceDocument.
-     * @param {ApiClientService} apiClient
-     * @memberof ServiceDocument
-     */
-    constructor(apiClient: ApiClientService) { 
-        super(apiClient);
-    }
-
-    /**
      * Lädt das ServiceDokument anhand der übergebenen Url von der Api.
      * Lädt den XML-String von der Api und parst diesen anschließend.
      *
@@ -53,7 +44,7 @@ export class ServiceDocument extends EntityModelAbstract {
         var xmlString = await client.loadXML(url); // Raw XML laden
 
         var xmlParser: ServiceDocumentXmlParser = new ServiceDocumentXmlParser()
-        var result = new ServiceDocument(client);
+        var result = new ServiceDocument();
 
         xmlParser.fillFromXml(result, xmlString); // neue ServiceDocument Instanz anhand des XMLs befüllen
         return result;

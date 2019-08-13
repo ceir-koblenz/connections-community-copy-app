@@ -1,5 +1,4 @@
-import { URL } from 'url';
-import { EntityModelAbstract } from '../models/entity-model-abstract';
+import { IEntityModel } from '../models/i-entity-model';
 
 /**
  * Stellt einen Link dar, der zum Nachladen einer Entität verwendet werden kann
@@ -8,7 +7,7 @@ import { EntityModelAbstract } from '../models/entity-model-abstract';
  * @class EntityLink
  * @template T
  */
-export class EntityLink<T extends EntityModelAbstract>{
+export class EntityLink<T extends IEntityModel>{
     /**
      * Die Url, unter der die verknüpfte Entität geladen werden kann.
      *
@@ -33,6 +32,7 @@ export class EntityLink<T extends EntityModelAbstract>{
 
     constructor(url: URL, name: string) {
         this.url = url;
+        this.name = name;
     }
 
     /**
