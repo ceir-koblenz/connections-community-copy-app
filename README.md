@@ -4,10 +4,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Projekt einrichten
 
+Nachdem das Repository geklont wurde, im Repositoryverzeichnis über die Konsole `npm install` ausführen.
+Dies installiert alle in der package.json definierten Abhängigkeiten.
+
 Um die Anwendung lokal laufen lassen zu können, muss der Entwicklungs-Proxyserver konfiguriert werden.
 Dazu die Datei "proxy.conf.json.template" kopieren, die Kopie "proxy.conf.json" nennen und ein gültiges 
 Authentifizierungstoken eintragen. Dazu bspw. https://www.blitter.se/utils/basic-authentication-header-generator/ verwenden
-(Nutzername+Passwort sind die, mit denen ihr euch auf https://c55.bas.uni-koblenz.de einloggt.)
+(Nutzername+Passwort sind die, mit denen ihr euch auf https://c55.bas.uni-koblenz.de einloggt. Diese entsprechen NICHT
+euren Anmeldedaten bei uniconnect!)
 
 Gestartet wird der Entwicklungsserver mit `npm start`.
 
