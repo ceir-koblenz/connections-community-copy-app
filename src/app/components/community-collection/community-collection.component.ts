@@ -3,6 +3,7 @@ import { CommunityCollection } from 'src/app/models/community-collection.model';
 import { EntityLink } from 'src/app/helpers/entity-link';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { Community } from 'src/app/models/community.model';
+import {LoggingService} from 'src/app/services/logging/logging.service';
 
 @Component({
   selector: 'app-community-collection',
@@ -32,10 +33,12 @@ export class CommunityCollectionComponent implements OnInit {
     return this._collection;
   }
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private apiClient: ApiClientService,
+    private loggingservice: LoggingService) { }
 
   onSelect(link: EntityLink<Community>) {
     this.selectedCommunity = link;
+    this.loggingservice.LogWarning('Noch Nichts zu Finden');
   }
 
   ngOnInit() {

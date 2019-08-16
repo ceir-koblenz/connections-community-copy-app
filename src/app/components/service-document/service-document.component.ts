@@ -4,6 +4,8 @@ import { ConfigurationService } from 'src/app/services/configuration/configurati
 import { ServiceDocument } from 'src/app/models/service-document.model';
 import { EntityLink } from 'src/app/helpers/entity-link';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
+import {LoggingService} from 'src/app/services/logging/logging.service';
+
 
 @Component({
   selector: 'app-service-document',
@@ -16,7 +18,8 @@ export class ServiceDocumentComponent implements OnInit {
   selectedCommunityCollection: EntityLink<CommunityCollection>;
 
   constructor(private apiClient: ApiClientService,
-    private configService: ConfigurationService) {
+    private configService: ConfigurationService,
+    private LoggingService: LoggingService) {
   }
 
   async ngOnInit() {
@@ -26,9 +29,12 @@ export class ServiceDocumentComponent implements OnInit {
     // ergibt sich aus den Links.
     var serviceDocUrl = new URL(apiUrl + "/communities/service/atom/service")
     this.serviceDoc = await ServiceDocument.load(this.apiClient, serviceDocUrl)
+
   }
 
   onSelect(link: EntityLink<CommunityCollection>) {
     this.selectedCommunityCollection = link;
+    this.LoggingService.LogInfo('Collection Cahnged');
+    
   }
 }

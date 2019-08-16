@@ -9,12 +9,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ServiceDocumentComponent } from './components/service-document/service-document.component';
 import { DevHttpInterceptor } from './dev-http-interceptor';
 import { CommunityCollectionComponent } from './components/community-collection/community-collection.component';
+import { LoggingComponent } from './components/logging/logging.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ServiceDocumentComponent,
-    CommunityCollectionComponent
+    CommunityCollectionComponent,
+    LoggingComponent
   ],
   imports: [
     BrowserModule,
