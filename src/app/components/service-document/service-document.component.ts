@@ -34,7 +34,7 @@ export class ServiceDocumentComponent implements OnInit {
 
   onSelect(link: EntityLink<CommunityCollection>) {
     this.selectedCommunityCollection = link;
-    this.LoggingService.LogInfo('Collection Cahnged');
+    this.LoggingService.LogInfo('Collection Changed');
     
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoggingService} from 'src/app/services/logging/logging.service';
 
+// Komponente zum anzeigen der Logs
 
 @Component({
   selector: 'app-logging',

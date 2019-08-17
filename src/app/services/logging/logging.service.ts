@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { LogEntry } from 'src/app/components/log-entry';
-import {loglevel} from 'src/app/components/log-entry';
+import { LogEntry } from 'src/app/services/log-entry';
+import {loglevel} from 'src/app/services/log-entry';
 
+
+//hier werden LogEntrys mithilfe der verschidenen Funktionen erstellt und im Array des Service gespeichert
 
 @Injectable({
   providedIn: 'root'
