@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {LoggingService} from 'src/app/services/logging/logging.service';
 
 /**
  * Service, welcher den Zugriff auf die Connections-Api kapselt.
@@ -14,7 +15,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApiClientService {
   private httpClient: HttpClient
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, private loggingService: LoggingService) {
     this.httpClient = httpClient;
   }
 
@@ -28,6 +29,7 @@ export class ApiClientService {
   async loadXML(url: URL): Promise<string> {
     var resultPromise = this.httpClient.get(url.toString(), {responseType: "text"}).toPromise();
     var result: string = (await resultPromise).toString();
+    this.loggingService.LogInfo('Lade Daten von: ' +url.toString());
 
     return result;
   }

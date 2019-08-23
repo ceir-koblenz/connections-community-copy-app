@@ -1,8 +1,10 @@
+<h1>Logs</h1>
 <div *ngIf="loggingservice.logs.length">
-
-        <h2>Logs</h2>
-        <button class="clear"
-                (click)="loggingservice.clear()">clear</button>
-        <div *ngFor='let log of loggingservice.logs'> {{log.LogLevel}}: {{log.Message}} </div>
-      
+  
+        <ul *ngFor='let log of loggingservice.logs'>
+                <li >   
+                        <b>{{log.LogLevel}}:</b>      
+                        {{log.Message}}
+                </li>
+        </ul>
       </div>

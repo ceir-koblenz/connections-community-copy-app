@@ -4,7 +4,7 @@ import { ConfigurationService } from 'src/app/services/configuration/configurati
 import { ServiceDocument } from 'src/app/models/service-document.model';
 import { EntityLink } from 'src/app/helpers/entity-link';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
-import {LoggingService} from 'src/app/services/logging/logging.service';
+
 
 
 @Component({
@@ -18,8 +18,7 @@ export class ServiceDocumentComponent implements OnInit {
   selectedCommunityCollection: EntityLink<CommunityCollection>;
 
   constructor(private apiClient: ApiClientService,
-    private configService: ConfigurationService,
-    private LoggingService: LoggingService) {
+    private configService: ConfigurationService) {
   }
 
   async ngOnInit() {
@@ -34,7 +33,7 @@ export class ServiceDocumentComponent implements OnInit {
 
   onSelect(link: EntityLink<CommunityCollection>) {
     this.selectedCommunityCollection = link;
-    this.LoggingService.LogInfo('Collection Changed');
+
     
   }
 }
