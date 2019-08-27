@@ -6,7 +6,7 @@ import {LoggingService} from 'src/app/services/logging/logging.service';
  * Service, welcher den Zugriff auf die Connections-Api kapselt.
  * Alle Api-Zugriffe sollen über diesen Service geschehen!
  *
- * @export
+ * @export ApiClientService
  * @class ApiClientService
  */
 @Injectable({
@@ -21,12 +21,12 @@ export class ApiClientService {
 
   /**
    * Lädt asynchron das Dokument der übergebenen URL.
-   * ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
-   * @param {URL} url
-   * @returns {Promise<string>}
+   * @param {URL} url Url zum Connections-Endpoint, der das zu ladende XML liefert
+   * @returns {Promise<string>} Promise mit dem geladenen XML-String
    * @memberof ApiClientService
    */
   async loadXML(url: URL): Promise<string> {
+    // ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
     var resultPromise = this.httpClient.get(url.toString(), {responseType: "text"}).toPromise();
     var result: string = (await resultPromise).toString();
     this.loggingService.LogInfo('Lade Daten von: ' +url.toString());
