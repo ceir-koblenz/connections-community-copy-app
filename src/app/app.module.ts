@@ -10,13 +10,15 @@ import { ServiceDocumentComponent } from './components/service-document/service-
 import { DevHttpInterceptor } from './dev-http-interceptor';
 import { CommunityCollectionComponent } from './components/community-collection/community-collection.component';
 import { LoggingComponent } from './components/logging/logging.component';
+import { CommunityComponent } from './components/community/community.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ServiceDocumentComponent,
     CommunityCollectionComponent,
-    LoggingComponent
+    LoggingComponent,
+    CommunityComponent
   ],
   imports: [
     BrowserModule,
