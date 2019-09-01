@@ -9,18 +9,15 @@ import { ActivatedRoute } from '@angular/router';
 export class CommunityComponent implements OnInit {
   
   title = 'community';
+  private commId: string = null;
   constructor(
     private route: ActivatedRoute
-    ) {}
+    ) {
+      this.route.params.subscribe( params => this.commId = (params).id );
+    }
 
   ngOnInit() {
-    const id = this.getCommunity();
-  }
-
-  getCommunity(): number {
-    const id2 = +this.route.snapshot.paramMap.get('id');
-    console.log("ID = " + id2);
-    return id2;
   }
 
 }
+
