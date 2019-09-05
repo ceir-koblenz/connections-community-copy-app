@@ -5,9 +5,9 @@
 </div>
 
 <div *ngIf="collection.model">
-    <li *ngFor="let comm of collection.model.communityLinks" [class.bg-secondary]="comm === selectedCommunity"
+    <li *ngFor="let comm of collection.model.communities" [class.bg-secondary]="comm === selectedCommunity"
         (click)="onSelect(comm)">
-        <span>{{comm.name}} </span>
-        <a routerLink="/community-selection/c98690c8-eac8-4b84-95f5-f866f744TEST" routerLinkActive="active">Select</a>
+        <span>{{comm.title}} </span>
+        <a [routerLink]="['/community-selection/', comm.id]" routerLinkActive="active">Select</a>
     </li>
 </div>

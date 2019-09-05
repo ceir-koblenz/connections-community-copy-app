@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { ConfigurationService } from 'src/app/services/configuration/configuration.service';
 import { ServiceDocument } from 'src/app/models/service-document.model';
-import { EntityLink } from 'src/app/helpers/entity-link';
+import { EntityLink } from 'src/app/common/entity-link';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
 
 

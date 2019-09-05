@@ -1,8 +1,8 @@
 import { IEntityModel } from './i-entity-model';
-import { EntityLink } from '../helpers/entity-link';
+import { EntityLink } from '../common/entity-link';
 import { CommunityCollection } from './community-collection.model';
 import { ApiClientService } from '../services/api-client/api-client.service';
-import { ServiceDocumentXmlParser } from '../helpers/servicedocument-xml-parser';
+import { ServiceDocumentXmlParser } from '../xml-parser/servicedocument-xml-parser';
 
 /**
  * Modelklasse für das ServiceDokument, welches den Ausgangspunkt
@@ -12,7 +12,7 @@ import { ServiceDocumentXmlParser } from '../helpers/servicedocument-xml-parser'
  * @class ServiceDocument
  * @implements {IEntityModel}
  */
-export class ServiceDocument implements IEntityModel {
+export class ServiceDocument {
     /**
      * Link, mit dem sich die Liste der Communities laden lassen, in
      * denen der aktuelle Nutzer Mitglied ist.

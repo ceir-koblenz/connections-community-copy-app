@@ -25,15 +25,29 @@ export abstract class EntityXmlParserAbstract<T> {
   constructor() { }
 
   /**
-   * von abgeleiteten Klassen zu Implementieren: Befüllt eine Objektinstanz mit geparsten Inhalten
-   * aus dem XML-String
+   * von abgeleiteten Klassen zu Implementieren: Befüllt eine Objektinstanz 
+   * anhand des geparsten JSON-Objekts
+   *
+   * @abstract
+   * @param {T} entity
+   * @param {any} parsedObj
+   * @memberof EntityXmlParserAbstract
+   */
+  abstract fillFromObject(entity: T, parsedObj: any): void
+
+    /**
+   * Befüllt eine Objektinstanz mit geparsten Inhalten aus dem XML-String
    *
    * @abstract
    * @param {T} entity
    * @param {string} xmlString
    * @memberof EntityXmlParserAbstract
    */
-  abstract fillFromXml(entity: T, xmlString: string): void
+  fillFromXml(entity: T, xmlString: string): void {
+    var json = this.parse(xmlString);
+
+    this.fillFromObject(entity, json);
+  }
 
   /**
    * Wandelt den übergebenen XML-String in ein JSON-Objekt um und gibt es zurück.

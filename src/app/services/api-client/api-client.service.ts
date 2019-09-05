@@ -26,10 +26,11 @@ export class ApiClientService {
    * @memberof ApiClientService
    */
   async loadXML(url: URL): Promise<string> {
+    this.loggingService.LogInfo('Lade Daten von: ' +url.toString());
+    
     // ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
     var resultPromise = this.httpClient.get(url.toString(), {responseType: "text"}).toPromise();
-    var result: string = (await resultPromise).toString();
-    this.loggingService.LogInfo('Lade Daten von: ' +url.toString());
+    var result: string = (await resultPromise).toString();    
 
     return result;
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
-import { EntityLink } from 'src/app/helpers/entity-link';
+import { EntityLink } from 'src/app/common/entity-link';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { Community } from 'src/app/models/community.model';
 
@@ -37,7 +37,6 @@ export class CommunityCollectionComponent implements OnInit {
 
   onSelect(link: EntityLink<Community>) {
     this.selectedCommunity = link;
-
   }
 
   ngOnInit() {
