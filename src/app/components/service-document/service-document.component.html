@@ -1,24 +1,19 @@
-<div style="text-align:center" class="container">
+<p>ServiceDocument Component</p>
 
-    <p>ServiceDocument Component</p>
-
-    <div *ngIf="serviceDoc">
-        <div *ngIf="serviceDoc.myCommunitiesLink" (click)="onSelect(serviceDoc.myCommunitiesLink)" class="border"
+<div *ngIf="serviceDoc">
+    <div *ngIf="serviceDoc.myCommunitiesLink" (click)="onSelect(serviceDoc.myCommunitiesLink)" class="border"
         [class.bg-secondary]="serviceDoc.myCommunitiesLink === selectedCommunityCollection">
-            <p>{{serviceDoc.myCommunitiesLink.name}}</p>
-            <p>{{serviceDoc.myCommunitiesLink.url}}</p>
-        </div>
+        <p>{{serviceDoc.myCommunitiesLink.name}}</p>
+        <p>{{serviceDoc.myCommunitiesLink.url}}</p>
+    </div>
 
-        <div *ngIf="serviceDoc.allCommunitiesLink" (click)="onSelect(serviceDoc.allCommunitiesLink)" class="border"
+    <div *ngIf="serviceDoc.allCommunitiesLink" (click)="onSelect(serviceDoc.allCommunitiesLink)" class="border"
         [class.bg-secondary]="serviceDoc.allCommunitiesLink === selectedCommunityCollection">
-            <p>{{serviceDoc.allCommunitiesLink.name}}</p>
-            <p>{{serviceDoc.allCommunitiesLink.url}}</p>
-        </div>
+        <p>{{serviceDoc.allCommunitiesLink.name}}</p>
+        <p>{{serviceDoc.allCommunitiesLink.url}}</p>
     </div>
+</div>
 
-    <div *ngIf="selectedCommunityCollection">
-        <app-community-collection [collection]="selectedCommunityCollection"></app-community-collection>
-    </div>
-
-        <app-logging></app-logging>
+<div *ngIf="selectedCommunityCollection">
+    <app-community-collection [collection]="selectedCommunityCollection"></app-community-collection>
 </div>
