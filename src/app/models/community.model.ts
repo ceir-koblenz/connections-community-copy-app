@@ -1,6 +1,7 @@
 import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
+import { EntityLink } from '../common/entity-link';
 
 /**
  * EntityModel einer Community.
@@ -12,6 +13,16 @@ import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 export class Community implements IEntityModel{
     public id: String;
     title: String;
+    summary: String;
+    logoUrl: String;
+    datePublished: String;
+    dateUpdated: String;
+    author: EntityLink<any>;//TODO replace with EntityLink<author>. Applies to all following EntityLinks.
+    members: EntityLink<any>;
+    socialDocuments: EntityLink<any>;
+    bookmarks: EntityLink<any>;
+    miscApps: EntityLink<any>;
+
 
     /**
      * Lädt die Community anhand der übergebenen Url von der Api.
