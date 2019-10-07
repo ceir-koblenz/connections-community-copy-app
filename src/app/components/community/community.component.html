@@ -1,7 +1,7 @@
 <h2>Community ID = {{commId}}</h2>
 <br>
 <p>Titel: {{community.title}}</p>
-<img src="{{tempLogoUrl}}" alt="[Hier soll ein Bild sein.]"> <!-- TODO replace with this.logoUrl when parsing from xml working--> 
+<app-logo [community]="community"></app-logo>
 <br><br> 
 <p>Beschreibung: <br> {{community.summary}}</p>
 <p>Veröffentlicht am: <br> {{community.datePublished}}</p>

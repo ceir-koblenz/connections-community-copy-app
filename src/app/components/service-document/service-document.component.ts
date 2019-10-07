@@ -26,7 +26,7 @@ export class ServiceDocumentComponent implements OnInit {
 
     // einzige Komponente, bei der die Url zusammengebaut werden muss, alles andere
     // ergibt sich aus den Links.
-    var serviceDocUrl = new URL(apiUrl + "/communities/service/atom/service")
+    var serviceDocUrl = new URL(apiUrl + "communities/service/atom/service")
     this.serviceDoc = await ServiceDocument.load(this.apiClient, serviceDocUrl)
 
   }

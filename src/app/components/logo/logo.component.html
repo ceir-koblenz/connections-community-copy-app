@@ -1,0 +1,4 @@
+<img [src]="imageBlobUrl" alt="NoLogo" height="80" width="80" />
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+    <input [(ngModel)]="imageBlobUrl" accept="image/*" type="file" name="logo" (change)="logoChanged($event)"/>    
+</form>
