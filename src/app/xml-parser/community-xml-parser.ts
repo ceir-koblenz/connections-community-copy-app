@@ -14,5 +14,12 @@ export class CommunityXmlParser extends EntityXmlParserAbstract<Community>{
     fillFromObject(entity: Community, parsedObj: any): void {
         entity.id = parsedObj.entry["snx:communityUuid"];
         entity.title = parsedObj.entry.title["#text"];
+        var link_list = parsedObj.entry.link;
+        link_list.forEach(link => {
+            // Community logo link
+            if (link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/logo") {
+                entity.logo.url = link["@_href"];
+            }
+        });
     }
 }

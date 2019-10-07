@@ -1,6 +1,7 @@
 import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
+import { Logo } from './logo.model';
 
 /**
  * EntityModel einer Community.
@@ -12,6 +13,7 @@ import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 export class Community implements IEntityModel{
     public id: String;
     title: String;
+    logo: Logo = new Logo();
 
     /**
      * Lädt die Community anhand der übergebenen Url von der Api.
