@@ -15,7 +15,6 @@ export class Community implements IEntityModel{
     public id: String;
     title: String;
     summary: String;
-    logoUrl: String;
     datePublished: String;
     dateUpdated: String;
     author: EntityLink<any>;//TODO replace with EntityLink<author>. Applies to all following EntityLinks.
@@ -23,7 +22,7 @@ export class Community implements IEntityModel{
     socialDocuments: EntityLink<any>;
     bookmarks: EntityLink<any>;
     miscApps: EntityLink<any>;
-    logo: Logo = new Logo();
+    logo: EntityLink<Logo>;
 
     /**
      * Lädt die Community anhand der übergebenen Url von der Api.

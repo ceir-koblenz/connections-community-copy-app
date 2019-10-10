@@ -9,6 +9,5 @@ import { ApiClientService } from '../services/api-client/api-client.service';
  * @implements {IEntityModel}
  */
 export class Logo implements IEntityModel{
-    url:String;
-    new:Blob;
+    blob:Blob;
 }

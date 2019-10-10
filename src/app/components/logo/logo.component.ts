@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Community } from 'src/app/models/community.model';
 import { NgForm } from '@angular/forms';
+import { Logo } from 'src/app/models/logo.model';
+import { EntityLink } from 'src/app/common/entity-link';
 
 @Component({
   selector: 'app-logo',
@@ -9,7 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LogoComponent implements OnInit {
 
-  @Input() community: Community;
+  @Input() logo: EntityLink<Logo>;
 
   /* 
   * Variable für das Image, das im Formular angezeigt und beim
@@ -21,11 +22,14 @@ export class LogoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit() {
     // Set existing community image as default
-    this.imageBlobUrl = this.community.logo.url
+    // Set existing community image as default
+    this.imageBlobUrl = this.logo.url.href;
+    this.logo.model = new Logo();
   }
 
   /*
@@ -41,10 +45,13 @@ export class LogoComponent implements OnInit {
         let base64 = event.target.result
         let img = base64.split(',')[1]
         let blob = new Blob([window.atob(img)], { type: 'image/jpeg' })
-        this.community.logo.new = blob
+        this.logo.model.blob = blob
         this.imageBlobUrl = base64
       }
       fr.readAsDataURL(file)
+    } else{
+      this.logo.model.blob = null;
+      this.imageBlobUrl = "";
     }
   }
 
