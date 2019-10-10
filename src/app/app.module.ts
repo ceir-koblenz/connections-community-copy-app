@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
@@ -11,6 +12,7 @@ import { DevHttpInterceptor } from './dev-http-interceptor';
 import { CommunityCollectionComponent } from './components/community-collection/community-collection.component';
 import { LoggingComponent } from './components/logging/logging.component';
 import { CommunityComponent } from './components/community/community.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import { CommunityComponent } from './components/community/community.component';
     ServiceDocumentComponent,
     CommunityCollectionComponent,
     LoggingComponent,
-    CommunityComponent
+    CommunityComponent,
+    LogoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     {
