@@ -23,6 +23,18 @@ export class CommunityXmlParser extends EntityXmlParserAbstract<Community>{
             if (link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/logo") {
                 entity.logo = new EntityLink<Logo>(link["@_href"], "Logo");
             }
+
+            if(link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/member-list"){
+                entity.members = new EntityLink<any>(link["@_href"], "Members");
+            }
+
+            if(link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/bookmarks"){
+                entity.bookmarks = new EntityLink<any>(link["@_href"], "Bookmarks");
+            }
+
+            if(link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/remote-applications"){
+                entity.miscApps = new EntityLink<any>(link["@_href"], "Remote-Applications");
+            }
         });
         entity.datePublished = parsedObj.entry.published;
         entity.dateUpdated = parsedObj.entry.updated;
