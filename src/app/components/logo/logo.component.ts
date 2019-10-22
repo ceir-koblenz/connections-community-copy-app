@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Logo } from 'src/app/models/logo.model';
 import { EntityLink } from 'src/app/common/entity-link';
+import { rewriteConnectionsUrl } from 'src/app/dev-http-interceptor';
 
 @Component({
   selector: 'app-logo',
@@ -22,14 +23,14 @@ export class LogoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    // Set existing community image as default
+    this.imageBlobUrl = rewriteConnectionsUrl(this.logo.url.toString());
+    this.logo.model = new Logo();
   }
 
   ngAfterViewInit() {
-    // Set existing community image as default
-    // Set existing community image as default
-    this.imageBlobUrl = this.logo.url.href;
-    this.logo.model = new Logo();
+    // this.imageBlobUrl = this.logo.url.toString();
+    // this.logo.model = new Logo();
   }
 
   /*
@@ -49,7 +50,7 @@ export class LogoComponent implements OnInit {
         this.imageBlobUrl = base64
       }
       fr.readAsDataURL(file)
-    } else{
+    } else {
       this.logo.model.blob = null;
       this.imageBlobUrl = "";
     }
