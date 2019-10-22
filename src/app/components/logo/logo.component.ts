@@ -28,11 +28,6 @@ export class LogoComponent implements OnInit {
     this.logo.model = new Logo();
   }
 
-  ngAfterViewInit() {
-    // this.imageBlobUrl = this.logo.url.toString();
-    // this.logo.model = new Logo();
-  }
-
   /*
   * Event Listener für ein geändertes Logo
   * Speichert das neue Logo als Blob in community.logo.new.
