@@ -15,7 +15,7 @@ export class DevHttpInterceptor implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (req.url.startsWith("https://c55.bas.uni-koblenz.de")) {
+        if (req.url.startsWith("https://devco.fgbas.uni-koblenz.de")) {
             var newUrl = new URL(req.url);
             newUrl.protocol = "http"
             newUrl.port = "4200"
