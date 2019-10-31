@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {LoggingService} from 'src/app/services/logging/logging.service';
+import { LoggingService } from 'src/app/services/logging/logging.service';
 
 /**
  * Service, welcher den Zugriff auf die Connections-Api kapselt.
@@ -26,12 +26,17 @@ export class ApiClientService {
    * @memberof ApiClientService
    */
   async loadXML(url: URL): Promise<string> {
-    this.loggingService.LogInfo('Lade Daten von: ' +url.toString());
-    
-    // ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
-    var resultPromise = this.httpClient.get(url.toString(), {responseType: "text"}).toPromise();
-    var result: string = (await resultPromise).toString();    
+    this.loggingService.LogInfo('Lade Daten von: ' + url.toString());
 
-    return result;
+    // ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
+    var resultPromise = this.httpClient.get(url.toString(), { responseType: "text" }).toPromise();
+    try {
+      var result: string = (await resultPromise).toString();
+      return result;
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim Laden der Daten. Statustext: ${error.statusText}`);
+      return '';
+    }
+
   }
 }

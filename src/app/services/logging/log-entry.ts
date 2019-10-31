@@ -2,7 +2,8 @@
 export enum loglevel{
     None = 'None',
     Info = 'Info' ,
-    Warning = 'Warning' 
+    Warning = 'Warning',
+    Error = 'Error' 
 }
 
 // Klasse stellt einen Logeintrag mit einer Message und einem Loglevel dar

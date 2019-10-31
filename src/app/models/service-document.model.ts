@@ -42,11 +42,14 @@ export class ServiceDocument {
      */
     static async load(client: ApiClientService, url: URL): Promise<ServiceDocument> {
         var xmlString = await client.loadXML(url); // Raw XML laden
+        if (xmlString) {
+            var xmlParser: ServiceDocumentXmlParser = new ServiceDocumentXmlParser()
+            var result = new ServiceDocument();
 
-        var xmlParser: ServiceDocumentXmlParser = new ServiceDocumentXmlParser()
-        var result = new ServiceDocument();
+            xmlParser.fillFromXml(result, xmlString); // neue ServiceDocument Instanz anhand des XMLs befüllen
+            return result;
+        }
 
-        xmlParser.fillFromXml(result, xmlString); // neue ServiceDocument Instanz anhand des XMLs befüllen
-        return result;
+        return null;
     }
 }

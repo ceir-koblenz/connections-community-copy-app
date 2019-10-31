@@ -24,11 +24,11 @@ export class ServiceDocumentXmlParser extends EntityXmlParserAbstract<ServiceDoc
         collections.forEach(element => {
             var term = element["atom:category"]["@_term"]
             if (term === "public") {
-                entity.allCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], 
-                element["atom:title"]["#text"])
+                entity.allCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"],
+                    element["atom:title"]["#text"])
             } else if (term === "personal") {
-                entity.myCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"], 
-                element["atom:title"]["#text"])
+                entity.myCommunitiesLink = new EntityLink<CommunityCollection>(element["@_href"],
+                    element["atom:title"]["#text"])
             }
         });
     }
