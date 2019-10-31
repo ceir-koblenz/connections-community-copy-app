@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { ConfigurationService } from 'src/app/services/configuration/configuration.service';
+import { getConfig } from './../../app-config';
 import { ServiceDocument } from 'src/app/models/service-document.model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
@@ -17,12 +17,11 @@ export class ServiceDocumentComponent implements OnInit {
   serviceDoc: ServiceDocument;
   selectedCommunityCollection: EntityLink<CommunityCollection>;
 
-  constructor(private apiClient: ApiClientService,
-    private configService: ConfigurationService) {
+  constructor(private apiClient: ApiClientService) {
   }
 
   async ngOnInit() {
-    var apiUrl = this.configService.getConfig().connectionsUrl;
+    var apiUrl = getConfig().connectionsUrl;
 
     // einzige Komponente, bei der die Url zusammengebaut werden muss, alles andere
     // ergibt sich aus den Links.
