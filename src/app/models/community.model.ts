@@ -3,7 +3,6 @@ import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
 import { Logo } from './logo.model';
-import { MemberCollection } from './member-collection.model';
 
 /**
  * EntityModel einer Community.
@@ -19,7 +18,7 @@ export class Community implements IEntityModel{
     datePublished: String;
     dateUpdated: String;
     //author: EntityLink<any>;
-    members: EntityLink<MemberCollection>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
+    members: EntityLink<any>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
     bookmarks: EntityLink<any>;
     miscApps: EntityLink<any>;
     logo: EntityLink<Logo>;

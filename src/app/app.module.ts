@@ -13,7 +13,7 @@ import { CommunityCollectionComponent } from './components/community-collection/
 import { LoggingComponent } from './components/logging/logging.component';
 import { CommunityComponent } from './components/community/community.component';
 import { LogoComponent } from './components/logo/logo.component';
-import { membersComponent } from './components/members/members.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +21,7 @@ import { membersComponent } from './components/members/members.component';
     CommunityCollectionComponent,
     LoggingComponent,
     CommunityComponent,
-    LogoComponent,
-    membersComponent,
+    LogoComponent
   ],
   imports: [
     BrowserModule,
