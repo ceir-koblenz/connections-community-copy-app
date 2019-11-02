@@ -3,6 +3,7 @@ import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
 import { Logo } from './logo.model';
+import { RemoteApplicationCollection } from './remoteapplication-collection.model';
 
 /**
  * EntityModel einer Community.
@@ -20,7 +21,7 @@ export class Community implements IEntityModel{
     //author: EntityLink<any>;
     members: EntityLink<any>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
     bookmarks: EntityLink<any>;
-    miscApps: EntityLink<any>;
+    miscApps: EntityLink<RemoteApplicationCollection>;
     logo: EntityLink<Logo>;
 
     /**
