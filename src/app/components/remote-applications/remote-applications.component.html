@@ -1,0 +1,7 @@
+<h3>Remote Applications</h3>
+<div *ngIf="remoteApplications">
+    <li *ngFor="let remoteApp of remoteApplications.remoteApplications"
+        (click)="onSelect(remoteApp.link)">
+        <span>{{remoteApp.title}} </span>
+    </li>
+</div>
