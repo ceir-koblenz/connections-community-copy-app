@@ -15,12 +15,18 @@ import { Member } from '../models/member.model';
 export class MemberCollectionXmlParser extends EntityXmlParserAbstract<MemberCollection>{
     fillFromObject(entity: MemberCollection, parsedObj: any): void {
         var memberParser = new MemberXmlParser();
+        if (parsedObj.feed.entry.length>1){
+            parsedObj.feed.entry.forEach(entry => {
+                var memEntity = new Member();
+                memberParser.fillFromObject(memEntity, {entry: entry});
 
-        parsedObj.feed.entry.forEach(entry => {
+                entity.membercollection.push(memEntity);
+            });
+        }else{
             var memEntity = new Member();
-            memberParser.fillFromObject(memEntity, {entry: entry});
+            memberParser.fillFromObject(memEntity, {entry: (parsedObj.feed.entry)});
 
             entity.membercollection.push(memEntity);
-        });
+        }
     }
 }
