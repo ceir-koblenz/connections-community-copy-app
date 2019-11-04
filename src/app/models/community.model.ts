@@ -17,8 +17,9 @@ export class Community implements IEntityModel{
     summary: String;
     datePublished: String;
     dateUpdated: String;
-    //author: EntityLink<any>;
-    members: EntityLink<any>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
+    author: EntityLink<any>;//TODO replace with EntityLink<author>. Applies to all following EntityLinks.
+    members: EntityLink<any>;
+    socialDocuments: EntityLink<any>;
     bookmarks: EntityLink<any>;
     miscApps: EntityLink<any>;
     logo: EntityLink<Logo>;
@@ -40,7 +41,6 @@ export class Community implements IEntityModel{
         var result = new Community();
 
         xmlParser.fillFromXml(result, xmlString); // neue Community Instanz anhand des XMLs befüllen
-        
         return result;
     }
 }
