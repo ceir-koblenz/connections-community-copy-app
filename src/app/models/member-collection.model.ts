@@ -1,5 +1,5 @@
 import { IEntityModel } from './i-entity-model';
-import { MemberCollectionXmlParser } from '../xml-parser/member-collection-xml';
+import { MemberCollectionXmlParser } from '../xml-parser/member-collection-xml-parser';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { EntityLink } from '../common/entity-link';
 import { Member } from './member.model';

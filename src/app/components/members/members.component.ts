@@ -12,31 +12,25 @@ import { DeclareFunctionStmt } from '@angular/compiler';
 })
 export class membersComponent implements OnInit {
 
-@Input() members: EntityLink<MemberCollection>;
-private Collection: MemberCollection;
-OtherRoleCollection: MemberCollection;
-OwnerRoleCollection: MemberCollection;
+  @Input() members: EntityLink<MemberCollection>;
+  private Collection: MemberCollection;
+  OtherRoleCollection: MemberCollection;
+  OwnerRoleCollection: MemberCollection;
 
-
-  
-
-async ngOnInit() {
+  async ngOnInit() {
     this.Collection = await MemberCollection.load(this.apiClient, this.members);
-    this.OtherRoleCollection = new MemberCollection;
-    this.OwnerRoleCollection= new MemberCollection;
-
     this.Collection.membercollection.forEach(member => {
-      if(member.role == "owner"){
+      if (member.role == "owner") {
         this.OwnerRoleCollection.membercollection.push(member);
-      }else{
+      } else {
         this.OtherRoleCollection.membercollection.push(member);
       }
     });
   }
 
-
-  constructor(private apiClient: ApiClientService){
-
+  constructor(private apiClient: ApiClientService) {
+    this.OtherRoleCollection = new MemberCollection;
+    this.OwnerRoleCollection = new MemberCollection;
   }
 
   /**
@@ -45,22 +39,11 @@ async ngOnInit() {
     * @param {Member} Other
     * @memberof membersComponent
     */
-    public CheckedMembers(SelctedObject,Other:Member) {
-    var cb = <HTMLInputElement> document.getElementById(Other.UUid.toString());
-    var member = this.Collection.membercollection.find(function(curr) {
-      return curr.UUid == Other.UUid;  
+  public CheckedMembers(SelctedObject, Other: Member) {
+    var cb = <HTMLInputElement>document.getElementById(Other.UUid.toString());
+    var member = this.Collection.membercollection.find(function (curr) {
+      return curr.UUid == Other.UUid;
     });
     member.Uebernehmen = cb.checked;
   }
-
-
-  public getMembercollection (){
-
-  }
-
-
-  ngAfterViewInit() {
-
-  }
-
 }
