@@ -7,7 +7,8 @@
     <br><br>
     <p>Beschreibung: <br> {{community.summary}}</p>
     <p>Veröffentlicht am: <br> {{community.datePublished}}</p>
-    <p>Geändert am: <br> {{community.dateUpdated}}</p>
+    <p>Geändert am: <br> {{community.dateUpdated}}</p>    
+    <app-remote-applications [remoteApps]="community.miscApps"></app-remote-applications>
     <!--
 <members></members>
 <socialDocuments></socialDocuments>

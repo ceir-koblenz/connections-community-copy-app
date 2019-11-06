@@ -14,6 +14,8 @@ import { LoggingComponent } from './components/logging/logging.component';
 import { CommunityComponent } from './components/community/community.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { membersComponent } from './components/members/members.component';
+import { RemoteApplicationsComponent } from './components/remote-applications/remote-applications.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +25,7 @@ import { membersComponent } from './components/members/members.component';
     CommunityComponent,
     LogoComponent,
     membersComponent,
+    RemoteApplicationsComponent
   ],
   imports: [
     BrowserModule,
