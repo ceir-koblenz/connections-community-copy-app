@@ -16,7 +16,7 @@ export class RemoteApplicationXmlParser extends EntityXmlParserAbstract<any>{
         var link_list = parsedObj.link;
         var category = parsedObj.category["@_term"];
         link_list.forEach(link => {
-            // Community logo link
+            // Remote app content link
             if (link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/remote-application/feed") {
                 entity.link = new EntityLink<RemoteApplication>(link["@_href"], category);
             }

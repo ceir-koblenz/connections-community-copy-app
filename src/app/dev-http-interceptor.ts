@@ -15,14 +15,14 @@ export class DevHttpInterceptor implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (req.url.startsWith("https://c55.bas.uni-koblenz.de")) {
+        if (req.url.startsWith("https://devco.fgbas.uni-koblenz.de")) {
             var newUrl = new URL(req.url);
             newUrl.protocol = "http"
             newUrl.port = "4200"
             newUrl.host = "localhost"
             newUrl.pathname = "api/" + newUrl.pathname
 
-            // alle Requests gegen https://c55.bas.uni-koblenz.de werden auf http://localhost:4200/api geleitet
+            // alle Requests gegen https://devco.fgbas.uni-koblenz.de werden auf http://localhost:4200/api geleitet
 
             const dupReq = req.clone({ url: newUrl.toString() });
             return next.handle(dupReq);
