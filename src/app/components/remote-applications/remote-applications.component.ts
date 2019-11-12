@@ -19,17 +19,16 @@ export class RemoteApplicationsComponent implements OnInit {
   selectedRemoteApplication: EntityLink<RemoteApplication>;
 
   constructor(private apiClient: ApiClientService) {
-    this.client = apiClient
+    this.client = apiClient;
   }
 
   ngOnInit() {
     this.loadRemoteApps();
   }
 
-  onSelect(link) {    
+  onSelect(link) {
     this.selectedRemoteApplication = link;
     console.log(this.selectedRemoteApplication);
-    //TODO: create new component per application type 
   }
 
   async loadRemoteApps() {

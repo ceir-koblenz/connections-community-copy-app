@@ -15,6 +15,7 @@ import { CommunityComponent } from './components/community/community.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { membersComponent } from './components/members/members.component';
 import { RemoteApplicationsComponent } from './components/remote-applications/remote-applications.component';
+import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { RemoteApplicationsComponent } from './components/remote-applications/re
     CommunityComponent,
     LogoComponent,
     membersComponent,
-    RemoteApplicationsComponent
+    RemoteApplicationsComponent,
+    WikiComponent
   ],
   imports: [
     BrowserModule,
