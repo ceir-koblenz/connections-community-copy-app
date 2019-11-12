@@ -16,6 +16,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { membersComponent } from './components/members/members.component';
 import { RemoteApplicationsComponent } from './components/remote-applications/remote-applications.component';
 import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
+import { BlogsComponent } from './components/blogs/blogs.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { WikiComponent } from './components/remote-applications/wiki/wiki.compon
     LogoComponent,
     membersComponent,
     RemoteApplicationsComponent,
-    WikiComponent
+    WikiComponent,
+    BlogsComponent
   ],
   imports: [
     BrowserModule,
