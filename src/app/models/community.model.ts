@@ -23,6 +23,7 @@ export class Community implements IEntityModel{
     members: EntityLink<MemberCollection>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
     bookmarks: EntityLink<any>;
     miscApps: EntityLink<RemoteApplicationCollection>;
+    widgets: EntityLink<any>;
     logo: EntityLink<Logo>;
 
     /**
