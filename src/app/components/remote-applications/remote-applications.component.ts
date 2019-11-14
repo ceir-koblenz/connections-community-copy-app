@@ -15,11 +15,9 @@ export class RemoteApplicationsComponent implements OnInit {
   @Input() remoteApps: EntityLink<RemoteApplicationCollection>;
 
   client: ApiClientService;
-  remoteApplications: RemoteApplicationCollection;
   selectedRemoteApplication: EntityLink<RemoteApplication>;
 
   constructor(private apiClient: ApiClientService) {
-    this.client = apiClient;
   }
 
   ngOnInit() {
@@ -32,12 +30,7 @@ export class RemoteApplicationsComponent implements OnInit {
   }
 
   async loadRemoteApps() {
-    var xmlString = await this.client.loadXML(this.remoteApps.url); // Raw XML laden
-
-    var xmlParser: RemoteApplicationCollectionXmlParser = new RemoteApplicationCollectionXmlParser()
-    this.remoteApplications = new RemoteApplicationCollection;
-
-    xmlParser.fillFromXml(this.remoteApplications, xmlString);
+    await RemoteApplicationCollection.load(this.apiClient, this.remoteApps)
   }
 
 }

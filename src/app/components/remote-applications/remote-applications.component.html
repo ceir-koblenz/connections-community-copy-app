@@ -1,6 +1,6 @@
 <h3>Remote Applications</h3>
-<div *ngIf="remoteApplications">
-    <li *ngFor="let remoteApp of remoteApplications.remoteApplications" (click)="onSelect(remoteApp.link)">
+<div *ngIf="remoteApps.model">
+    <li *ngFor="let remoteApp of remoteApps.model.remoteApplications" (click)="onSelect(remoteApp.link)">
         <span>{{remoteApp.title}} </span>
         <div *ngIf="selectedRemoteApplication">
             <div *ngIf="remoteApp.title === 'Wiki'">
