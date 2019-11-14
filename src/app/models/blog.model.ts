@@ -4,7 +4,7 @@ import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
-import { BlogsXmlParser } from '../xml-parser/blogs-xml';
+import { BlogXmlParser } from '../xml-parser/blog-xml';
 
 /**
  * EntityModel eines Members.
@@ -13,7 +13,7 @@ import { BlogsXmlParser } from '../xml-parser/blogs-xml';
  * @class Member
  * @implements {IEntityModel}
  */
-export class Blogs implements IEntityModel{
+export class Blog implements IEntityModel{
     //TODO Change attributes
     public UUid: String;
     public name: String;
