@@ -4,7 +4,14 @@
         <span>{{remoteApp.title}} </span>
         <div *ngIf="selectedRemoteApplication">
             <div *ngIf="remoteApp.title === 'Wiki'">
-                <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
+                <div *ngIf="selectedRemoteApplication.name === 'Wiki'">
+                    <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
+                </div>
+            </div>
+            <div *ngIf="remoteApp.title === 'Files'">
+                <div *ngIf="selectedRemoteApplication.name === 'Files'">
+                    <app-files [remoteApplication]="remoteApp.link"></app-files>
+                </div>
             </div>
             <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
         </div>

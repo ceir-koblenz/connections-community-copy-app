@@ -17,6 +17,7 @@ import { membersComponent } from './components/members/members.component';
 import { RemoteApplicationsComponent } from './components/remote-applications/remote-applications.component';
 import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
 import { BlogComponent } from './components/blog/blog.component';
+import { FilesComponent } from './components/remote-applications/files/files.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BlogComponent } from './components/blog/blog.component';
     membersComponent,
     RemoteApplicationsComponent,
     WikiComponent,
-    BlogComponent
+    BlogComponent,
+    FilesComponent
   ],
   imports: [
     BrowserModule,
