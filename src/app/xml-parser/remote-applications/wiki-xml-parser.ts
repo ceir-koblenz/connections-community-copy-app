@@ -15,7 +15,7 @@ export class WikiXmlParser extends EntityXmlParserAbstract<any>{
         entity.uUid = parsedObj["td:uuid"];
         entity.title = parsedObj.title["#text"];
         entity.label = parsedObj["td:label"];  
-        entity.summary = parsedObj.summary;
+        entity.summary = parsedObj.summary["#text"];
         entity.authorUuid = parsedObj.author["snx:userid"];      
         entity.contentUrl = new EntityLink<any>(parsedObj.content["@_src"], "content");
     }

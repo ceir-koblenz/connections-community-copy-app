@@ -22,7 +22,7 @@ export class WikiComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.loadWikiFeed();    
+    await this.loadWikiFeed();
   }
 
   async loadWikiFeed() {
@@ -31,7 +31,14 @@ export class WikiComponent implements OnInit {
     var xmlParser: WikiCollectionXmlParser = new WikiCollectionXmlParser()
     this.wikis = new WikiCollection();
 
-    xmlParser.fillFromXml(this.wikis, xmlString);
+    var nextPageLink: URL = this.remoteApplication.url;
+
+    do {
+      var currentXml = await this.client.loadXML(nextPageLink)
+      nextPageLink = xmlParser.getNextPageUrl(this.remoteApplication.url, currentXml)
+      xmlParser.fillFromXml(this.wikis, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+    } while (nextPageLink !== null);
+
   }
 
 }

@@ -23,10 +23,10 @@ export class RemoteApplicationCollectionXmlParser extends EntityXmlParserAbstrac
 
         // Unterscheidung, weil das JSON unterschiedlich ausfällt, wenn es mehrere RemoteApps gibt
         if (entries.length === undefined) {
-            _parseAndAddEntry(entries)
+            _parseAndAddEntry(entries);
         } else {
             entries.forEach(entry => {
-                _parseAndAddEntry(entry)
+                _parseAndAddEntry(entry);
             });
         }
     }
@@ -36,15 +36,15 @@ export class RemoteApplicationCollectionXmlParser extends EntityXmlParserAbstrac
      * @param parsedObj 
      */
     getNextPageUrl(xmlString: string): URL {
-        var parsedObj = super.parse(xmlString) // todo das bedeutet, dass für Collections der Xml-Baum zweimal geparst wird... fürs Fill und fürs getNextPage
+        var parsedObj = super.parse(xmlString); // todo das bedeutet, dass für Collections der Xml-Baum zweimal geparst wird... fürs Fill und fürs getNextPage
 
-        var result: URL = null
+        var result: URL = null;
         parsedObj.feed.link.forEach(link => {
             if (result === null && link["@_rel"] == "next") {
                 result = new URL(link["@_href"])
             }
-        })
+        });
 
-        return result
+        return result;
     }
 }
