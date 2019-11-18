@@ -22,10 +22,10 @@ export class AktivitaetenComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.loadWikiFeed();    
+    await this.loadAktivitaeten();    
   }
 
-  async loadWikiFeed() {
+  async loadAktivitaeten() {
     var xmlString = await this.client.loadXML(this.remoteApplication.url); // Raw XML laden
 
     var xmlParser: AktivitaetenCollectionXmlParser = new AktivitaetenCollectionXmlParser()
