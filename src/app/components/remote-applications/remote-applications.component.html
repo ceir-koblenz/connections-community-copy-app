@@ -13,6 +13,11 @@
                     <app-files [remoteApplication]="remoteApp.link"></app-files>
                 </div>
             </div>
+            <div *ngIf="remoteApp.title === 'Aktivitäten'">
+                <div *ngIf="selectedRemoteApplication.name === 'Activities'">
+                    <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
+                </div>
+            </div>
             <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
         </div>
     </li>
