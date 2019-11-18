@@ -1,0 +1,10 @@
+<p>
+    <label>Art des Vorgangs:
+        <select [(ngModel)]="selectedProcessType">
+            <option [ngValue]="copy">Community kopieren</option>
+            <option [ngValue]="template">Template aus Community erstellen</option>
+        </select>
+    </label>
+    <app-community [commId]="commId"></app-community>
+    <input type="button" value="Vorgang starten" />
+</p>

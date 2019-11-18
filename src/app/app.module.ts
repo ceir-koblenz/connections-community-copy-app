@@ -20,6 +20,7 @@ import { BlogComponent } from './components/blog/blog.component';
 import { FilesComponent } from './components/remote-applications/files/files.component';
 import { AktivitaetenComponent } from './components/remote-applications/aktivitaeten/aktivitaeten.component';
 import { widgetsComponent } from './components/widgets/widgets.component';
+import { CommunityWrapperComponent } from './components/app/community-wrapper/community-wrapper.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { widgetsComponent } from './components/widgets/widgets.component';
     BlogComponent,
     FilesComponent,
     AktivitaetenComponent,
-    widgetsComponent
+    widgetsComponent,
+    CommunityWrapperComponent
 
   ],
   imports: [
