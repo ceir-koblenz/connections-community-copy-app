@@ -39,6 +39,9 @@ export class CommunityXmlParser extends EntityXmlParserAbstract<Community>{
                 default:
                     break;
             }
+            if(link["@_rel"] == "http://www.ibm.com/xmlns/prod/sn/widgets"){
+                entity.widgets = new EntityLink<any>(link["@_href"], "Remote-Applications");
+            }
         });
         entity.datePublished = parsedObj.entry.published;
         entity.dateUpdated = parsedObj.entry.updated;

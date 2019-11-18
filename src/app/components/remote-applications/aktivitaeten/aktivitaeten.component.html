@@ -1,0 +1,11 @@
+<div *ngIf="Aktivitaeten">
+    <ul>
+        <li *ngFor="let Aktivitaet of Aktivitaeten.aktivitaeten">
+                <span>{{Aktivitaet.title}}</span>
+                <span>{{Aktivitaet.published}}</span>
+                <span>{{Aktivitaet.updated}}</span>
+                <span>{{Aktivitaet.duedate}}</span>
+                <span>{{Aktivitaet.ziel}}</span>
+        </li>
+    </ul>
+</div>

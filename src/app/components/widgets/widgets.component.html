@@ -1,0 +1,9 @@
+<h3>Widgets</h3>
+<div *ngIf="remoteWidgetcollection">
+    <li *ngFor="let widget of remoteWidgetcollection.Widgets" (click)="onSelect(widget.link)">
+        <span>{{widget.title}} </span>
+        <div *ngIf="selectedWidget">
+            <!-- TODO: Hier können weitere  Collections hinzugefügt werden -->
+        </div>
+    </li>
+</div>

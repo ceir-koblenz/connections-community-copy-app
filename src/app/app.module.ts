@@ -18,6 +18,9 @@ import { RemoteApplicationsComponent } from './components/remote-applications/re
 import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { FilesComponent } from './components/remote-applications/files/files.component';
+import { AktivitaetenComponent } from './components/remote-applications/aktivitaeten/aktivitaeten.component';
+import { widgetsComponent } from './components/widgets/widgets.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { FilesComponent } from './components/remote-applications/files/files.com
     RemoteApplicationsComponent,
     WikiComponent,
     BlogComponent,
-    FilesComponent
+    FilesComponent,
+    AktivitaetenComponent,
+    widgetsComponent
+
   ],
   imports: [
     BrowserModule,
