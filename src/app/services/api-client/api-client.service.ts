@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { LoggingService } from 'src/app/services/logging/logging.service';
 
 /**
@@ -37,6 +37,19 @@ export class ApiClientService {
     } catch (error) {
       this.loggingService.LogError(`Fehler beim Laden der Daten. Statustext: ${error.statusText}`);
       return '';
+    }
+  }
+
+  async postXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
+    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    this.loggingService.LogInfo('Sende Daten an: ' + uri);
+
+    var resultPromise = this.httpClient.request("POST", uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" } }).toPromise()
+    try {
+      return <HttpResponse<any>>(await resultPromise)
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}`);
+      return null;
     }
 
   }

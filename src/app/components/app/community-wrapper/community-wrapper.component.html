@@ -5,6 +5,6 @@
             <option [ngValue]="template">Template aus Community erstellen</option>
         </select>
     </label>
-    <app-community [commId]="commId"></app-community>
-    <input type="button" value="Vorgang starten" />
+    <app-community  [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
+    <input type="button" value="Vorgang starten" [attr.disabled]="(community && !processRunning) ? null : ''" (click)="startProcess()"/>
 </p>

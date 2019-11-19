@@ -10,6 +10,7 @@ import { Community } from 'src/app/models/community.model';
 })
 export class CommunityComponent implements OnInit {
   @Input() commId: string = null;
+  @Input() commLoaded: (x: Community) => void = null
   private community: Community = null;
 
   constructor(private apiClient: ApiClientService
@@ -19,6 +20,9 @@ export class CommunityComponent implements OnInit {
     var apiUrl = getConfig().connectionsUrl;
     var commUrl = new URL(apiUrl + "/communities/service/atom/community/instance?communityUuid=" + this.commId);
     this.community = await Community.load(this.apiClient, commUrl);
+    if (this.community) {
+      this.commLoaded(this.community)
+    }
   }
 }
 
