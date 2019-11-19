@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { getConfig } from './../../app-config';
 import { Community } from 'src/app/models/community.model';
@@ -10,14 +9,11 @@ import { Community } from 'src/app/models/community.model';
   styleUrls: ['./community.component.sass']
 })
 export class CommunityComponent implements OnInit {
-  private commId: string = null;
+  @Input() commId: string = null;
   private community: Community = null;
 
-  constructor(private route: ActivatedRoute,
-    private apiClient: ApiClientService
-  ) {
-    this.commId = this.route.snapshot.params.id;
-  }
+  constructor(private apiClient: ApiClientService
+  ) { }
 
   async ngOnInit() {
     var apiUrl = getConfig().connectionsUrl;

@@ -18,6 +18,10 @@ import { RemoteApplicationsComponent } from './components/remote-applications/re
 import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { FilesComponent } from './components/remote-applications/files/files.component';
+import { AktivitaetenComponent } from './components/remote-applications/aktivitaeten/aktivitaeten.component';
+import { widgetsComponent } from './components/widgets/widgets.component';
+import { CommunityWrapperComponent } from './components/app/community-wrapper/community-wrapper.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { FilesComponent } from './components/remote-applications/files/files.com
     RemoteApplicationsComponent,
     WikiComponent,
     BlogComponent,
-    FilesComponent
+    FilesComponent,
+    AktivitaetenComponent,
+    widgetsComponent,
+    CommunityWrapperComponent
+
   ],
   imports: [
     BrowserModule,
