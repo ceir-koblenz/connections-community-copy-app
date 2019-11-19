@@ -13,7 +13,7 @@
                     <app-files [remoteApplication]="remoteApp.link"></app-files>
                 </div>
             </div>
-            <div *ngIf="remoteApp.title === 'Aktivitäten'">
+            <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')"> <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                 <div *ngIf="selectedRemoteApplication.name === 'Activities'">
                     <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
                 </div>
