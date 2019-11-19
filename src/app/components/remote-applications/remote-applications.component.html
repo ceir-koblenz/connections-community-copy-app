@@ -8,7 +8,7 @@
                     <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
                 </div>
             </div>
-            <div *ngIf="remoteApp.title === 'Files'">
+            <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')"> <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                 <div *ngIf="selectedRemoteApplication.name === 'Files'">
                     <app-files [remoteApplication]="remoteApp.link"></app-files>
                 </div>

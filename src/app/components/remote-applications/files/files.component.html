@@ -1,1 +1,8 @@
-<p>files works!</p>
+<div *ngIf="files">
+    <ul>
+        <li *ngFor="let file of files.files">
+            <span>{{file.title}}</span>
+            <p>{{file.fileUrl}}</p>
+        </li>
+    </ul>
+</div>

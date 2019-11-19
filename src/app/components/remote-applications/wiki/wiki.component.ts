@@ -26,9 +26,8 @@ export class WikiComponent implements OnInit {
   }
 
   async loadWikiFeed() {
-    var xmlString = await this.client.loadXML(this.remoteApplication.url); // Raw XML laden
 
-    var xmlParser: WikiCollectionXmlParser = new WikiCollectionXmlParser()
+    var xmlParser: WikiCollectionXmlParser = new WikiCollectionXmlParser();
     this.wikis = new WikiCollection();
 
     var nextPageLink: URL = this.remoteApplication.url;
