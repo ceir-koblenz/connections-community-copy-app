@@ -15,6 +15,7 @@ import { WidgetCollection } from './widget-collection.model';
  * @implements {IEntityModel}
  */
 export class Community implements IEntityModel{
+    shouldCopy: boolean;
     public id: String;
     title: String;
     summary: String;

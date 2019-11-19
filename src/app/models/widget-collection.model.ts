@@ -9,5 +9,6 @@ import { Widget } from './widget.model'
  * @implements {IEntityModel}
  */
 export class WidgetCollection implements IEntityModel {
+    shouldCopy: boolean;
     public Widgets: Array<Widget> = new Array<Widget>();
 }

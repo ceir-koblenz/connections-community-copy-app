@@ -1,3 +1,5 @@
+import { EntityLink } from '../common/entity-link';
+
 /**
  * Stellt ein Interface für ein Entitätsmodel dar; Schnittstelle für alle Entitäten,
  * die von der Connections-API geladen werden.
@@ -6,4 +8,5 @@
  * @interface IEntityModel
  */
 export interface IEntityModel {
+    shouldCopy: boolean
 }

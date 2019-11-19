@@ -12,6 +12,7 @@ import { Member } from './member.model';
  * @implements {IEntityModel}
  */
 export class MemberCollection implements IEntityModel {
+    shouldCopy: boolean;
     public membercollection: Array<Member> = new Array<Member>();
 
     /**

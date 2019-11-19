@@ -12,6 +12,7 @@ import { MemberXmlParser } from '../xml-parser/member-xml';
  * @implements {IEntityModel}
  */
 export class Member implements IEntityModel{
+    shouldCopy: boolean;
     public UUid: String;
     public name: String;
     public email: String;

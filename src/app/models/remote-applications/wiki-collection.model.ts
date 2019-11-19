@@ -9,5 +9,6 @@ import { Wiki } from './wiki.model';
  * @implements {IEntityModel}
  */
 export class WikiCollection implements IEntityModel {
+    shouldCopy: boolean;
     public wikis: Array<Wiki> = new Array<Wiki>();
 }
