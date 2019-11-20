@@ -1,7 +1,18 @@
 <div *ngIf="community">
     <h2>Community ID = {{commId}}</h2>
     <br>
-    <p>Titel: {{community.title}}</p>
+    <label for="text">Titel: </label>
+    <br>
+    <input value="{{community.title}}" [(ngModel)]="community.title" id="title1" name="title1">
+    <br>
+    <label>Type:</label>
+    <br>
+        <select [(ngModel)]="community.Type" >
+            <option value="private">Privat</option>
+            <option value="public">Öffentlich</option>
+            <option value="publicInviteOnly">Einladung notwendig</option>
+        </select>
+    <br>
     <app-logo [logo]="community.logo"></app-logo>
     <app-members [members]="community.members"></app-members>
     <br><br>

@@ -27,6 +27,7 @@ export class Community implements IEntityModel{
     miscApps: EntityLink<RemoteApplicationCollection>;
     widgets: EntityLink<WidgetCollection>;
     logo: EntityLink<Logo>;
+    Type: String;
 
     /**
      * Lädt die Community anhand der übergebenen Url von der Api.
