@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Community } from 'src/app/models/community.model';
-import { CommunityService } from 'src/app/services/community/community.service';
+import { CreateTemplateService, CreateTemplateResult } from 'src/app/services/create-template.service';
 
 @Component({
   selector: 'app-community-wrapper',
@@ -17,9 +17,10 @@ export class CommunityWrapperComponent implements OnInit {
   private selectedProcessType = null;
   private community: Community = null;
   private processRunning: boolean = false;
+  private processResult: CreateTemplateResult = null;
 
   constructor(private route: ActivatedRoute,
-    private commService: CommunityService) {
+    private createService: CreateTemplateService) {
 
     this.commId = this.route.snapshot.params.id;
     this.commLoaded = this.commLoaded.bind(this)
@@ -27,8 +28,7 @@ export class CommunityWrapperComponent implements OnInit {
 
   async startProcess() {
     this.processRunning = true
-
-    await this.commService.create(this.community)
+    this.processResult = await this.createService.create(this.community)
   }
 
   commLoaded(community: Community) {

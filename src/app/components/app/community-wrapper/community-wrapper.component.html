@@ -1,10 +1,19 @@
-<p>
-    <label>Art des Vorgangs:
-        <select [(ngModel)]="selectedProcessType">
-            <option [ngValue]="copy">Community kopieren</option>
-            <option [ngValue]="template">Template aus Community erstellen</option>
-        </select>
-    </label>
-    <app-community  [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
-    <input type="button" value="Vorgang starten" [attr.disabled]="(community && !processRunning) ? null : ''" (click)="startProcess()"/>
-</p>
+<div>
+    <p [hidden]="!processResult || (processResult && !processResult.success)">
+        Vorgang erfolgreich.
+    </p>
+    <p [hidden]="!processResult || (processResult && processResult.success)">
+            Vorgang fehlgeschlagen.
+    </p>
+    <div [hidden]="processResult && processResult.success">
+        <label>Art des Vorgangs:
+            <select [(ngModel)]="selectedProcessType">
+                <option [ngValue]="copy">Community kopieren</option>
+                <option [ngValue]="template">Template aus Community erstellen</option>
+            </select>
+        </label>
+        <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
+        <input type="button" value="Vorgang starten" [attr.disabled]="(community && !processRunning) ? null : ''"
+            (click)="startProcess()" />
+    </div>
+</div>
