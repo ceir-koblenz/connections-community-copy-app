@@ -1,22 +1,37 @@
-
 <div class="jumbotron" style="margin-top: 20px;">
-        <p [hidden]="!processResult || (processResult && !processResult.success)">
-                Vorgang erfolgreich.
-            </p>
-            <p [hidden]="!processResult || (processResult && processResult.success)">
-                    Vorgang fehlgeschlagen.
-            </p>
-            <div [hidden]="processResult && processResult.success">
-                    <h4>Zu kopierende Community Elemente auswählen</h4>
-                    <hr class="my-4">
-                    <label>Vorgang auswählen *</label>
-                    <select required [(ngModel)]="selectedProcessType" class="custom-select custom-select-lg mb-3">
-                        <option [ngValue]="copy">Community kopieren</option>
-                        <option [ngValue]="template">Template aus Community erstellen</option>
-                    </select>
-                    <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
-                    <hr class="my-4">
-                    <p class="font-weight-light">Beim Klick auf "Vorgang starten" wird die neue Community erstellt, ist aber nicht sichtbar.</p>
-                    <input type="button" class="btn btn-success" value="Vorgang starten" [attr.disabled]="(community && !processRunning) ? null : ''"
-                    (click)="startProcess()" />
-            </div>
+    <div [hidden]="!processResult || (processResult && !processResult.success)">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Vorgang erfolgreich</h4>
+            <p>Die neue Community wurde erstellt.</p>
+            <hr>
+            <a class="btn btn-secondary active" role="button" [routerLink]="['/service']" routerLinkActive="active">
+                Zur Community Übersicht
+            </a>
+        </div>
+    </div>
+    <div [hidden]="!processResult || (processResult && processResult.success)">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Vorgang fehlgeschlagen</h4>
+            <p>Die neue Community wurde erstellt.</p>
+            <hr>
+            <a class="btn btn-secondary active" role="button" [routerLink]="['/service']" routerLinkActive="active">
+                Zur Community Übersicht
+            </a>
+        </div>
+    </div>
+    <div [hidden]="processResult && processResult.success">
+        <h4>Zu kopierende Community Elemente auswählen</h4>
+        <hr class="my-4">
+        <label>Vorgang auswählen *</label>
+        <select required [(ngModel)]="selectedProcessType" class="custom-select custom-select-lg mb-3">
+            <option [ngValue]="copy">Community kopieren</option>
+            <option [ngValue]="template">Template aus Community erstellen</option>
+        </select>
+        <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
+        <hr class="my-4">
+        <p class="font-weight-light">Beim Klick auf "Vorgang starten" wird die neue Community erstellt, ist aber nicht
+            sichtbar.</p>
+        <input type="button" class="btn btn-success" value="Vorgang starten"
+            [attr.disabled]="(community && !processRunning) ? null : ''" (click)="startProcess()" />
+    </div>
+</div>
