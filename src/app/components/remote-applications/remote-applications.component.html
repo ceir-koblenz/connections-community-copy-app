@@ -1,24 +1,44 @@
-<h3>Remote Applications</h3>
+<div *ngIf="!remoteApps.model">
+    <div class="spinner-grow text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 <div *ngIf="remoteApps.model">
-    <li *ngFor="let remoteApp of remoteApps.model.remoteApplications" (click)="onSelect(remoteApp.link)">
-        <span>{{remoteApp.title}} </span>
-        <div *ngIf="selectedRemoteApplication">
-            <div *ngIf="remoteApp.title === 'Wiki'">
-                <div *ngIf="selectedRemoteApplication.name === 'Wiki'">
-                    <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
+    <div id="remoteAppAccordion">
+        <div *ngFor="let remoteApp of remoteApps.model.remoteApplications" class="card"
+            (click)="onSelect(remoteApp.link)">
+            <div class="card-header" id="{{'heading' + remoteApp.title}}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse"
+                        attr.data-target="{{'#collapse' + remoteApp.title}}" aria-expanded="true"
+                        attr.aria-controls="{{'collapse' + remoteApp.title}}">
+                        {{remoteApp.title}}
+                    </button>
+                </h5>
+            </div>
+            <div id="{{'collapse' + remoteApp.title}}" attr.aria-labelledby="{{'heading' + remoteApp.title}}"
+                class="collapse" data-parent="#remoteAppAccordion">
+                <div class="card-body">
+                    <div *ngIf="selectedRemoteApplication && remoteApp.title === 'Wiki'">
+                        <div *ngIf="selectedRemoteApplication.name === 'Wiki'">
+                            <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
+                        </div>
+                    </div>
+                    <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')">
+                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                        <div *ngIf="selectedRemoteApplication.name === 'Files'">
+                            <app-files [remoteApplication]="remoteApp.link"></app-files>
+                        </div>
+                    </div>
+                    <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')">
+                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                        <div *ngIf="selectedRemoteApplication.name === 'Activities'">
+                            <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
+                        </div>
+                    </div>
+                    <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>
             </div>
-            <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')"> <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                <div *ngIf="selectedRemoteApplication.name === 'Files'">
-                    <app-files [remoteApplication]="remoteApp.link"></app-files>
-                </div>
-            </div>
-            <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')"> <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                <div *ngIf="selectedRemoteApplication.name === 'Activities'">
-                    <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
-                </div>
-            </div>
-            <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
         </div>
-    </li>
+    </div>
 </div>

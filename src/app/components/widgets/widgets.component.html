@@ -1,9 +1,26 @@
-<h3>Widgets</h3>
+<div *ngIf="!remoteWidgetcollection">
+    <div class="spinner-grow text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
 <div *ngIf="remoteWidgetcollection">
-    <li *ngFor="let widget of remoteWidgetcollection.Widgets" (click)="onSelect(widget.link)">
-        <span>{{widget.title}} </span>
-        <div *ngIf="selectedWidget">
-            <!-- TODO: Hier können weitere  Collections hinzugefügt werden -->
+    <div id="remoteAppAccordion">
+        <div *ngFor="let widget of remoteWidgetcollection.Widgets" class="card" (click)="onSelect(widget.link)">
+            <div class="card-header" id="{{'heading' + widget.title}}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse"
+                        attr.data-target="{{'#collapse' + widget.title}}" aria-expanded="true"
+                        attr.aria-controls="{{'collapse' + widget.title}}">
+                        {{widget.title}}
+                    </button>
+                </h5>
+            </div>
+            <div id="{{'collapse' + widget.title}}" attr.aria-labelledby="{{'heading' + widget.title}}" class="collapse"
+                data-parent="#remoteAppAccordion">
+                <div class="card-body">
+                    <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
+                </div>
+            </div>
         </div>
-    </li>
+    </div>
 </div>

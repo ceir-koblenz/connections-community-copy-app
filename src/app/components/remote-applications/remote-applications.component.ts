@@ -20,8 +20,9 @@ export class RemoteApplicationsComponent implements OnInit {
   constructor(private apiClient: ApiClientService) {
   }
 
-  ngOnInit() {
-    this.loadRemoteApps();
+  async ngOnInit() {
+    await this.loadRemoteApps();
+    this.selectedRemoteApplication = this.remoteApps.model.remoteApplications[0].link;
   }
 
   onSelect(link) {

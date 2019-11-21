@@ -1,14 +1,14 @@
-<div id="accordion">
+<div id="memberAccordion">
     <div class="card">
-        <div class="card-header" id="headingOne">
+        <div class="card-header" id="memberHeadingOne">
             <h5 class="mb-0">
-                <button class="btn btn-light btn-block collapsed " data-toggle="collapse" data-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-light btn-block collapsed " data-toggle="collapse" data-target="#memberCollapseOne"
+                    aria-expanded="true" aria-controls="memberCollapseOne">
                     Eigentümer der Community auswählen...
                 </button>
             </h5>
         </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="memberCollapseOne" class="collapse show" aria-labelledby="memberHeadingOne" data-parent="#memberAccordion">
             <div class="card-body">
                 <div *ngIf="OwnerRoleCollection.membercollection.length">
                     <div class="input-group mb-3">
@@ -17,7 +17,7 @@
                                 <input type="checkbox" value="" (click)="CheckedMembers(this,owner)">
                             </div>
                         </div>
-                        <input type="text" value="Alle Eigentümer" class="form-control"
+                        <input type="text" disabled value="Alle Eigentümer" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
                     <div *ngFor="let owner of OwnerRoleCollection.membercollection" class="input-group mb-3">
@@ -26,7 +26,7 @@
                                 <input type="checkbox" id={{owner.UUid}} value="" (click)="CheckedMembers(this,owner)">
                             </div>
                         </div>
-                        <input type="text" value="{{owner.name}} ({{owner.email}})" class="form-control"
+                        <input type="text" disabled value="{{owner.name}} ({{owner.email}})" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
                 </div>
@@ -35,15 +35,15 @@
     </div>
     <br />
     <div class="card">
-        <div class="card-header" id="headingTwo">
+        <div class="card-header" id="memberHeadingTwo">
             <h5 class="mb-0">
-                <button class="btn btn-light btn-block collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="false" aria-controls="collapseTwo">
+                <button class="btn btn-light btn-block collapsed" data-toggle="collapse" data-target="#memberCollapseTwo"
+                    aria-expanded="false" aria-controls="memberCollapseTwo">
                     Mitglieder der Community auswählen...
                 </button>
             </h5>
         </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div id="memberCollapseTwo" class="collapse" aria-labelledby="memberHeadingTwo" data-parent="#memberAccordion">
             <div class="card-body">
                 <div *ngIf="OtherRoleCollection.membercollection.length">
                     <div class="input-group mb-3">
@@ -52,7 +52,7 @@
                                 <input type="checkbox" value="" (click)="CheckedMembers(this,other)">
                             </div>
                         </div>
-                        <input type="text" value="Alle Mitglieder" class="form-control"
+                        <input type="text" disabled value="Alle Mitglieder" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
                     <div *ngFor="let other of OtherRoleCollection.membercollection" class="input-group mb-3">
@@ -61,7 +61,7 @@
                                 <input type="checkbox" id={{other.UUid}} value="" (click)="CheckedMembers(this,other)">
                             </div>
                         </div>
-                        <input type="text" value="{{other.name}} ({{other.email}})" class="form-control"
+                        <input type="text" disabled value="{{other.name}} ({{other.email}})" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
                 </div>
