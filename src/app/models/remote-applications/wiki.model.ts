@@ -9,6 +9,7 @@ import { EntityLink } from 'src/app/common/entity-link';
  * @implements {IEntityModel}
  */
 export class Wiki implements IEntityModel{
+	shouldCopy: boolean;
 
     uUid:String;
 	title:String;

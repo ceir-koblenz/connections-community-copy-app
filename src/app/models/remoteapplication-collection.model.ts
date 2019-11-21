@@ -12,6 +12,7 @@ import { RemoteApplicationCollectionXmlParser } from '../xml-parser/remoteapplic
  * @implements {IEntityModel}
  */
 export class RemoteApplicationCollection implements IEntityModel {
+    shouldCopy: boolean;
     public remoteApplications: Array<RemoteApplication> = new Array<RemoteApplication>();
 
     static async load(client: ApiClientService, link: EntityLink<RemoteApplicationCollection>): Promise<RemoteApplicationCollection> {

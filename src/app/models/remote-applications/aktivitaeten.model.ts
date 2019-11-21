@@ -8,6 +8,7 @@ import { IEntityModel } from '../i-entity-model';
  * @implements {IEntityModel}
  */
 export class Aktivitaet implements IEntityModel {
+	shouldCopy: boolean;
 
 	uUid: String;
 	title: String;

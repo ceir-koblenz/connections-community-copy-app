@@ -9,5 +9,6 @@ import { File } from './file.model';
  * @implements {IEntityModel}
  */
 export class FileCollection implements IEntityModel {
+    shouldCopy: boolean;
     public files: Array<File> = new Array<File>();
 }

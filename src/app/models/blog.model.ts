@@ -14,6 +14,7 @@ import { BlogXmlParser } from '../xml-parser/blog-xml';
  * @implements {IEntityModel}
  */
 export class Blog implements IEntityModel{
+    shouldCopy: boolean;
     //TODO Change attributes
     public UUid: String;
     public name: String;

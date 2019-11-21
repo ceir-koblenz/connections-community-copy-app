@@ -1,5 +1,3 @@
-// Konfiguration für einen Entwicklungs-Proxyserver, der Requests an die Connections-Api weiterleitet.
-// Notwendig wegen CORS Problemen bei requests vom Localhost aus.
 {
     "/api/*": {
       "target": "https://devco.fgbas.uni-koblenz.de",
@@ -7,8 +5,8 @@
       "logLevel": "debug",
       "pathRewrite": {"^/api" : "https://devco.fgbas.uni-koblenz.de/"},
       "changeOrigin": true,
-      "headers": {"Authorization": "Basic DEIN-AUTH-TOKEN="} // hier muss ein gültiges Authentifizierungstoken rein.
-      // Erzeugen mit Nutzername+PW für devco.fgbas.uni-koblenz.de bspw. unter https://www.blitter.se/utils/basic-authentication-header-generator/
-      // beispielhafter Auth-Header: "Basic asdf12134=="
+      "headers": {
+        "Origin": "https://devco.fgbas.uni-koblenz.de/",
+        "Authorization": "Basic DEIN-AUTH-TOKEN="}
     }
   }

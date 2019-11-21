@@ -12,6 +12,7 @@ import { Community } from './community.model';
  * @implements {IEntityModel}
  */
 export class CommunityCollection implements IEntityModel {
+    shouldCopy: boolean;
     public communities: Array<Community> = new Array<Community>();
 
     /**

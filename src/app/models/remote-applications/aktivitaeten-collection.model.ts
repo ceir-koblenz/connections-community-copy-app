@@ -9,5 +9,6 @@ import { Aktivitaet } from './aktivitaeten.model';
  * @implements {IEntityModel}
  */
 export class AktivitaetenCollection implements IEntityModel {
+    shouldCopy: boolean;
     public aktivitaeten: Array<Aktivitaet> = new Array<Aktivitaet>();
 }
