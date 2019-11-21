@@ -1,4 +1,11 @@
-<img [src]="imageBlobUrl" alt="NoLogo" height="80" width="80" />
+<label>Community Logo</label>
+<br/>
+<img [src]="imageBlobUrl" class="rounded" alt="NoLogo" />
+<br/><br/>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
-    <input accept="image/*" type="file" name="logo" (change)="logoChanged($event)" />
+    <div class="custom-file">        
+        <input accept="image/*" class="custom-file-input" type="file" name="logo" id="commLogo" (change)="logoChanged($event)" />
+        <label class="custom-file-label" for="customFile">Choose file</label>
+    </div>
 </form>
+<br/>

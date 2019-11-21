@@ -1,13 +1,37 @@
-<p>CommunityCollection Component</p>
-
-<div>Collection:
-    <p>{{collection.name}}</p>
+<div *ngIf="!collection.model">
+    <div class="spinner-grow text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
 </div>
+<!-- Search form -->
+<div *ngIf="collection.model" class="mb-4">
+    <input class="form-control" type="text" placeholder="Suchen..." aria-label="Search">
+</div>
+<div *ngIf="collection.model" class="list-group">
 
-<div *ngIf="collection.model">
-    <li *ngFor="let comm of collection.model.communities" [class.bg-secondary]="comm === selectedCommunity"
-        (click)="onSelect(comm)">
-        <span>{{comm.title}} </span>
-        <a [routerLink]="['/community-selection/', comm.id]" routerLinkActive="active">Select</a>
-    </li>
+    <a *ngFor="let comm of collection.model.communities" [class.bg-secondary]="comm === selectedCommunity"
+        class="list-group-item list-group-item-action" [routerLink]="['/community-selection/', comm.id]"
+        routerLinkActive="active">
+        {{comm.title}}
+    </a>
+    <!-- TODO Pagination & Filter/Suche nach Community -->
+    <nav aria-label="Page navigation example" style="margin-top: 20px;">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link text-dark" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link text-dark" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>

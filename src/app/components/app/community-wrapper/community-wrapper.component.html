@@ -1,10 +1,12 @@
-<p>
-    <label>Art des Vorgangs:
-        <select [(ngModel)]="selectedProcessType">
-            <option [ngValue]="copy">Community kopieren</option>
-            <option [ngValue]="template">Template aus Community erstellen</option>
-        </select>
-    </label>
+<div class="jumbotron" style="margin-top: 20px;">
+    <h4>Zu kopierende Community Elemente auswählen</h4>
+    <hr class="my-4">
+    <label>Vorgang auswählen *</label>
+    <select required [(ngModel)]="selectedProcessType" class="custom-select custom-select-lg mb-3">
+        <option [ngValue]="copy">Community kopieren</option>
+        <option [ngValue]="template">Template aus Community erstellen</option>
+    </select>
     <app-community [commId]="commId"></app-community>
-    <input type="button" value="Vorgang starten" />
-</p>
+    <br/>
+    <input type="button" class="btn btn-success" value="Vorgang starten" />
+</div>

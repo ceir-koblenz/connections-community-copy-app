@@ -1,19 +1,38 @@
-<p>ServiceDocument Component</p>
-
-<div *ngIf="serviceDoc">
-    <div *ngIf="serviceDoc.myCommunitiesLink" (click)="onSelect(serviceDoc.myCommunitiesLink)" class="border"
-        [class.bg-secondary]="serviceDoc.myCommunitiesLink === selectedCommunityCollection">
-        <p>{{serviceDoc.myCommunitiesLink.name}}</p>
-        <p>{{serviceDoc.myCommunitiesLink.url}}</p>
+<div class="jumbotron" style="margin-top: 20px;">
+    <div *ngIf="!serviceDoc" class="text-center">
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div *ngIf="serviceDoc" class="container">
+        <h4>Community auswählen</h4>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>{{serviceDoc.myCommunitiesLink.name}}</strong>
+                    </div>                    
+                    <div *ngIf="myCommunityCollection" class="card-body">
+                        <div class="card-body">
+                            <app-community-collection [collection]="myCommunityCollection">
+                            </app-community-collection>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>{{serviceDoc.allCommunitiesLink.name}}</strong>
+                    </div>                    
+                    <div *ngIf="allCommunityCollection" class="card-body">
+                        <app-community-collection [collection]="allCommunityCollection">
+                        </app-community-collection>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div *ngIf="serviceDoc.allCommunitiesLink" (click)="onSelect(serviceDoc.allCommunitiesLink)" class="border"
-        [class.bg-secondary]="serviceDoc.allCommunitiesLink === selectedCommunityCollection">
-        <p>{{serviceDoc.allCommunitiesLink.name}}</p>
-        <p>{{serviceDoc.allCommunitiesLink.url}}</p>
-    </div>
-</div>
-
-<div *ngIf="selectedCommunityCollection">
-    <app-community-collection [collection]="selectedCommunityCollection"></app-community-collection>
 </div>

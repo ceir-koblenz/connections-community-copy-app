@@ -1,9 +1,12 @@
-<h1>Logs</h1>
-<div *ngIf="loggingservice.logs.length">
-        <ul *ngFor='let log of loggingservice.logs'>
-                <li>
-                        <b>{{log.LogLevel}}:</b>
-                        {{log.Message}}
-                </li>
-        </ul>
+<div class="jumbotron">
+        <h1>Logs</h1>
+        <hr class="my-4">
+        <div *ngIf="loggingservice.logs.length">
+                <ul *ngFor='let log of loggingservice.logs'>
+                        <li>
+                                <b>{{log.LogLevel}}:</b>
+                                {{log.Message}}
+                        </li>
+                </ul>
+        </div>
 </div>
