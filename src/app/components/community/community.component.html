@@ -7,10 +7,10 @@
     <br>
     <label>Type:</label>
     <br>
-        <select [(ngModel)]="community.Type" >
-            <option value="private">Privat</option>
+        <select [(ngModel)]="community.type" >
+            <option value="private">Eingeschränkt</option>
             <option value="public">Öffentlich</option>
-            <option value="publicInviteOnly">Einladung notwendig</option>
+            <option value="publicInviteOnly">Moderiert</option>
         </select>
     <br>
     <app-logo [logo]="community.logo"></app-logo>
@@ -21,10 +21,4 @@
     <p>Geändert am: <br> {{community.dateUpdated}}</p>    
     <app-remote-applications [remoteApps]="community.miscApps"></app-remote-applications>
     <app-widgets [remoteWidgets]="community.widgets"></app-widgets>
-    <!--
-<members></members>
-<socialDocuments></socialDocuments>
-...
--->
-
 </div>

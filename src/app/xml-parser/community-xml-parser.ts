@@ -45,7 +45,7 @@ export class CommunityXmlParser extends EntityXmlParserAbstract<Community>{
         });
         entity.datePublished = parsedObj.entry.published;
         entity.dateUpdated = parsedObj.entry.updated;
-        entity.Type = parsedObj.entry["snx:communityType"]
+        entity.type = parsedObj.entry["snx:communityType"]
 
         //Debug
         //console.log(entity.logoUrl.toString());
