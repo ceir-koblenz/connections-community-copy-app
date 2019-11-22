@@ -5,25 +5,34 @@
 </div>
 <div *ngIf="community">
     <hr class="my-4">
-    <h4>Allgemeine Community Informationen</h4><br/>
+    <h4>Allgemeine Community Informationen</h4><br />
     <div class="form-group">
         <label for="commTitle">Titel</label>
-        <input type="text" id="commTitle" value="{{community.title}}" class="form-control"
+        <input type="text" id="commTitle" [(ngModel)]="community.title" class="form-control"
             placeholder="Community Titel">
+    </div>
+    <div class="form-group">
+        <label for="commType">Type:</label>
+        <select class="form-control" id="commType" [(ngModel)]="community.type">
+            <option value="private">Eingeschränkt</option>
+            <option value="public">Öffentlich</option>
+            <option value="publicInviteOnly">Moderiert</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="commDesc">Beschreibung</label>
         <input type="text" value="{{community.summary}}" id="commDesc" class="form-control"
             placeholder="Community Titel">
     </div>
+
     <app-logo [logo]="community.logo"></app-logo>
     <hr class="my-4">
-    <h4>Mitglieder der Community</h4><br/>
+    <h4>Mitglieder der Community</h4><br />
     <app-members [members]="community.members"></app-members>
     <hr class="my-4">
-    <h4>Applications der Community</h4><br/>
+    <h4>Applications der Community</h4><br />
     <app-remote-applications [remoteApps]="community.miscApps"></app-remote-applications>
     <hr class="my-4">
-    <h4>Widgets der Community</h4><br/>
+    <h4>Widgets der Community</h4><br />
     <app-widgets [remoteWidgets]="community.widgets"></app-widgets>
 </div>

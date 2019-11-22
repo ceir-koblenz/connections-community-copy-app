@@ -14,7 +14,7 @@ import { WidgetCollection } from './widget-collection.model';
  * @class Community
  * @implements {IEntityModel}
  */
-export class Community implements IEntityModel{
+export class Community implements IEntityModel {
     shouldCopy: boolean;
     public id: String;
     title: String;
@@ -26,4 +26,5 @@ export class Community implements IEntityModel{
     miscApps: EntityLink<RemoteApplicationCollection>;
     widgets: EntityLink<WidgetCollection>;
     logo: EntityLink<Logo>;
+    type: String;
 }

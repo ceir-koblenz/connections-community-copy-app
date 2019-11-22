@@ -10,7 +10,7 @@ export class CommunityXmlWriter {
             <title type="text">${comm.title}</title>
             <content type="html">${comm.summary}</content>
             <category term="community" scheme="http://www.ibm.com/xmlns/prod/sn/type"></category>
-            <snx:communityType>private</snx:communityType>
+            <snx:communityType>${comm.type}</snx:communityType>
         </entry>`
     }
 }

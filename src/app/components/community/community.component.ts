@@ -26,5 +26,6 @@ export class CommunityComponent implements OnInit {
       this.commLoaded(this.community)
     }
   }
+
 }
 
