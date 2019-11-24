@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Logo } from 'src/app/models/logo.model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { rewriteConnectionsUrl } from 'src/app/dev-http-interceptor';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-logo',
@@ -17,15 +19,37 @@ export class LogoComponent implements OnInit {
   * Variable für das Image, das im Formular angezeigt und beim
   * Ändern geupdatet wird, damit das ausgewählte Bild angezeigt wird.
   */
-  imageBlobUrl: String;
+  imageBlobUrl: string;
 
-  constructor() {
+  private httpClient: HttpClient;
+
+  constructor(httpClient: HttpClient) {
+    this.httpClient = httpClient;
   }
 
   ngOnInit(): void {
     // Set existing community image as default
     this.imageBlobUrl = rewriteConnectionsUrl(this.logo.url.toString());
     this.logo.model = new Logo();
+    this.logo.model.blob = new Blob();
+    // Load existing community image
+    this.getImage(this.imageBlobUrl).subscribe(
+      blob => this.logo.model.blob = blob
+    )
+  }
+
+  setShouldCopy() {
+    this.logo.model.shouldCopy = !this.logo.model.shouldCopy;
+  }
+
+  /**
+   * Image als Blob um es beim Erstellen der 
+   * neuen Community wieder zu verwenden.
+   * @param {string} imageUrl 
+   * @returns {Observable<Blob>}
+   */
+  getImage(imageUrl: string): Observable<Blob> {
+    return this.httpClient.get(imageUrl, { responseType: 'blob' });
   }
 
   /*
@@ -37,18 +61,32 @@ export class LogoComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
       let fr = new FileReader();
-      fr.onload = (event: any) => {
+      fr.onloadend = (event: any) => {
         let base64 = event.target.result
-        let img = base64.split(',')[1]
-        let blob = new Blob([window.atob(img)], { type: 'image/jpeg' })
-        this.logo.model.blob = blob
+        let binary = base64.split(',')[1]
+        this.logo.model.blob = this.dataURItoBlob(binary)
         this.imageBlobUrl = base64
       }
       fr.readAsDataURL(file)
-    } else {
-      this.logo.model.blob = null;
-      this.imageBlobUrl = "";
     }
   }
+
+  /**
+   * Magic Method. Nur so konnte das Bild in binary umgewandelt werden,
+   * sodass Uniconnect das Bild auch lesen kann. 
+   * Das hier reicht wohl nicht -.- var blob = new Blob([atob(binary)], {'type':'image/jpeg'})
+   * 
+   * @param dataURI 
+   */
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+    return blob;
+ }
 
 }

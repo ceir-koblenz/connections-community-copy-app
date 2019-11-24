@@ -1,11 +1,19 @@
 <label>Community Logo</label>
-<br/>
-<img [src]="imageBlobUrl" class="rounded" alt="NoLogo" />
-<br/><br/>
+<br />
+<img [src]="imageBlobUrl" class="rounded" alt="NoLogo" width="15%" height="15%" />
+<br /><br />
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
-    <div class="custom-file">        
-        <input accept="image/*" class="custom-file-input" type="file" name="logo" id="commLogo" (change)="logoChanged($event)" />
-        <label class="custom-file-label" for="customFile">Choose file</label>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" value="" (click)="setShouldCopy(this)">
+            </div>
+        </div>
+        <div class="custom-file">
+            <input accept="image/*" class="custom-file-input" type="file" name="logo" id="commLogo"
+                (change)="logoChanged($event)" />
+            <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
     </div>
 </form>
-<br/>
+<br />
