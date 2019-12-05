@@ -1,6 +1,4 @@
 import { IEntityModel } from './i-entity-model';
-import { ApiClientService } from '../services/api-client/api-client.service';
-import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
 import { Logo } from './logo.model';
 import { MemberCollection } from './member-collection.model';

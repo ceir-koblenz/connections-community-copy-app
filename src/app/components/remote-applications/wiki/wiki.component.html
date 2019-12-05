@@ -7,15 +7,17 @@
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" value="">
+                <input type="checkbox" [checked]="copyAll"
+                (click)="setShouldCopyAll()">
             </div>
         </div>
-        <input type="text" disabled value="Alle Wiki-Seiten" class="form-control" aria-label="Text input with checkbox">
+        <input type="text" disabled value="Alle Wiki-Seiten" class="form-control" 
+        aria-label="Text input with checkbox">
     </div>
     <div *ngFor="let wiki of wikis.wikis" class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" id={{wiki.UUid}} value="">
+                <input type="checkbox" id={{wiki.uUid}} [checked]="copyAll || wiki.shouldCopy" (click)="setShouldCopy(wiki)">
             </div>
         </div>
         <input type="text" disabled value="{{wiki.title}}" class="form-control"

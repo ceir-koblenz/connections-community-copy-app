@@ -44,7 +44,7 @@ export class ApiClientService {
     var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
     this.loggingService.LogInfo('Sende Daten an: ' + uri);
 
-    var resultPromise = this.httpClient.request("POST", uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" } }).toPromise()
+    var resultPromise = this.httpClient.request("POST", uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" }, responseType: "text" }).toPromise()
     try {
       return <HttpResponse<any>>(await resultPromise)
     } catch (error) {

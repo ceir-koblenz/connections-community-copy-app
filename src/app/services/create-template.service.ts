@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
+import { asyncForEach } from '../common/async-foreach';
+import { WikiService } from './community/wiki/wiki.service';
 
 /**
  * Service für den Kopiervorgang einer Community samt aller abhängigen Entitäten
@@ -13,7 +15,7 @@ import { CommunityService } from './community/community.service';
 })
 export class CreateTemplateService {
 
-  constructor(private commService: CommunityService) { }
+  constructor(private commService: CommunityService, private wikiService: WikiService) { }
 
   async create(community: Community): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
@@ -21,8 +23,28 @@ export class CreateTemplateService {
 
     var commResult = await this.commService.create(community)
     if (commResult.ok) {
-      var location = commResult.headers.get("Location")
-      // todo weitere Entitäten zur Community hinzufügen
+      var location = new URL(commResult.headers.get("Location"))
+
+      // get new community id
+      var newCommunityId = location.searchParams.get("communityUuid")
+
+      const copyRemoteApps = async () => {
+        await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
+          // try copy wiki
+          if (remoteApp.link.name == "Wiki") {
+            await this.wikiService.create(newCommunityId, remoteApp.link.model);
+          }
+
+          // try copy files
+
+
+          //TODO: weitere Entitäten zur Community hinzufügen
+
+
+        })
+      }
+      await copyRemoteApps();
+
     } else {
       result.success = false
     }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EntityLink } from 'src/app/common/entity-link';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { RemoteApplicationCollectionXmlParser } from 'src/app/xml-parser/remoteapplicationcollection-xml-parser';
 import { RemoteApplicationCollection } from 'src/app/models/remoteapplication-collection.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 
@@ -27,7 +26,6 @@ export class RemoteApplicationsComponent implements OnInit {
 
   onSelect(link) {
     this.selectedRemoteApplication = link;
-    console.log(this.selectedRemoteApplication);
   }
 
   async loadRemoteApps() {
