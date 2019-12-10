@@ -31,7 +31,7 @@ export class CreateTemplateService {
       const copyRemoteApps = async () => {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
           // try copy wiki
-          if (remoteApp.link.name == "Wiki") {
+          if (remoteApp.link.name == "Wiki" && remoteApp.link.model) {
             await this.wikiService.create(newCommunityId, remoteApp.link.model);
           }
 
