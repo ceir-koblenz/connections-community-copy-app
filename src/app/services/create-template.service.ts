@@ -3,6 +3,7 @@ import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
+import { FileService } from './community/file/file.service';
 
 /**
  * Service für den Kopiervorgang einer Community samt aller abhängigen Entitäten
@@ -15,7 +16,7 @@ import { WikiService } from './community/wiki/wiki.service';
 })
 export class CreateTemplateService {
 
-  constructor(private commService: CommunityService, private wikiService: WikiService) { }
+  constructor(private commService: CommunityService, private wikiService: WikiService, private fileService: FileService) { }
 
   async create(community: Community): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
@@ -36,7 +37,9 @@ export class CreateTemplateService {
           }
 
           // try copy files
-
+          if ((remoteApp.link.name == "Files" || "Dateien") && remoteApp.link.model) {
+            await this.fileService.create(newCommunityId, remoteApp.link.model);
+          }
 
           //TODO: weitere Entitäten zur Community hinzufügen
 
