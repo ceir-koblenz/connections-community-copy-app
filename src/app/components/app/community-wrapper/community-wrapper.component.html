@@ -12,14 +12,23 @@
     <div [hidden]="!processResult || (processResult && processResult.success)">
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">Vorgang fehlgeschlagen</h4>
-            <p>Die neue Community wurde erstellt.</p>
+            <p>Die Community konnte nicht erstellt werden.</p>
             <hr>
             <a class="btn btn-secondary active" role="button" [routerLink]="['/service']" routerLinkActive="active">
                 Zur Community Übersicht
             </a>
         </div>
     </div>
-    <div [hidden]="processResult && processResult.success">
+    <div [hidden]="!processRunning">
+        <p>Die Community wird erstellt...</p>
+        <p><ngb-progressbar type="success" [value]="processStatus.value" [striped]="true" [animated]="true">{{processStatus.value > 0 ? (processStatus.value + "%") : ("")}}</ngb-progressbar></p>
+        <ul style="list-style-type:none">
+            <li *ngFor="let log of processStatus.logList">
+                &#10003; {{log}} 
+            </li>
+        </ul>
+    </div>
+    <div [hidden]="processRunning || processResult">
         <h4>Zu kopierende Community Elemente auswählen</h4>
         <hr class="my-4">
         <label>Vorgang auswählen *</label>

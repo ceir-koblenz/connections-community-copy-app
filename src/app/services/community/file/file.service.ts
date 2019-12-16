@@ -8,7 +8,7 @@ import { getConfig } from 'src/app/app-config';
 import { FileCollection } from 'src/app/models/remote-applications/file-collection.model';
 import { File } from 'src/app/models/remote-applications/file.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -35,7 +35,8 @@ export class FileService {
         return files;
     }
 
-    async create(newCommunityId: string, fileCollection: FileCollection) {
+    async create(newCommunityId: string, fileCollection: FileCollection):Promise<HttpResponse<any>> {
+        var result: HttpResponse<any>;
         var filesToCopy: Array<File> = new Array<File>();
         // Filter out which files should be copied.
         const getFilesToCopy = async () => {
@@ -59,7 +60,7 @@ export class FileService {
                         var blob = await this.httpClient.get(file.fileUrl, { responseType: 'blob' }).toPromise();
                         // Create file
                         var url = new URL(getConfig().connectionsUrl + "/files/basic/api/communitylibrary/" + newCommunityId + "/feed")
-                        var result = await this.apiClient.postFile(blob, url, { "Slug": file.title, "X-Update-Nonce": nonceResult })
+                        result = await this.apiClient.postFile(blob, url, { "Slug": file.title, "X-Update-Nonce": nonceResult });
                         if (result.ok) {
                             this.loggingService.LogInfo('File wurde erstellt.')
                         } else {
@@ -71,6 +72,7 @@ export class FileService {
             }
             await copyFileEntries();
         }
+        return result;
     }
 
     /**
