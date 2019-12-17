@@ -20,9 +20,10 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="commDesc">Beschreibung</label>
-        <input type="text" value="{{community.summary}}" id="commDesc" class="form-control"
-            placeholder="Community Titel">
+        <label for="commDescHtml">Beschreibung</label>
+        <editor [init]="{
+            base_url: '/tinymce',
+            suffix: '.min'}" [(ngModel)]="community.contentHtml" id="commDescHtml"></editor>
     </div>
 
     <app-logo [logo]="community.logo"></app-logo>

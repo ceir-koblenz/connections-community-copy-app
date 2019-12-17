@@ -31,6 +31,7 @@ export class CommunityWrapperComponent implements OnInit {
   async startProcess() {
     this.processRunning = true;
     this.processResult = await this.createService.create(this.community, this.processStatus);
+
     this.processRunning = false;
   }
 

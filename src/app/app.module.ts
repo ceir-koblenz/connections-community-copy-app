@@ -21,7 +21,7 @@ import { FilesComponent } from './components/remote-applications/files/files.com
 import { AktivitaetenComponent } from './components/remote-applications/aktivitaeten/aktivitaeten.component';
 import { widgetsComponent } from './components/widgets/widgets.component';
 import { CommunityWrapperComponent } from './components/app/community-wrapper/community-wrapper.component';
-
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { CommunityWrapperComponent } from './components/app/community-wrapper/co
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    EditorModule
   ],
   providers: [
     {

@@ -14,12 +14,12 @@ import { WidgetCollection } from './widget-collection.model';
  */
 export class Community implements IEntityModel {
     shouldCopy: boolean;
-    public id: String;
+    id: String;
     title: String;
-    summary: String;
+    contentHtml: String;
     datePublished: String;
     dateUpdated: String;
-    members: EntityLink<MemberCollection>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
+    members: EntityLink<MemberCollection>;
     bookmarks: EntityLink<any>;
     miscApps: EntityLink<RemoteApplicationCollection>;
     widgets: EntityLink<WidgetCollection>;
