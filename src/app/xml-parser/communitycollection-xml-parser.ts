@@ -17,9 +17,26 @@ export class CommunityCollectionXmlParser extends EntityXmlParserAbstract<Commun
 
         parsedObj.feed.entry.forEach(entry => {
             var commEntity = new Community();
-            commParser.fillFromObject(commEntity, {entry: entry});
+            commParser.fillFromObject(commEntity, { entry: entry });
 
             entity.communities.push(commEntity);
         });
+    }
+
+    /**
+* Gibt die URL zur nächsten Seite des Feeds zurück, falls vorhanden. Sonst null.
+* @param parsedObj 
+*/
+    getNextPageUrl(xmlString: string): URL {
+        var parsedObj = super.parse(xmlString); // todo das bedeutet, dass für Collections der Xml-Baum zweimal geparst wird... fürs Fill und fürs getNextPage
+
+        var result: URL = null;
+        parsedObj.feed.link.forEach(link => {
+            if (result === null && link["@_rel"] == "next") {
+                result = new URL(link["@_href"])
+            }
+        });
+
+        return result;
     }
 }

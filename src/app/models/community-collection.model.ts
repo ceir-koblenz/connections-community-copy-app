@@ -26,14 +26,20 @@ export class CommunityCollection implements IEntityModel {
      * @memberof CommunityCollection
      */
     static async load(client: ApiClientService, link: EntityLink<CommunityCollection>): Promise<CommunityCollection> {
-        var xmlString = await client.loadXML(link.url); // Raw XML laden
-
         var xmlParser = new CommunityCollectionXmlParser()
         var result = new CommunityCollection();
 
-        xmlParser.fillFromXml(result, xmlString); // neue CommunityCollection Instanz anhand des XMLs befüllen
+        var nextPageLink: URL = link.url;
+
+        do {
+            var currentXml = await client.loadXML(nextPageLink)
+            nextPageLink = xmlParser.getNextPageUrl(currentXml)
+            xmlParser.fillFromXml(result, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+        } while (nextPageLink !== null);
+
         link.model = result;
 
         return result;
     }
+
 }
