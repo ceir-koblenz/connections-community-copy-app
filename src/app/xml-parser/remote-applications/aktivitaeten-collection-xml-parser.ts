@@ -1,16 +1,16 @@
-import { EntityXmlParserAbstract } from '../entity-xml-parser-abstract';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
 import { AktivitaetXmlParser } from './aktivitaeten-xml-parser';
 import { Aktivitaet } from 'src/app/models/remote-applications/aktivitaeten.model';
+import { EntityFeedXmlParserAbstract } from '../entity-feed-xml-parser-abstract';
 
 /**
- * XML-Parser für das Parsen der Remote Apps Collection einer Community.
+ * XML-Parser für das Parsen der Aktivitäten Collection einer Community.
  *
  * @export
- * @class RemoteApplicationCollectionXmlParser
- * @extends {EntityXmlParserAbstract<any>}
+ * @class AktivitaetenCollectionXmlParser
+ * @extends {EntityFeedXmlParserAbstract<any>}
  */
-export class AktivitaetenCollectionXmlParser extends EntityXmlParserAbstract<any>{
+export class AktivitaetenCollectionXmlParser extends EntityFeedXmlParserAbstract<any>{
     fillFromObject(entity: AktivitaetenCollection, parsedObj: any): void {
         var memberParser = new AktivitaetXmlParser();
         if (parsedObj.feed.entry.length !== undefined) {

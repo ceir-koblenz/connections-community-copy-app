@@ -2,7 +2,7 @@ import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
-import { MemberXmlParser } from '../xml-parser/member-xml';
+import { MemberXmlParser } from '../xml-parser/member-xml-parser';
 
 /**
  * EntityModel eines Members.

@@ -1,6 +1,6 @@
 import { EntityXmlParserAbstract } from './entity-xml-parser-abstract';
 import { MemberCollection } from '../models/member-collection.model';
-import { MemberXmlParser } from './member-xml';
+import { MemberXmlParser } from './member-xml-parser';
 import { Member } from '../models/member.model';
 
 /**

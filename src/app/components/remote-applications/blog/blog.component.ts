@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { BlogXmlParser } from 'src/app/xml-parser/remote-applications/blog-xml';
+import { BlogXmlParser } from 'src/app/xml-parser/remote-applications/blog-xml-parser';
 import { Blog } from 'src/app/models/remote-applications/blog.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { EntityLink } from 'src/app/common/entity-link';
@@ -35,7 +35,7 @@ export class BlogComponent implements OnInit {
 
     do {
       var currentXml = await this.client.loadXML(nextPageLink)
-      nextPageLink = xmlParser.getNextPageUrl(this.remoteApplication.url, currentXml)
+      nextPageLink = xmlParser.getNextPageUrlHack(this.remoteApplication.url, currentXml)
       xmlParser.fillFromXml(this.blog, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
     } while (nextPageLink !== null);
 
