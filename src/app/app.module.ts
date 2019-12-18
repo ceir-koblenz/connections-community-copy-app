@@ -22,6 +22,7 @@ import { AktivitaetenComponent } from './components/remote-applications/aktivita
 import { widgetsComponent } from './components/widgets/widgets.component';
 import { CommunityWrapperComponent } from './components/app/community-wrapper/community-wrapper.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     FilesComponent,
     AktivitaetenComponent,
     widgetsComponent,
-    CommunityWrapperComponent
+    CommunityWrapperComponent,
+    FilterPipe
 
   ],
   imports: [
