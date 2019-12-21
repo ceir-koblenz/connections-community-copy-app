@@ -41,17 +41,11 @@ export class ApiClientService {
   }
 
   async postXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
-    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
-    this.loggingService.LogInfo('Sende Daten an: ' + uri);
+    return this._sendXML("POST", xmlString, url);
+  }
 
-    var resultPromise = this.httpClient.request("POST", uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" }, responseType: "text" }).toPromise()
-    try {
-      return <HttpResponse<any>>(await resultPromise)
-    } catch (error) {
-      this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}`);
-      return null;
-    }
-
+  async putXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
+    return this._sendXML("PUT", xmlString, url);
   }
 
   /**
@@ -93,7 +87,18 @@ export class ApiClientService {
       this.loggingService.LogError(`Fehler beim senden des Files. Statustext: ${error.statusText}`);
       return null;
     }
-
   }
 
+  private async _sendXML(httpVerb: string, xmlString: string, url: URL): Promise<HttpResponse<any>> {
+    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    this.loggingService.LogInfo('Sende Daten an: ' + uri);
+
+    var resultPromise = this.httpClient.request(httpVerb, uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" }, responseType: "text" }).toPromise()
+    try {
+      return <HttpResponse<any>>(await resultPromise)
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}`);
+      return null;
+    }
+  }
 }
