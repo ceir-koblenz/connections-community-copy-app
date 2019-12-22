@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { BlogXmlParser } from 'src/app/xml-parser/remote-applications/blog-xml-parser';
-import { Blog } from 'src/app/models/remote-applications/blog.model';
+import { BlogCollectionXmlParser } from 'src/app/xml-parser/remote-applications/blog-collection-xml-parser';
+import { BlogCollection } from 'src/app/models/remote-applications/blog-collection.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { EntityLink } from 'src/app/common/entity-link';
+import { BlogService } from 'src/app/services/community/blog/blog.service';
 
 @Component({
   selector: 'app-blog',
@@ -13,12 +14,13 @@ import { EntityLink } from 'src/app/common/entity-link';
 export class BlogComponent implements OnInit {
 
   @Input() remoteApplication: EntityLink<RemoteApplication>;
+  @Input() communityId: string;
 
   client: ApiClientService;
-  blog: Blog;
-
+  blogs: BlogCollection;
+  copyAll: boolean = false;
   
-  constructor(private apiClient: ApiClientService) {
+  constructor(private apiClient: ApiClientService, private blogService: BlogService) {
     this.client = apiClient;
   }
 
@@ -27,20 +29,19 @@ export class BlogComponent implements OnInit {
   }
 
   async loadBlogFeed() {
+    this.blogs = await this.blogService.load(this.remoteApplication, this.communityId);
+  }
 
-    var xmlParser: BlogXmlParser = new BlogXmlParser();
-    this.blog = new Blog();
+  setShouldCopyAll() {
+    this.copyAll = !this.copyAll;
+    // Iterate through all blogs and update shouldCopy variable
+    this.blogs.blogs.forEach(blog => {
+      blog.shouldCopy = this.copyAll;
+    });
+  }
 
-    var nextPageLink: URL = this.remoteApplication.url;
-
-    do {
-      var currentXml = await this.client.loadXML(nextPageLink)
-      nextPageLink = xmlParser.getNextPageUrlHack(this.remoteApplication.url, currentXml)
-      xmlParser.fillFromXml(this.blog, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
-    } while (nextPageLink !== null);
-
+  setShouldCopy(blog) {
+    blog.shouldCopy = !blog.shouldCopy;
   }
 
 }
-
-
