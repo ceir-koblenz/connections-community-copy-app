@@ -18,6 +18,5 @@ export class WikiXmlParser extends EntityXmlParserAbstract<any>{
         entity.summary = parsedObj.summary["#text"];
         entity.authorUuid = parsedObj.author["snx:userid"];      
         entity.contentUrl = new EntityLink<any>(parsedObj.content["@_src"], "content");
-        console.log(entity.contentUrl);
     }
 }
