@@ -14,6 +14,7 @@ import { BlogService } from 'src/app/services/community/blog/blog.service';
 export class BlogComponent implements OnInit {
 
   @Input() remoteApplication: EntityLink<RemoteApplication>;
+  @Input() communityId: string;
 
   client: ApiClientService;
   blogs: BlogCollection;
@@ -28,7 +29,7 @@ export class BlogComponent implements OnInit {
   }
 
   async loadBlogFeed() {
-    this.blogs = await this.blogService.load(this.remoteApplication);
+    this.blogs = await this.blogService.load(this.remoteApplication, this.communityId);
   }
 
   setShouldCopyAll() {

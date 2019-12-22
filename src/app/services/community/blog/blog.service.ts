@@ -18,11 +18,11 @@ export class BlogService {
     constructor(private apiClient: ApiClientService,
         private loggingService: LoggingService) { }
 
-    async load(entity: EntityLink<RemoteApplication>): Promise<BlogCollection> {
+    async load(entity: EntityLink<RemoteApplication>, communityId: string): Promise<BlogCollection> {
         var xmlParser: BlogCollectionXmlParser = new BlogCollectionXmlParser();
         var blogs = new BlogCollection();
-
-        var nextPageLink: URL = entity.url;
+        var url = new URL(getConfig().connectionsUrl + "blogs/" + communityId + "/feed/entries/atom?lang=de_de");
+        var nextPageLink: URL = url;
 
         do {
             var currentXml = await this.apiClient.loadXML(nextPageLink)
@@ -30,13 +30,14 @@ export class BlogService {
             xmlParser.fillFromXml(blogs, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
         } while (nextPageLink !== null);
 
-        
+        /*
         const loadBlogContent = async () => {
             await asyncForEach(blogs.blogs, async (blog) => {
                 await Blog.loadContentXml(this.apiClient, blog);
             })
         }
         await loadBlogContent();
+        */
 
         entity.model = blogs;
         return blogs;

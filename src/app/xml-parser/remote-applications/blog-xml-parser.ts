@@ -16,7 +16,7 @@ export class BlogXmlParser extends EntityXmlParserAbstract<any>{
         entity.title = parsedObj.title["#text"];
         console.log(entity.title);
         entity.summary = parsedObj.summary["#text"];
-        entity.content = parsedObj.summary["#text"];
+        entity.content = parsedObj.content["#text"];
 
     }
 }
