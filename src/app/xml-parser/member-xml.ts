@@ -20,7 +20,7 @@ export class MemberXmlParser extends EntityXmlParserAbstract<Member>{
         entity.role = parsedObj.entry["snx:role"];
         entity.UUid = entity.UUid["#text"];
         entity.role = entity.role["#text"];
-        entity.Uebernehmen = false;
+        entity.shouldCopy = false;
    
     }
 }
