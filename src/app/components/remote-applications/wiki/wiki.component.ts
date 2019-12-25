@@ -24,6 +24,7 @@ export class WikiComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadWikiFeed();
+    this.remoteApplication.model.shouldCopy = true; //TODO: nur für Processbar test! Issue #56 soll das steuern!
   }
 
   async loadWikiFeed() {

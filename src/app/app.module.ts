@@ -16,12 +16,13 @@ import { LogoComponent } from './components/logo/logo.component';
 import { membersComponent } from './components/members/members.component';
 import { RemoteApplicationsComponent } from './components/remote-applications/remote-applications.component';
 import { WikiComponent } from './components/remote-applications/wiki/wiki.component';
-import { BlogComponent } from './components/blog/blog.component';
+import { BlogComponent } from './components/remote-applications/blog/blog.component';
 import { FilesComponent } from './components/remote-applications/files/files.component';
 import { AktivitaetenComponent } from './components/remote-applications/aktivitaeten/aktivitaeten.component';
 import { widgetsComponent } from './components/widgets/widgets.component';
 import { CommunityWrapperComponent } from './components/app/community-wrapper/community-wrapper.component';
-
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CommunityWrapperComponent } from './components/app/community-wrapper/co
     FilesComponent,
     AktivitaetenComponent,
     widgetsComponent,
-    CommunityWrapperComponent
+    CommunityWrapperComponent,
+    FilterPipe
 
   ],
   imports: [
@@ -46,7 +48,8 @@ import { CommunityWrapperComponent } from './components/app/community-wrapper/co
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    EditorModule
   ],
   providers: [
     {

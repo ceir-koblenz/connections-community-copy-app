@@ -5,11 +5,11 @@
 </div>
 <!-- Search form -->
 <div *ngIf="collection.model" class="mb-4">
-    <input class="form-control" type="text" placeholder="Suchen..." aria-label="Search">
+    <input class="form-control" type="text" placeholder="Suchen..." aria-label="Search" [(ngModel)]="searchText">
 </div>
 <div *ngIf="collection.model" class="list-group">
 
-    <a *ngFor="let comm of collection.model.communities" [class.bg-secondary]="comm === selectedCommunity"
+    <a *ngFor="let comm of collection.model.communities | filter : searchText : 'title'" [class.bg-secondary]="comm === selectedCommunity"
         class="list-group-item list-group-item-action" [routerLink]="['/community-selection/', comm.id]"
         routerLinkActive="active">
         {{comm.title}}

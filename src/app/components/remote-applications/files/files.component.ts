@@ -4,6 +4,7 @@ import { EntityLink } from 'src/app/common/entity-link';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { FileCollection } from 'src/app/models/remote-applications/file-collection.model';
+import { FileService } from 'src/app/services/community/file/file.service';
 
 @Component({
   selector: 'app-files',
@@ -16,29 +17,31 @@ export class FilesComponent implements OnInit {
 
   client: ApiClientService;
   files: FileCollection;
+  copyAll: boolean = false;
 
-  constructor(private apiClient: ApiClientService) {
+  constructor(private apiClient: ApiClientService, private fileService: FileService) {
     this.client = apiClient;
   }
 
   async ngOnInit() {
     await this.loadWikiFeed();
+    this.remoteApplication.model.shouldCopy = true; //TODO: nur für Processbar test! Issue #56 soll das steuern!
+  }
+
+  setShouldCopyAll() {
+    this.copyAll = !this.copyAll;
+    // Iterate through all wikis and update shouldCopy variable
+    this.files.files.forEach(file => {
+      file.shouldCopy = this.copyAll;
+    });
+  }
+
+  setShouldCopy(file) {
+    file.shouldCopy = !file.shouldCopy;
   }
 
   async loadWikiFeed() {
-
-    var xmlParser: FileCollectionXmlParser = new FileCollectionXmlParser();
-    this.files = new FileCollection();
-
-    var nextPageLink: URL = this.remoteApplication.url;
-
-    do {
-      var currentXml = await this.client.loadXML(nextPageLink)
-      nextPageLink = xmlParser.getNextPageUrl(this.remoteApplication.url, currentXml)
-      xmlParser.fillFromXml(this.files, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
-    } while (nextPageLink !== null);
-
+    this.files = await this.fileService.load(this.remoteApplication);
   }
-
 
 }

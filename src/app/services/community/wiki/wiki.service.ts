@@ -10,6 +10,7 @@ import { LoggingService } from '../../logging/logging.service';
 import { WikiXmlWriter } from './wiki-xml-writer';
 import { getConfig } from 'src/app/app-config';
 import { WidgetXmlWriter } from '../widget-xml-writer';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -27,7 +28,7 @@ export class WikiService {
 
         do {
             var currentXml = await this.apiClient.loadXML(nextPageLink)
-            nextPageLink = xmlParser.getNextPageUrl(entity.url, currentXml)
+            nextPageLink = xmlParser.getNextPageUrlHack(entity.url, currentXml)
             xmlParser.fillFromXml(wikis, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
         } while (nextPageLink !== null);
 
@@ -49,7 +50,8 @@ export class WikiService {
         return wikis;
     }
 
-    async create(newCommunityId: string, wikiCollection: WikiCollection) {
+    async create(newCommunityId: string, wikiCollection: WikiCollection):Promise<HttpResponse<any>> {
+        var result: HttpResponse<any>;
         var wikisToCopy: Array<Wiki> = new Array<Wiki>();
         const getWikisToCopy = async () => {
             await asyncForEach(wikiCollection.wikis, async (wiki:Wiki) => {
@@ -66,7 +68,7 @@ export class WikiService {
             var widgetWriter = new WidgetXmlWriter()
             var xml = widgetWriter.toXmlString("Wiki")
             var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId)
-            var result = await this.apiClient.postXML(xml, url)
+            result = await this.apiClient.postXML(xml, url)
             if (result.ok) {
                 this.loggingService.LogInfo('Wiki Widget erstellt.')
                 // Create entries/pages
@@ -88,6 +90,7 @@ export class WikiService {
                 this.loggingService.LogInfo('Kopieren von Wikis fehlgeschlagen.')
             }
         }
+        return result;
     }
 
 }

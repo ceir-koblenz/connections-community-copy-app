@@ -75,4 +75,25 @@ export class ApiClientService {
 
   }
 
+  /**
+   * Create Binary File 
+   * @param {Blob} binary 
+   * @param {URL} url 
+   * @param {string} contentType
+   * @returns {Promise<string>} Promise mit dem response des PUT 
+   */
+  async postFile(binary: Blob, url: URL, header: {}): Promise<HttpResponse<any>> {
+    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    this.loggingService.LogInfo('Sende File an: ' + uri);
+
+    var resultPromise = this.httpClient.request("POST", uri, { body: binary, observe: "response", headers: header, responseType: "text" }).toPromise()
+    try {
+      return <HttpResponse<any>>(await resultPromise)
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim senden des Files. Statustext: ${error.statusText}`);
+      return null;
+    }
+
+  }
+
 }
