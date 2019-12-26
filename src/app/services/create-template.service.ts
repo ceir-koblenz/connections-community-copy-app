@@ -3,10 +3,12 @@ import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
+import { MemberService } from './community/member/member.service';
 import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
 import { LayoutService } from './community/layout.service';
+
 
 /**
  * Service für den Kopiervorgang einer Community samt aller abhängigen Entitäten
@@ -21,6 +23,7 @@ export class CreateTemplateService {
 
   constructor(private commService: CommunityService,
     private wikiService: WikiService,
+    private memberService: MemberService,
     private fileService: FileService,
     private layoutService: LayoutService) { }
 
@@ -64,6 +67,15 @@ export class CreateTemplateService {
 
         processStatus.countUp();
       }
+
+      // Copy Member
+      const copyMember = async () => {
+        if (community.members.model) {
+          await this.memberService.create(newCommunityId, community.members.model);
+        }
+
+      }
+      await copyMember();
 
       const copyRemoteApps = async () => {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {

@@ -14,7 +14,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" value="" (click)="CheckedMembers(this,owner)">
+                                <input type="checkbox" id="cbAll" value="" (click)="CheckAll('cbAll')">
                             </div>
                         </div>
                         <input type="text" disabled value="Alle Eigentümer" class="form-control"
@@ -23,7 +23,7 @@
                     <div *ngFor="let owner of OwnerRoleCollection.membercollection" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" id={{owner.UUid}} value="" (click)="CheckedMembers(this,owner)">
+                                <input type="checkbox" id={{owner.UUid}} [(ngModel)]="owner.shouldCopy" value="" (click)="CheckedMembers(this,owner)">
                             </div>
                         </div>
                         <input type="text" disabled value="{{owner.name}} ({{owner.email}})" class="form-control"
@@ -49,7 +49,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" value="" (click)="CheckedMembers(this,other)">
+                                <input type="checkbox" id="cbAllOthers" value="" (click)="CheckAll('cbAllOthers')">
                             </div>
                         </div>
                         <input type="text" disabled value="Alle Mitglieder" class="form-control"
@@ -58,7 +58,7 @@
                     <div *ngFor="let other of OtherRoleCollection.membercollection" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="checkbox" id={{other.UUid}} value="" (click)="CheckedMembers(this,other)">
+                                <input type="checkbox" id={{other.UUid}} [(ngModel)]="other.shouldCopy" value="" (click)="CheckedMembers(this,other)">
                             </div>
                         </div>
                         <input type="text" disabled value="{{other.name}} ({{other.email}})" class="form-control"
