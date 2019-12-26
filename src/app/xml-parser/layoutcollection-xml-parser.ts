@@ -4,14 +4,23 @@ import { LayoutXmlParser } from './layout-xml-parser';
 import { Layout } from '../models/layout.model';
 
 export class LayoutCollectionXmlParser extends EntityFeedXmlParserAbstract<LayoutCollection>{
-    fillFromObject(entity: LayoutCollection, parsedObj: any): void {
-        var layoutParser = new LayoutXmlParser();
+    fillFromObject(collection: LayoutCollection, parsedObj: any): void {
+        var entries = parsedObj.feed.entry;
+        var parser = new LayoutXmlParser();
 
-        parsedObj.feed.entry.forEach(entry => {
-            var layoutEntity = new Layout();
-            layoutParser.fillFromObject(layoutEntity, { entry: entry });
+        const _parseAndAddEntry = (x) => {
+            var entity = new Layout();
+            parser.fillFromObject(entity, x);
 
-            entity.layouts.push(layoutEntity);
-        });
+            collection.layouts.push(entity);
+        }
+
+        if (entries.length === undefined) {
+            _parseAndAddEntry(entries);
+        } else {
+            entries.forEach(entry => {
+                _parseAndAddEntry(entry);
+            });
+        }
     }
 }

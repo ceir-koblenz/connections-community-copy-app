@@ -4,6 +4,7 @@ import { Logo } from './logo.model';
 import { MemberCollection } from './member-collection.model';
 import { RemoteApplicationCollection } from './remoteapplication-collection.model';
 import { WidgetCollection } from './widget-collection.model';
+import { LayoutCollection } from './layout-collection.model';
 
 /**
  * EntityModel einer Community.
@@ -20,9 +21,9 @@ export class Community implements IEntityModel {
     datePublished: String;
     dateUpdated: String;
     members: EntityLink<MemberCollection>;
-    bookmarks: EntityLink<any>;
     miscApps: EntityLink<RemoteApplicationCollection>;
     widgets: EntityLink<WidgetCollection>;
     logo: EntityLink<Logo>;
+    layouts: EntityLink<LayoutCollection>;
     type: String;
 }
