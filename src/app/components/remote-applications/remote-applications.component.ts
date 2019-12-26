@@ -12,7 +12,8 @@ import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 export class RemoteApplicationsComponent implements OnInit {
 
   @Input() remoteApps: EntityLink<RemoteApplicationCollection>;
-
+  @Input() communityId: string;
+  
   client: ApiClientService;
   selectedRemoteApplication: EntityLink<RemoteApplication>;
 
