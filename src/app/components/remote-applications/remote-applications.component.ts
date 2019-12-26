@@ -14,7 +14,6 @@ export class RemoteApplicationsComponent implements OnInit {
   @Input() remoteApps: EntityLink<RemoteApplicationCollection>;
   @Input() communityId: string;
   
-  client: ApiClientService;
   selectedRemoteApplication: EntityLink<RemoteApplication>;
 
   constructor(private apiClient: ApiClientService) {

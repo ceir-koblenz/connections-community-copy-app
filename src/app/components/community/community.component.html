@@ -31,6 +31,9 @@
     <h4>Mitglieder der Community</h4><br />
     <app-members [members]="community.members"></app-members>
     <hr class="my-4">
+    <h4>Layout der Community</h4><br />
+    <app-layout [layoutCollection]="community.layouts"></app-layout>
+    <hr class="my-4">
     <h4>Applications der Community</h4><br />
     <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
     <hr class="my-4">

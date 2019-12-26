@@ -7,6 +7,7 @@ import { MemberService } from './community/member/member.service';
 import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
+import { LayoutService } from './community/layout.service';
 
 
 /**
@@ -20,22 +21,30 @@ import { timeout } from '../common/timeout';
 })
 export class CreateTemplateService {
 
-
-  constructor(private commService: CommunityService, private wikiService: WikiService
-              , private memberService:MemberService,private fileService: FileService) { }
+  constructor(private commService: CommunityService,
+    private wikiService: WikiService,
+    private memberService: MemberService,
+    private fileService: FileService,
+    private layoutService: LayoutService) { }
 
   async create(community: Community, processStatus: ProcessStatus): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
     result.success = true
 
-    // Count to copy elements
+    // Count to copy elements TODO auslagern
     processStatus.openCounter = 1; // Default value. Community wird ab hier immer kopiert.  
     const countToCopyElements = async () => {
-      await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
-        if (remoteApp.link.model && remoteApp.link.model.shouldCopy) {
-          processStatus.openCounter += 1;
-        }
-      })
+      if (community.layouts.model.shouldCopy) {
+        processStatus.openCounter += community.layouts.model.layouts.length
+      }
+
+      if (community.miscApps.model.shouldCopy) {
+        await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
+          if (remoteApp.link.model && remoteApp.link.model.shouldCopy) {
+            processStatus.openCounter += 1;
+          }
+        })
+      }
     }
     await countToCopyElements();
 
@@ -43,13 +52,25 @@ export class CreateTemplateService {
     if (commResult.ok) {
       processStatus.countUp();
       processStatus.log("Community wurde erstellt");
+
       var location = new URL(commResult.headers.get("Location"))
       // get new community id
       var newCommunityId = location.searchParams.get("communityUuid")
 
+      if (community.layouts.model.shouldCopy) {
+        var layoutResult = await this.layoutService.createCollection(newCommunityId, community.layouts.model);
+        if (layoutResult) {
+          processStatus.log("Layouts wurden kopiert");
+        } else {
+          processStatus.log("Beim Kopieren der Layouts sind Fehler aufgetreten");
+        }
+
+        processStatus.countUp();
+      }
+
       // Copy Member
       const copyMember = async () => {
-        if(community.members.model){
+        if (community.members.model) {
           await this.memberService.create(newCommunityId, community.members.model);
         }
 
