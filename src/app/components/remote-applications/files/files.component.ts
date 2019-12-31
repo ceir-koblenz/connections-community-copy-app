@@ -5,6 +5,8 @@ import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { FileCollection } from 'src/app/models/remote-applications/file-collection.model';
 import { FileService } from 'src/app/services/community/file/file.service';
+import { FolderService } from 'src/app/services/community/file/folder.service';
+import { FolderCollection } from 'src/app/models/remote-applications/folder-collection.model';
 
 @Component({
   selector: 'app-files',
@@ -18,13 +20,14 @@ export class FilesComponent implements OnInit {
   client: ApiClientService;
   files: FileCollection;
   copyAll: boolean = false;
+  folder: FolderCollection;
 
-  constructor(private apiClient: ApiClientService, private fileService: FileService) {
+  constructor(private apiClient: ApiClientService, private fileService: FileService, private folderService: FolderService) {
     this.client = apiClient;
   }
 
   async ngOnInit() {
-    await this.loadWikiFeed();
+    await this.loadFileFeed();
     this.remoteApplication.model.shouldCopy = true; //TODO: nur für Processbar test! Issue #56 soll das steuern!
   }
 
@@ -40,8 +43,15 @@ export class FilesComponent implements OnInit {
     file.shouldCopy = !file.shouldCopy;
   }
 
-  async loadWikiFeed() {
-    this.files = await this.fileService.load(this.remoteApplication);
+  async loadFileFeed() {
+    //this.files = await this.fileService.load(this.remoteApplication);
+    //TODO: Develop folders...
+    this.folder = await this.folderService.load(this.remoteApplication);
+    console.log(this.folder);
+    //TODO: ausgabe files und folder und subfolder mit files 
+    // in html mit eigener subfolder komponete, die sich selbst 
+    // aufruft.
+    //TODO: ausprogrammieren create von foldern und entsprechend die files... dann finito!
   }
 
 }

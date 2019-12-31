@@ -1,29 +1,28 @@
 import { EntityXmlParserAbstract } from '../entity-xml-parser-abstract';
 import { EntityLink } from '../../common/entity-link';
 import { File } from 'src/app/models/remote-applications/file.model';
+import { Folder } from 'src/app/models/remote-applications/folder.model';
 
 /**
- * XML-Parser für das Parsen von einem File einer Community.
+ * XML-Parser für das Parsen von einem Folder einer Community.
  *
  * @export
- * @class export class FileXmlParser extends EntityXmlParserAbstract<any>{
+ * @class export class FolderXmlParser extends EntityXmlParserAbstract<any>{
 
  * @extends {EntityXmlParserAbstract<any>}
  */
-export class FileXmlParser extends EntityXmlParserAbstract<any>{
-    fillFromObject(entity: File, parsedObj: any): void {
+export class FolderXmlParser extends EntityXmlParserAbstract<any>{
+    fillFromObject(entity: Folder, parsedObj: any): void {
         if (parsedObj) {
             entity.uUid = parsedObj["td:uuid"];
             entity.title = parsedObj.title["#text"];
             entity.label = parsedObj["td:label"];
-            entity.summary = parsedObj.summary["#text"];
             entity.authorUuid = parsedObj.author["snx:userid"];
-            entity.isInFolder = parsedObj["td:isFiledInFolder"];
             var link_list = parsedObj.link;
             link_list.forEach(link => {
-                // file download link
-                if (link["@_rel"] === "enclosure") {
-                    entity.fileUrl = link["@_href"];
+                // subfolder link
+                if (link["@_rel"] === "files") {
+                    entity.feed_link = link["@_href"];
                 }
             });
         }

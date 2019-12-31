@@ -9,7 +9,6 @@ import { FileCollection } from 'src/app/models/remote-applications/file-collecti
 import { File } from 'src/app/models/remote-applications/file.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'

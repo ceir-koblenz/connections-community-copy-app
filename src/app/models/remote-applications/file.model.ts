@@ -17,6 +17,7 @@ export class File implements IEntityModel{
 	label:String;
 	authorUuid:String;
 	communityUuid:String;
-    fileUrl:string;
+	fileUrl:string;
+	isInFolder:Boolean;
     
 }

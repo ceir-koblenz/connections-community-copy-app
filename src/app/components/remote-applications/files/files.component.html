@@ -1,25 +1,54 @@
-<div *ngIf="!files">
+<div *ngIf="!folder">
     <div class="spinner-grow text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div *ngIf="files">
-    <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" [checked]="copyAll"
-                    (click)="setShouldCopyAll()">
+<div *ngIf="folder">
+    <div id="folderAppAccordion">
+        <div *ngFor="let folder of folder.folders" class="card" (click)="onSelect()">
+            <div class="card-header" id="{{'heading' + folder.uUid}}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" attr.data-target="{{'#collapse' + folder.uUid}}"
+                        aria-expanded="true" attr.aria-controls="{{'collapse' + folder.uUid}}">
+                        {{folder.title}}
+                    </button>
+                </h5>
+            </div>
+            <div id="{{'collapse' + folder.uUid}}" attr.aria-labelledby="{{'heading' + folder.uUid}}" class="collapse"
+                data-parent="#folderAppAccordion">
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" [checked]="copyAll" (click)="setShouldCopyAll()">
+                            </div>
+                        </div>
+                        <input type="text" disabled value="Alle Dateien" class="form-control"
+                            aria-label="Text input with checkbox">
+                    </div>
+                    <div *ngFor="let file of folder.files" class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id={{file.UUid}} [checked]="copyAll || file.shouldCopy"
+                                    (click)="setShouldCopy(file)">
+                            </div>
+                        </div>
+                        <input type="text" disabled value="{{file.title}}" class="form-control"
+                            aria-label="Text input with checkbox">
+                    </div>
+                    <!-- TODO: das muss zu einer Subfolder-Component werden, die sich dann selbst aufruft!-->
+                    <div *ngFor="let subfolder of folder.childFolders" class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" id={{subfolder.UUid}} [checked]="copyAll || subfolder.shouldCopy"
+                                    (click)="setShouldCopy(subfolder)">
+                            </div>
+                        </div>
+                        <input type="text" disabled value="{{subfolder.title}}" class="form-control"
+                            aria-label="Text input with checkbox">
+                    </div>
                 </div>
             </div>
-            <input type="text" disabled value="Alle Dateien" class="form-control" aria-label="Text input with checkbox">
         </div>
-        <div *ngFor="let file of files.files" class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" id={{file.UUid}} [checked]="copyAll || file.shouldCopy" (click)="setShouldCopy(file)">
-                </div>
-            </div>
-            <input type="text" disabled value="{{file.title}}" class="form-control"
-                aria-label="Text input with checkbox">
-        </div>
+    </div>
 </div>
