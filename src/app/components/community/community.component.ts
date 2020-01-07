@@ -23,6 +23,9 @@ export class CommunityComponent implements OnInit {
     var commUrl = new URL(apiUrl + "/communities/service/atom/community/instance?communityUuid=" + this.commId);
     this.community = await this.commService.load(this.apiClient, commUrl);
     if (this.community) {
+      // Default-Communitytitel mit Suffix setzen
+      this.community.title += " - Copy"
+
       this.commLoaded(this.community)
     }
   }
