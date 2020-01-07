@@ -21,10 +21,13 @@
     </div>
     <div [hidden]="!processRunning">
         <p>Die Community wird erstellt...</p>
-        <p><ngb-progressbar type="success" [value]="processStatus.value" [striped]="true" [animated]="true">{{processStatus.value > 0 ? (processStatus.value + "%") : ("")}}</ngb-progressbar></p>
+        <p>
+            <ngb-progressbar type="success" [value]="processStatus.value" [striped]="true" [animated]="true">
+                {{processStatus.value > 0 ? (processStatus.value + "%") : ("")}}</ngb-progressbar>
+        </p>
         <ul style="list-style-type:none">
             <li *ngFor="let log of processStatus.logList">
-                &#10003; {{log}} 
+                &#10003; {{log}}
             </li>
         </ul>
     </div>
@@ -33,8 +36,9 @@
         <hr class="my-4">
         <label>Vorgang auswählen *</label>
         <select required [(ngModel)]="selectedProcessType" class="custom-select custom-select-lg mb-3">
-            <option [ngValue]="copy">Community kopieren</option>
-            <option [ngValue]="template">Template aus Community erstellen</option>
+            <option *ngFor="let element of processTypes | keyvalue" [ngValue]="element.key">
+                {{element.value}}
+            </option>
         </select>
         <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
         <hr class="my-4">
