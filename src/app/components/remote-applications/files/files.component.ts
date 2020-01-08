@@ -47,7 +47,6 @@ export class FilesComponent implements OnInit {
 
   async loadFileFeed() {
     this.folder = await this.folderService.load(this.remoteApplication);
-    //TODO: ausprogrammieren create von foldern und entsprechend die files... dann finito!
   }
 
 }
