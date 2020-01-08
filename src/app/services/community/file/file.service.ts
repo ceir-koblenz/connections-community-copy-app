@@ -9,6 +9,7 @@ import { FileCollection } from 'src/app/models/remote-applications/file-collecti
 import { File } from 'src/app/models/remote-applications/file.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { FileXmlParser } from 'src/app/xml-parser/remote-applications/file-xml-parser';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,7 @@ export class FileService {
         return files;
     }
 
-    async create(newCommunityId: string, fileCollection: FileCollection):Promise<HttpResponse<any>> {
+    async create(newCommunityId: string, fileCollection: FileCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
         var filesToCopy: Array<File> = new Array<File>();
         // Filter out which files should be copied.
@@ -53,7 +54,7 @@ export class FileService {
             var nonceResult = await this.getNonce();
             // Create files            
             const copyFileEntries = async () => {
-                await asyncForEach(filesToCopy, async (file) => {
+                await asyncForEach(filesToCopy, async (file: File) => {
                     const copyFile = async () => {
                         // Download file
                         var blob = await this.httpClient.get(file.fileUrl, { responseType: 'blob' }).toPromise();
@@ -62,6 +63,11 @@ export class FileService {
                         result = await this.apiClient.postFile(blob, url, { "Slug": file.title, "X-Update-Nonce": nonceResult });
                         if (result.ok) {
                             this.loggingService.LogInfo('File wurde erstellt.')
+                            // parse new file and get new uuid
+                            var fileXmlParser: FileXmlParser = new FileXmlParser();
+                            var newFile = new File();
+                            fileXmlParser.fillFromXml(newFile, result.body);
+                            file.uUid = newFile.uUid;
                         } else {
                             this.loggingService.LogInfo('File erstellen fehlgeschlagen.')
                         }
@@ -79,7 +85,7 @@ export class FileService {
      * 
      * @returns {Promise<any>}
      */
-    getNonce(): Promise<any> {
+    public getNonce(): Promise<any> {
         return this.httpClient.get(getConfig().connectionsUrl + "/files/basic/api/nonce", { responseType: 'text' }).toPromise();
     }
 

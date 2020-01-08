@@ -13,7 +13,12 @@ import { File } from 'src/app/models/remote-applications/file.model';
 export class FileCollectionXmlParser extends EntityXmlParserAbstract<any>{
 
     fillFromObject(entity: FileCollection, parsedObj: any): void {
-        var entries = parsedObj.feed.entry;
+        var entries:any;
+        if (parsedObj.feed !== undefined) {
+            entries = parsedObj.feed.entry;
+        } else if (parsedObj.entry !== undefined) {
+            entries = parsedObj.entry;
+        }
         var fileParser = new FileXmlParser();
         if (Array.isArray(entries)) {
             entries.forEach(entry => {

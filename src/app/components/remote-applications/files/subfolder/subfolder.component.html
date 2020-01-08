@@ -1,0 +1,30 @@
+<div *ngIf="folder" id="{{'subfolderAppAccordion' + folder.uUid}}" class="card">
+    <div class="card-header" id="heading">
+        <h5 class="mb-0">
+            <input type="checkbox" id={{folder.uUid}} [checked]="folder.shouldCopy || folder.shouldCopyAll" (click)="setShouldCopyFolder(folder)" />
+            <button class="btn btn-link" data-toggle="collapse" attr.data-target="{{'#collapse' + folder.uUid}}"
+                aria-expanded="true" attr.aria-controls="{{'collapse' + folder.uUid}}">
+                {{folder.title}}
+            </button>
+        </h5>
+    </div>
+    <div id="{{'collapse' + folder.uUid}}" attr.aria-labelledby="heading"  class="collapse"
+        data-parent="#subfolderAppAccordion">
+        <div class="card-body">
+            <div *ngFor="let file of folder.files" class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" id={{file.uUid}} [checked]="file.shouldCopyAll || file.shouldCopy"
+                            (click)="setShouldCopy(folder, file)">
+                    </div>
+                </div>
+                <input type="text" disabled value="{{file.title}}" class="form-control"
+                    aria-label="Text input with checkbox">
+            </div>
+            <div *ngFor="let subfolder of folder.childFolders">
+                <!-- Rekursiver Aufruf der möglichen weiteren Subfolder -->
+                <app-subfolder [folder]="subfolder"></app-subfolder>
+            </div>
+        </div>
+    </div>
+</div>

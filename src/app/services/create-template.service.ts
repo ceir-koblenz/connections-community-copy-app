@@ -3,9 +3,9 @@ import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
-import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
+import { FolderService } from './community/file/folder.service';
 
 /**
  * Service für den Kopiervorgang einer Community samt aller abhängigen Entitäten
@@ -18,7 +18,7 @@ import { timeout } from '../common/timeout';
 })
 export class CreateTemplateService {
 
-  constructor(private commService: CommunityService, private wikiService: WikiService, private fileService: FileService) { }
+  constructor(private commService: CommunityService, private wikiService: WikiService, private folderService: FolderService) { }
 
   async create(community: Community, processStatus: ProcessStatus): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
@@ -56,7 +56,7 @@ export class CreateTemplateService {
 
           // try copy files
           if ((remoteApp.link.name == "Files" || "Dateien") && remoteApp.link.model) {
-            var result = await this.fileService.create(newCommunityId, remoteApp.link.model);
+            var result = await this.folderService.create(newCommunityId, remoteApp.link.model);
             if (result && result.ok) {
               processStatus.countUp();
               processStatus.log("Dateien wurden kopiert");

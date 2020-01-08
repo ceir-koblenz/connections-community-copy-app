@@ -12,13 +12,18 @@ import { Folder } from 'src/app/models/remote-applications/folder.model';
  * @extends {EntityXmlParserAbstract<any>}
  */
 export class FolderXmlParser extends EntityXmlParserAbstract<any>{
-    fillFromObject(entity: Folder, parsedObj: any): void {
-        if (parsedObj) {
-            entity.uUid = parsedObj["td:uuid"];
-            entity.title = parsedObj.title["#text"];
-            entity.label = parsedObj["td:label"];
-            entity.authorUuid = parsedObj.author["snx:userid"];
-            var link_list = parsedObj.link;
+    fillFromObject(entity: Folder, parsedObj: any): void {        
+        var tParsedObj:any = parsedObj;
+        if (tParsedObj && parsedObj.entry !== undefined) {
+            tParsedObj = parsedObj.entry;
+        }
+        if (tParsedObj) {
+            entity.uUid = tParsedObj["td:uuid"];
+            entity.title = tParsedObj.title["#text"];
+            entity.label = tParsedObj["td:label"];
+            entity.summary = tParsedObj.summary["#text"];
+            entity.authorUuid = tParsedObj.author["snx:userid"];
+            var link_list = tParsedObj.link;
             link_list.forEach(link => {
                 // subfolder link
                 if (link["@_rel"] === "files") {
