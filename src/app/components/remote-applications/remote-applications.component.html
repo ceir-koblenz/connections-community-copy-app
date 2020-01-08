@@ -36,6 +36,12 @@
                             <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
                         </div>
                     </div>
+                    <div *ngIf="(remoteApp.title === 'Blog') || (remoteApp.title === 'Blog')">
+                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                        <div *ngIf="selectedRemoteApplication.name === 'Blog'">
+                            <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
+                        </div>
+                    </div>
                     <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>
             </div>

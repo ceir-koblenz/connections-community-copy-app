@@ -12,7 +12,9 @@ import { ServiceDocumentXmlParser } from '../xml-parser/servicedocument-xml-pars
  * @class ServiceDocument
  * @implements {IEntityModel}
  */
-export class ServiceDocument {
+export class ServiceDocument implements IEntityModel {
+    shouldCopy: boolean = false;
+    
     /**
      * Link, mit dem sich die Liste der Communities laden lassen, in
      * denen der aktuelle Nutzer Mitglied ist.

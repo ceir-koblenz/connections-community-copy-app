@@ -28,7 +28,6 @@ export class widgetsComponent implements OnInit {
 
   onSelect(link) {
     this.selectedWidget = link;
-    console.log(this.selectedWidget);
   }
 
   async loadWidgets() {

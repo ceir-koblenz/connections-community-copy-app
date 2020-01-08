@@ -5,33 +5,17 @@
 </div>
 <!-- Search form -->
 <div *ngIf="collection.model" class="mb-4">
-    <input class="form-control" type="text" placeholder="Suchen..." aria-label="Search">
+    <input class="form-control" type="text" placeholder="Suchen..." aria-label="Search" [(ngModel)]="searchText">
 </div>
 <div *ngIf="collection.model" class="list-group">
+    <ng-container *ngIf="collection.model.communities | filter : searchText : 'title' as filtered">
+        <a *ngFor="let comm of filtered | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
+            [class.bg-secondary]="comm === selectedCommunity" class="list-group-item list-group-item-action"
+            [routerLink]="['/community-selection/', comm.id]" routerLinkActive="active">
+            {{comm.title}}
+        </a>
 
-    <a *ngFor="let comm of collection.model.communities" [class.bg-secondary]="comm === selectedCommunity"
-        class="list-group-item list-group-item-action" [routerLink]="['/community-selection/', comm.id]"
-        routerLinkActive="active">
-        {{comm.title}}
-    </a>
-    <!-- TODO Pagination & Filter/Suche nach Community -->
-    <nav aria-label="Page navigation example" style="margin-top: 20px;">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link text-dark" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <ngb-pagination [collectionSize]="filtered.length" [(page)]="page" [pageSize]="pageSize"
+            [directionLinks]="false"></ngb-pagination>
+    </ng-container>
 </div>

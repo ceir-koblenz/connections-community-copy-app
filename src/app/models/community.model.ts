@@ -4,6 +4,7 @@ import { Logo } from './logo.model';
 import { MemberCollection } from './member-collection.model';
 import { RemoteApplicationCollection } from './remoteapplication-collection.model';
 import { WidgetCollection } from './widget-collection.model';
+import { LayoutCollection } from './layout-collection.model';
 
 /**
  * EntityModel einer Community.
@@ -14,15 +15,15 @@ import { WidgetCollection } from './widget-collection.model';
  */
 export class Community implements IEntityModel {
     shouldCopy: boolean;
-    public id: String;
+    id: String;
     title: String;
-    summary: String;
+    contentHtml: String;
     datePublished: String;
     dateUpdated: String;
-    members: EntityLink<MemberCollection>; // any durch entsprechenden Modeltypen erstetzen, sobald dieser implementiert ist
-    bookmarks: EntityLink<any>;
+    members: EntityLink<MemberCollection>;
     miscApps: EntityLink<RemoteApplicationCollection>;
     widgets: EntityLink<WidgetCollection>;
     logo: EntityLink<Logo>;
+    layouts: EntityLink<LayoutCollection>;
     type: String;
 }

@@ -2,27 +2,24 @@ import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
 import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
 import { EntityLink } from '../common/entity-link';
-import { MemberXmlParser } from '../xml-parser/member-xml-parser';
+import { userXmlParser } from '../xml-parser/user-xml';
 
 /**
- * EntityModel eines Members.
+ * EntityModel des User.
  *
  * @export
- * @class Member
+ * @class User
  * @implements {IEntityModel}
  */
-export class Member implements IEntityModel{
-    shouldCopy: boolean;
+export class User implements IEntityModel{
     public UUid: String;
-    public name: String;
-    public email: String;
-    public role: String;
+    shouldCopy: boolean;
 
 
 
 
     /**
-     * Lädt einen Member anhand der übergebenen Url von der Api.
+     * Lädt den aktuellen User anhand der übergebenen Url von der Api.
      * Lädt den XML-String von der Api und parst diesen anschließend.
      *
      * @static
@@ -31,13 +28,13 @@ export class Member implements IEntityModel{
      * @returns {Promise<Community>}
      * @memberof Community
      */
-    static async load(client: ApiClientService, url: URL): Promise<Member> {
+    static async load(client: ApiClientService, url: URL): Promise<User> {
         var xmlString = await client.loadXML(url); // Raw XML laden
 
-        var xmlParser: MemberXmlParser = new MemberXmlParser()
-        var result = new Member();
+        var xmlParser: userXmlParser = new userXmlParser()
+        var result = new User();
 
-        xmlParser.fillFromXml(result, xmlString); // neue Member Instanz anhand des XMLs befüllen
+        xmlParser.fillFromXml(result, xmlString); // User Instanz anhand des XMLs befüllen
         return result;
     }
 }

@@ -1,0 +1,13 @@
+<div class="spinner-grow text-dark" *ngIf="!layoutCollection.entityLoaded()" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+<div *ngIf="layoutCollection.entityLoaded()">
+    <form>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="copy-layouts-check"
+                [checked]="layoutCollection.model.shouldCopy"
+                (change)="layoutCollection.model.shouldCopy = !layoutCollection.model.shouldCopy">
+            <label class="form-check-label" for="copy-layouts-check">konfiguriertes Layout kopieren</label>
+        </div>
+    </form>
+</div>

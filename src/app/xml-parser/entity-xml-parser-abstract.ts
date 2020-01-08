@@ -1,5 +1,6 @@
 import { X2jOptions } from 'fast-xml-parser';
 import * as Parser from 'fast-xml-parser';
+import { IEntityModel } from '../models/i-entity-model';
 
 /**
  * Basisklasse für alle XML-Parser
@@ -9,7 +10,7 @@ import * as Parser from 'fast-xml-parser';
  * @class EntityXmlParserAbstract
  * @template T
  */
-export abstract class EntityXmlParserAbstract<T> {
+export abstract class EntityXmlParserAbstract<T extends IEntityModel> {
 
   /**
    * Default-Optionen für alle Parse-Vorgänge.
@@ -35,14 +36,14 @@ export abstract class EntityXmlParserAbstract<T> {
    */
   abstract fillFromObject(entity: T, parsedObj: any): void
 
-    /**
-   * Befüllt eine Objektinstanz mit geparsten Inhalten aus dem XML-String
-   *
-   * @abstract
-   * @param {T} entity
-   * @param {string} xmlString
-   * @memberof EntityXmlParserAbstract
-   */
+  /**
+ * Befüllt eine Objektinstanz mit geparsten Inhalten aus dem XML-String
+ *
+ * @abstract
+ * @param {T} entity
+ * @param {string} xmlString
+ * @memberof EntityXmlParserAbstract
+ */
   fillFromXml(entity: T, xmlString: string): void {
     var json = this.parse(xmlString);
 

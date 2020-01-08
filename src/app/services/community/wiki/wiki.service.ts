@@ -28,7 +28,7 @@ export class WikiService {
 
         do {
             var currentXml = await this.apiClient.loadXML(nextPageLink)
-            nextPageLink = xmlParser.getNextPageUrl(entity.url, currentXml)
+            nextPageLink = xmlParser.getNextPageUrlHack(entity.url, currentXml)
             xmlParser.fillFromXml(wikis, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
         } while (nextPageLink !== null);
 

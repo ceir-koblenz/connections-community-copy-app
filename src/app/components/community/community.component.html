@@ -20,9 +20,10 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="commDesc">Beschreibung</label>
-        <input type="text" value="{{community.summary}}" id="commDesc" class="form-control"
-            placeholder="Community Titel">
+        <label for="commDescHtml">Beschreibung</label>
+        <editor [init]="{
+            base_url: '/tinymce',
+            suffix: '.min'}" [(ngModel)]="community.contentHtml" id="commDescHtml"></editor>
     </div>
 
     <app-logo [logo]="community.logo"></app-logo>
@@ -30,8 +31,11 @@
     <h4>Mitglieder der Community</h4><br />
     <app-members [members]="community.members"></app-members>
     <hr class="my-4">
+    <h4>Layout der Community</h4><br />
+    <app-layout [layoutCollection]="community.layouts"></app-layout>
+    <hr class="my-4">
     <h4>Applications der Community</h4><br />
-    <app-remote-applications [remoteApps]="community.miscApps"></app-remote-applications>
+    <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
     <hr class="my-4">
     <h4>Widgets der Community</h4><br />
     <app-widgets [remoteWidgets]="community.widgets"></app-widgets>
