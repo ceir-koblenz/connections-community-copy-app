@@ -174,17 +174,19 @@ export class FolderService {
         }
 
         // Folder erstellen
-        var folderXmlWriter = new FolderXmlWriter();
-        var xml = folderXmlWriter.toXmlString(folder);
-        result = await this.apiClient.postXML(xml, url);
-        if (result.ok) {
-            this.loggingService.LogInfo('Folder wurde erstellt.')
-            // get new folder id
-            var folderXmlParser: FolderXmlParser = new FolderXmlParser();
-            var newFolder: Folder = new Folder();
-            folderXmlParser.fillFromXml(newFolder, result.body);
-        } else {
-            this.loggingService.LogInfo('Folder erstellen fehlgeschlagen.')
+        if (!(folder.title === "Dateien ohne Ordner")) { // skip first folder (root)            
+            var folderXmlWriter = new FolderXmlWriter();
+            var xml = folderXmlWriter.toXmlString(folder);
+            result = await this.apiClient.postXML(xml, url);
+            if (result.ok) {
+                this.loggingService.LogInfo('Folder wurde erstellt.')
+                // get new folder id
+                var folderXmlParser: FolderXmlParser = new FolderXmlParser();
+                var newFolder: Folder = new Folder();
+                folderXmlParser.fillFromXml(newFolder, result.body);
+            } else {
+                this.loggingService.LogInfo('Folder erstellen fehlgeschlagen.')
+            }
         }
 
         // files aus diesem folder kopieren

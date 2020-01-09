@@ -32,14 +32,14 @@ export class CreateTemplateService {
     var result = new CreateTemplateResult()
     result.success = true
 
-    // Count to copy elements TODO auslagern
+    // Count to copy elements TODO: auslagern
     processStatus.openCounter = 1; // Default value. Community wird ab hier immer kopiert.  
     const countToCopyElements = async () => {
       if (community.layouts.model.shouldCopy) {
         processStatus.openCounter += community.layouts.model.layouts.length
       }
 
-      if (community.miscApps.model.shouldCopy) {
+      if (community.miscApps && community.miscApps.model && community.miscApps.model.remoteApplications) {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
           if (remoteApp.link.model && remoteApp.link.model.shouldCopy) {
             processStatus.openCounter += 1;

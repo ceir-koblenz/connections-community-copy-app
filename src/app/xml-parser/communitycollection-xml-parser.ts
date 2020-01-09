@@ -14,11 +14,17 @@ export class CommunityCollectionXmlParser extends EntityFeedXmlParserAbstract<Co
     fillFromObject(entity: CommunityCollection, parsedObj: any): void {
         var commParser = new CommunityXmlParser();
 
-        parsedObj.feed.entry.forEach(entry => {
+        if (Array.isArray(parsedObj.feed.entry)) {
+            parsedObj.feed.entry.forEach(entry => {
+                var commEntity = new Community();
+                commParser.fillFromObject(commEntity, { entry: entry });
+                entity.communities.push(commEntity);
+            });
+        } else {
             var commEntity = new Community();
-            commParser.fillFromObject(commEntity, { entry: entry });
-
+            commParser.fillFromObject(commEntity, { entry: parsedObj.feed.entry });
             entity.communities.push(commEntity);
-        });
+        }
+        
     }
 }

@@ -4,6 +4,7 @@ import { Community } from 'src/app/models/community.model';
 import { CreateTemplateService, CreateTemplateResult } from 'src/app/services/create-template.service';
 import { ProcessStatus } from 'src/app/common/process-status';
 import { ProcessType, ProcessTypeLabels } from 'src/app/common/process-type';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-community-wrapper',
@@ -43,7 +44,8 @@ export class CommunityWrapperComponent implements OnInit {
   private processStatus: ProcessStatus = new ProcessStatus();
 
   constructor(private route: ActivatedRoute,
-    private createService: CreateTemplateService) {
+    private createService: CreateTemplateService,
+    private _location: Location) {
 
     this.commId = this.route.snapshot.params.id;
     this.commLoaded = this.commLoaded.bind(this);
@@ -61,6 +63,10 @@ export class CommunityWrapperComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  backClicked() {
+    this._location.back();
   }
 
 }
