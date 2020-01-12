@@ -25,6 +25,7 @@ import { SubfolderComponent } from './components/remote-applications/files/subfo
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { WikiChildComponent } from './components/remote-applications/wiki/wiki-child/wiki-child.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     CommunityWrapperComponent,
     SubfolderComponent,
     FilterPipe,
-    LayoutComponent
+    LayoutComponent,
+    WikiChildComponent
   ],
   imports: [
     BrowserModule,

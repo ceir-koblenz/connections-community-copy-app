@@ -40,6 +40,26 @@ export class ApiClientService {
     }
   }
 
+  /**
+   * Lädt asynchron das Dokument der übergebenen URL.
+   * @param {URL} url Url zum Connections-Endpoint, der das zu ladende JSON liefert
+   * @returns {Promise<string>} Promise mit dem geladenen JSON-String
+   * @memberof ApiClientService
+   */
+  async loadJSON(url: URL): Promise<any> {
+    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    this.loggingService.LogInfo('Lade Daten von: ' + uri);
+
+    var resultPromise = this.httpClient.get(uri, { responseType: "json" }).toPromise();
+    try {
+      var result = await resultPromise;
+      return result;
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim Laden der Daten. Statustext: ${error.statusText}`);
+      return '';
+    }
+  }
+
   async postXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
     return this._sendXML("POST", xmlString, url);
   }

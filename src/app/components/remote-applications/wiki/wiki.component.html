@@ -4,23 +4,19 @@
     </div>
 </div>
 <div *ngIf="wikis">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="checkbox" [checked]="copyAll"
-                (click)="setShouldCopyAll()">
+    <div *ngFor="let wiki of wikis.wikis">
+        <div *ngIf="wiki.childWikis.length === 0" class="input-group mb-3">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="checkbox" id={{wiki.uUid}} [checked]="copyAll || wiki.shouldCopy"
+                        (click)="setShouldCopy(wiki)">
+                </div>
             </div>
+            <input type="text" disabled value="{{wiki.title}}" class="form-control"
+                aria-label="Text input with checkbox">
         </div>
-        <input type="text" disabled value="Alle Wiki-Seiten" class="form-control" 
-        aria-label="Text input with checkbox">
-    </div>
-    <div *ngFor="let wiki of wikis.wikis" class="input-group mb-3">
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                <input type="checkbox" id={{wiki.uUid}} [checked]="copyAll || wiki.shouldCopy" (click)="setShouldCopy(wiki)">
-            </div>
+        <div *ngIf="wiki.childWikis.length > 0" class="mb-12">
+            <app-wiki-child [wiki]="wiki"></app-wiki-child>
         </div>
-        <input type="text" disabled value="{{wiki.title}}" class="form-control"
-            aria-label="Text input with checkbox">
     </div>
 </div>

@@ -15,6 +15,7 @@ export class WikiCollectionXmlParser extends EntityFeedXmlParserAbstract<WikiCol
 
     fillFromObject(entity: WikiCollection, parsedObj: any): void {
         var entries = parsedObj.feed.entry;
+        entity.id = parsedObj.feed['td:uuid'];
         var wikiParser = new WikiXmlParser();
         if (Array.isArray(entries)) {
             entries.forEach(entry => {

@@ -4,6 +4,7 @@ import { WikiCollection } from 'src/app/models/remote-applications/wiki-collecti
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { WikiService } from 'src/app/services/community/wiki/wiki.service';
+import { Wiki } from 'src/app/models/remote-applications/wiki.model';
 
 @Component({
   selector: 'app-wiki',
@@ -29,6 +30,7 @@ export class WikiComponent implements OnInit {
 
   async loadWikiFeed() {
     this.wikis = await this.wikiService.load(this.remoteApplication);
+    await Wiki.sortWikis(this.wikis.wikis);
   }
 
   setShouldCopyAll() {
