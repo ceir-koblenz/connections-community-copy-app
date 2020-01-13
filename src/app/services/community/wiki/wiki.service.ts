@@ -9,7 +9,7 @@ import { ApiClientService } from '../../api-client/api-client.service';
 import { LoggingService } from '../../logging/logging.service';
 import { WikiXmlWriter } from './wiki-xml-writer';
 import { getConfig } from 'src/app/app-config';
-import { WidgetXmlWriter } from '../widget-xml-writer';
+import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { HttpResponse } from '@angular/common/http';
 import { WikiXmlParser } from 'src/app/xml-parser/remote-applications/wiki-xml-parser';
 
@@ -88,6 +88,7 @@ export class WikiService {
         if (wikis.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Wikis.');
             // Create a new wiki widget
+            // todo auslagern in WidgetService
             var widgetWriter = new WidgetXmlWriter();
             var xml = widgetWriter.toXmlString("Wiki");
             var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId);

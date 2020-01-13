@@ -8,7 +8,7 @@ import { MemberService } from './community/member/member.service';
 import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
-import { LayoutService } from './community/layout.service';
+import { LayoutService } from './community/layout/layout.service';
 
 
 /**

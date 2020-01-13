@@ -1,8 +1,6 @@
 import { IEntityModel } from './i-entity-model';
 import { ApiClientService } from '../services/api-client/api-client.service';
-import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
-import { EntityLink } from '../common/entity-link';
-import { userXmlParser } from '../xml-parser/user-xml';
+import { UserXmlParser } from '../xml-parser/user-xml-parser';
 
 /**
  * EntityModel des User.
@@ -31,7 +29,7 @@ export class User implements IEntityModel{
     static async load(client: ApiClientService, url: URL): Promise<User> {
         var xmlString = await client.loadXML(url); // Raw XML laden
 
-        var xmlParser: userXmlParser = new userXmlParser()
+        var xmlParser: UserXmlParser = new UserXmlParser()
         var result = new User();
 
         xmlParser.fillFromXml(result, xmlString); // User Instanz anhand des XMLs befüllen

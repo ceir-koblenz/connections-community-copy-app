@@ -8,7 +8,7 @@ import { asyncForEach } from 'src/app/common/async-foreach';
 import { ApiClientService } from '../../api-client/api-client.service';
 import { LoggingService } from '../../logging/logging.service';
 import { getConfig } from 'src/app/app-config';
-import { WidgetXmlWriter } from '../widget-xml-writer';
+import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 
 @Injectable({
     providedIn: 'root'

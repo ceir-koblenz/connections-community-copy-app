@@ -10,7 +10,7 @@
         </div>
         <div id="memberCollapseOne" class="collapse show" aria-labelledby="memberHeadingOne" data-parent="#memberAccordion">
             <div class="card-body">
-                <div *ngIf="OwnerRoleCollection.membercollection.length">
+                <div *ngIf="OwnerRoleCollection.members.length">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -20,7 +20,7 @@
                         <input type="text" disabled value="Alle Eigentümer" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
-                    <div *ngFor="let owner of OwnerRoleCollection.membercollection" class="input-group mb-3">
+                    <div *ngFor="let owner of OwnerRoleCollection.members" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="checkbox" id={{owner.UUid}} [(ngModel)]="owner.shouldCopy" value="" (click)="CheckedMembers(this,owner)">
@@ -45,7 +45,7 @@
         </div>
         <div id="memberCollapseTwo" class="collapse" aria-labelledby="memberHeadingTwo" data-parent="#memberAccordion">
             <div class="card-body">
-                <div *ngIf="OtherRoleCollection.membercollection.length">
+                <div *ngIf="OtherRoleCollection.members.length">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -55,7 +55,7 @@
                         <input type="text" disabled value="Alle Mitglieder" class="form-control"
                             aria-label="Text input with checkbox">
                     </div>
-                    <div *ngFor="let other of OtherRoleCollection.membercollection" class="input-group mb-3">
+                    <div *ngFor="let other of OtherRoleCollection.members" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="checkbox" id={{other.UUid}} [(ngModel)]="other.shouldCopy" value="" (click)="CheckedMembers(this,other)">

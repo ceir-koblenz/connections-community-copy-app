@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ApiClientService } from '../api-client/api-client.service';
-import { LoggingService } from '../logging/logging.service';
+import { ApiClientService } from '../../api-client/api-client.service';
+import { LoggingService } from '../../logging/logging.service';
 import { LayoutCollection } from 'src/app/models/layout-collection.model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { LayoutCollectionXmlParser } from 'src/app/xml-parser/layoutcollection-xml-parser';

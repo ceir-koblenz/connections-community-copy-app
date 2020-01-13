@@ -4,16 +4,15 @@ import { EntityLink } from 'src/app/common/entity-link';
 import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { Member } from 'src/app/models/member.model';
 import { User } from 'src/app/models/user.model';
-import { DeclareFunctionStmt } from '@angular/compiler';
-import { Url } from 'url';
 import { getConfig } from 'src/app/app-config';
+import { MemberService } from 'src/app/services/community/member/member.service';
 
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.sass']
 })
-export class membersComponent implements OnInit {
+export class MembersComponent implements OnInit {
 
   @Input() members: EntityLink<MemberCollection>;
   private Collection: MemberCollection;
@@ -24,20 +23,22 @@ export class membersComponent implements OnInit {
 
   async ngOnInit() {
     this.all = false;
-    this.Collection = await MemberCollection.load(this.apiClient, this.members);
+    this.Collection = await this.memberService.loadCollection(this.members);
     var url = new URL(getConfig().connectionsUrl + "/profiles/atom/profileService.do")
-    this.CurrentUser = await User.load(this.apiClient,url )
-    this.Collection.membercollection = this.Collection.membercollection.filter(member => member.UUid != this.CurrentUser.UUid);
-    this.Collection.membercollection.forEach(member => {
+    this.CurrentUser = await User.load(this.apiClient, url)
+    this.Collection.members = this.Collection.members.filter(member => member.UUid != this.CurrentUser.UUid);
+    this.Collection.members.forEach(member => {
       if (member.role == "owner") {
-        this.OwnerRoleCollection.membercollection.push(member);
+        this.OwnerRoleCollection.members.push(member);
       } else {
-        this.OtherRoleCollection.membercollection.push(member);
+        this.OtherRoleCollection.members.push(member);
       }
     });
   }
 
-  constructor(private apiClient: ApiClientService) {
+  constructor(private apiClient: ApiClientService,
+    private memberService: MemberService) {
+
     this.OtherRoleCollection = new MemberCollection;
     this.OwnerRoleCollection = new MemberCollection;
   }
@@ -46,36 +47,36 @@ export class membersComponent implements OnInit {
    *Setzt das ShouldCopy-Attribut eines Members
     *
     * @param {Member} Other
-    * @memberof membersComponent
+    * @memberof MembersComponent
     */
   public CheckedMembers(SelctedObject, Other: Member) {
     var cb = <HTMLInputElement>document.getElementById(Other.UUid.toString());
-    var member = this.Collection.membercollection.find(function (curr) {
+    var member = this.Collection.members.find(function (curr) {
       return curr.UUid == Other.UUid;
     });
     member.shouldCopy = cb.checked;
   }
-/**
- *Setzt das ShouldCopy-Attribut aller Member
- *
- * @param {string} elementID
- * @memberof membersComponent
- */
-public CheckAll(elementID:string){
+  /**
+   *Setzt das ShouldCopy-Attribut aller Member
+   *
+   * @param {string} elementID
+   * @memberof MembersComponent
+   */
+  public CheckAll(elementID: string) {
     var cb = <HTMLInputElement>document.getElementById(elementID);
-    this.all =  cb.checked;
+    this.all = cb.checked;
     if (cb.id == "cbAllOthers") {
-      this.OtherRoleCollection.membercollection.forEach(member => {
-        if(member.shouldCopy != cb.checked){
+      this.OtherRoleCollection.members.forEach(member => {
+        if (member.shouldCopy != cb.checked) {
           member.shouldCopy = cb.checked;
         }
       });
-    }else{
-      this.OwnerRoleCollection.membercollection.forEach(member => {
-        if(member.shouldCopy != cb.checked){
+    } else {
+      this.OwnerRoleCollection.members.forEach(member => {
+        if (member.shouldCopy != cb.checked) {
           member.shouldCopy = cb.checked;
         }
-      });  
+      });
     }
   }
 }

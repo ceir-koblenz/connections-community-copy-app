@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LayoutService } from 'src/app/services/community/layout.service';
+import { LayoutService } from 'src/app/services/community/layout/layout.service';
 import { LayoutCollection } from 'src/app/models/layout-collection.model';
 import { EntityLink } from 'src/app/common/entity-link';
 

@@ -1,8 +1,4 @@
 import { IEntityModel } from './i-entity-model';
-import { ApiClientService } from '../services/api-client/api-client.service';
-import { CommunityXmlParser } from '../xml-parser/community-xml-parser';
-import { EntityLink } from '../common/entity-link';
-import { MemberXmlParser } from '../xml-parser/member-xml-parser';
 
 /**
  * EntityModel eines Members.
@@ -13,31 +9,32 @@ import { MemberXmlParser } from '../xml-parser/member-xml-parser';
  */
 export class Member implements IEntityModel{
     shouldCopy: boolean;
-    public UUid: String;
-    public name: String;
-    public email: String;
-    public role: String;
-
-
-
-
     /**
-     * Lädt einen Member anhand der übergebenen Url von der Api.
-     * Lädt den XML-String von der Api und parst diesen anschließend.
+     * Die Id, die den Nutzer eindeutig identifiziert
      *
-     * @static
-     * @param {ApiClientService} client
-     * @param {URL} url
-     * @returns {Promise<Community>}
-     * @memberof Community
+     * @type {String}
+     * @memberof Member
      */
-    static async load(client: ApiClientService, url: URL): Promise<Member> {
-        var xmlString = await client.loadXML(url); // Raw XML laden
-
-        var xmlParser: MemberXmlParser = new MemberXmlParser()
-        var result = new Member();
-
-        xmlParser.fillFromXml(result, xmlString); // neue Member Instanz anhand des XMLs befüllen
-        return result;
-    }
+    public UUid: String;
+    /**
+     * Der Anzeigename des Nutzers
+     *
+     * @type {String}
+     * @memberof Member
+     */
+    public name: String;
+    /**
+     * Die Mailadresse des Nutzers
+     *
+     * @type {String}
+     * @memberof Member
+     */
+    public email: String;
+    /**
+     * Die Rolle des Nutzers in der aktuellen Community (bspw. admin)
+     *
+     * @type {String}
+     * @memberof Member
+     */
+    public role: String;
 }
