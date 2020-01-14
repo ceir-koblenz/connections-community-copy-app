@@ -64,7 +64,7 @@ export class BlogService {
                 const copyBlogEntries = async () => {
                     await asyncForEach(blogsToCopy, async (blog: Blog) => {
                         var xml = blogWriter.toXmlString(blog)
-                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/feed/entries/atom?ps=1000")
+                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/feed/entries/atom?ps=10000&amp;lang=de_de")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Blog Page erstellt.')
