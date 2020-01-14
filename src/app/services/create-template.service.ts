@@ -3,6 +3,7 @@ import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
+import { BlogService } from './community/blog/blog.service';
 import { FolderService } from './community/file/folder.service';
 import { MemberService } from './community/member/member.service';
 import { FileService } from './community/file/file.service';
@@ -24,6 +25,7 @@ export class CreateTemplateService {
 
   constructor(private commService: CommunityService,
     private wikiService: WikiService,
+    private blogService: BlogService,
     private memberService: MemberService,
     private folderService: FolderService,
     private layoutService: LayoutService) { }
@@ -86,6 +88,15 @@ export class CreateTemplateService {
             if (result.ok) {
               processStatus.countUp();
               processStatus.log("Wiki wurde kopiert");
+            }
+          }
+
+          // try copy blog
+          if (remoteApp.link.name == "Blog" && remoteApp.link.model) {
+            var result = await this.blogService.create(newCommunityId, remoteApp.link.model);
+            if (result.ok) {
+              processStatus.countUp();
+              processStatus.log("Blog wurde kopiert");
             }
           }
 
