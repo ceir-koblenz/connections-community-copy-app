@@ -24,23 +24,15 @@ export class BlogService {
     async load(entity: EntityLink<RemoteApplication>, communityId: string): Promise<BlogCollection> {
         var xmlParser: BlogCollectionXmlParser = new BlogCollectionXmlParser();
         var blogs = new BlogCollection();
-        var url = new URL(getConfig().connectionsUrl + "blogs/" + communityId + "/feed/entries/atom?lang=de_de");
+        var url = new URL(getConfig().connectionsUrl + "blogs/" + communityId + "/feed/entries/atom?ps=10000&amp;lang=de_de");
         var nextPageLink: URL = url;
 
         do {
             var currentXml = await this.apiClient.loadXML(nextPageLink)
-            nextPageLink = xmlParser.getNextPageUrlHack(url, currentXml)
+            //nextPageLink = xmlParser.getNextPageUrlHack(url, currentXml)
+            nextPageLink = null;
             xmlParser.fillFromXml(blogs, currentXml)  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
         } while (nextPageLink !== null);
-
-        /*
-        const loadBlogContent = async () => {
-            await asyncForEach(blogs.blogs, async (blog) => {
-                await Blog.loadContentXml(this.apiClient, blog);
-            })
-        }
-        await loadBlogContent();
-        */
 
         entity.model = blogs;
         return blogs;
@@ -72,7 +64,7 @@ export class BlogService {
                 const copyBlogEntries = async () => {
                     await asyncForEach(blogsToCopy, async (blog: Blog) => {
                         var xml = blogWriter.toXmlString(blog)
-                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/feed/entries/atom?lang=de_de")
+                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/feed/entries/atom?ps=1000")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Blog Page erstellt.')
