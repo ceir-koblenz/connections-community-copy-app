@@ -46,7 +46,7 @@ export class CreateTemplateService {
         processStatus.openCounter += 1;
       }
       if (community.members.model.members) {
-        var members: Member = community.members.model.members;
+        var members: Array<Member> = community.members.model.members;
         for (let index = 0; index < members.length; index++) {
           if (members[index].shouldCopy) {
             processStatus.openCounter += 1;
