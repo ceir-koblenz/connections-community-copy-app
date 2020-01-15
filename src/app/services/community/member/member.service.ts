@@ -8,6 +8,7 @@ import { ApiClientService } from '../../api-client/api-client.service';
 import { LoggingService } from '../../logging/logging.service';
 import { MemberXmlWriter } from './member-xml-writer';
 import { getConfig } from 'src/app/app-config';
+import { ProcessStatus } from 'src/app/common/process-status';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ export class MemberService {
      * @param {MemberCollection} memberCollection
      * @memberof MemberService
      */
-    async create(newCommunityId: string, memberCollection: MemberCollection) {
+    async create(newCommunityId: string, memberCollection: MemberCollection, processBar:ProcessStatus): Promise<ProcessStatus> {
         var memberToCopy: Array<Member> = new Array<Member>();
         const getMemberToCopy = async () => {
             await asyncForEach(memberCollection.members, async (member: Member) => {
@@ -43,13 +44,18 @@ export class MemberService {
                     var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/members?communityUuid=" + newCommunityId)
                     var result = await this.apiClient.postXML(xml, url)
                     if (result.ok) {
-                        this.loggingService.LogInfo('Member wurde erstellt.')
+                        processBar.countUp();
+                        processBar.log('Member ' + member.name + ' wurde hinzugefügt.');
+                        this.loggingService.LogInfo('Member wurde hinzugefügt.');
                     } else {
-                        this.loggingService.LogInfo('Member erstellen fehlgeschlagen.')
+                        processBar.countUp();
+                        processBar.log('Member ' + member.name + ' konnte nicht hinzugefügt werden.');
+                        this.loggingService.LogInfo('Member hinzugefügen fehlgeschlagen.')
                     }
                 });
             }
             await copyMembers();
+            return processBar;
         }
     }
 
