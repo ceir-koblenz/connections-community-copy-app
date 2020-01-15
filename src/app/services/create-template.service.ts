@@ -11,6 +11,9 @@ import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
 import { AktivitaetenCollectionXmlParser } from '../xml-parser/remote-applications/aktivitaeten-collection-xml-parser';
 import { LayoutService } from './community/layout/layout.service';
+import { RemoteApplication } from '../models/remoteapplication.model';
+import { Member } from '../models/member.model';
+import { MemberCollection } from '../models/member-collection.model';
 
 
 /**
@@ -40,19 +43,20 @@ export class CreateTemplateService {
     processStatus.openCounter = 1; // Default value. Community wird ab hier immer kopiert.  
     const countToCopyElements = async () => {
       if (community.layouts.model.shouldCopy) {
-        processStatus.openCounter += community.layouts.model.layouts.length
+        processStatus.openCounter += 1;
       }
       if (community.members.model.members) {
-        await asyncForEach(community.members.model.members, async (member) => {
-          if (member.shouldCopy) {
+        var members: Member = community.members.model.members;
+        for (let index = 0; index < members.length; index++) {
+          if (members[index].shouldCopy) {
             processStatus.openCounter += 1;
+            break;
           }
-        })
+        }
       }
-
       if (community.miscApps && community.miscApps.model && community.miscApps.model.remoteApplications) {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
-          if (remoteApp.link.model && remoteApp.link.model.shouldCopy) {
+          if (remoteApp.shouldCopy) {
             processStatus.openCounter += 1;
           }
         })
@@ -81,46 +85,92 @@ export class CreateTemplateService {
       }
 
       // Copy Member
-      const copyMember = async () => {
-        if (community.members.model) {
-          var result = await this.memberService.create(newCommunityId, community.members.model,processStatus);
-          processStatus = result;
+      if (community.members.model) {
+        var tResult = await this.memberService.create(newCommunityId, community.members.model);
+        if (tResult && tResult.ok) {
+          processStatus.countUp();
+          processStatus.log('Member wurden hinzugefügt.');
         }
-
       }
-      await copyMember();
 
       const copyRemoteApps = async () => {
-        await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
+        await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp: RemoteApplication) => {
           // try copy wiki
-          if (remoteApp.link.name == "Wiki" && remoteApp.link.model) {
+          if (remoteApp.shouldCopy && remoteApp.title == "Wiki" && remoteApp.link.model) {
             var result = await this.wikiService.create(newCommunityId, remoteApp.link.model);
-            if (result.ok) {
-              processStatus.countUp();
-              processStatus.log("Wiki wurde kopiert");
-            }
+            processStatus.countUp();
+            processStatus.log("Wiki wurde kopiert");
           }
 
           // try copy files
-          if ((remoteApp.link.name == "Files" || "Dateien") && remoteApp.link.model) {
+          if (remoteApp.shouldCopy && (remoteApp.title == "Files" || remoteApp.title == "Dateien") && remoteApp.link.model) {
             var result = await this.folderService.create(newCommunityId, remoteApp.link.model);
-            if (result && result.ok) {
-              processStatus.countUp();
-              processStatus.log("Dateien wurden kopiert");
-            }
+            processStatus.countUp();
+            processStatus.log("Dateien wurden kopiert");
           }
 
           // try copy aktivitäten
-
-          if (remoteApp.link.name == "Activities" && remoteApp.link.model) {
+          if (remoteApp.shouldCopy && (remoteApp.title == "Aktivitäten" || remoteApp.title == "Activities") && remoteApp.link.model) {
             var result = await this.aktivitaetenService.create(newCommunityId, remoteApp.link.model);
-            if (result && result.ok) {
-              processStatus.countUp();
-              processStatus.log("Aktivitäten wurden kopiert");
-            }
+            processStatus.countUp();
+            processStatus.log("Aktivitäten wurden kopiert");
           }
 
-          //TODO: weitere Entitäten zur Community hinzufügen
+          // try copy Blog
+          if (remoteApp.shouldCopy && remoteApp.title == "Blog") {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Blog wurde kopiert");
+          }
+
+          // try copy zugehörige communitys
+          if (remoteApp.shouldCopy && (remoteApp.title == "Zugehörige Communitys" || remoteApp.title == "Related Communities")) {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Zugehörige Communitys wurden kopiert");
+          }
+
+          // try copy Statusaktualisierungen
+          if (remoteApp.shouldCopy && (remoteApp.title == "Statusaktualisierungen" || remoteApp.title == "Status Updates")) {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Statusaktualisierungen wurden kopiert");
+          }
+
+          // try copy Lesezeichen
+          if (remoteApp.shouldCopy && (remoteApp.title == "Lesezeichen" || remoteApp.title == "Bookmarks")) {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Lesezeichen wurden kopiert");
+          }
+
+          // try copy Ideen-Blog
+          if (remoteApp.shouldCopy && (remoteApp.title == "Ideen-Blog" || remoteApp.title == "Ideation Blog")) {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Ideen-Blog wurde kopiert");
+          }
+
+          // try copy Foren
+          if (remoteApp.shouldCopy && (remoteApp.title == "Foren" || remoteApp.title == "Forums")) {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Foren wurden kopiert");
+          }
+
+          // try copy Feeds
+          if (remoteApp.shouldCopy && remoteApp.title == "Feeds") {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Feeds wurden kopiert");
+          }
+
+          // try copy Calendar
+          if (remoteApp.shouldCopy && remoteApp.title == "Calendar") {
+            //TODO:
+            processStatus.countUp();
+            processStatus.log("Calendar wurden kopiert");
+          }
 
         })
       }

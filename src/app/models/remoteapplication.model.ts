@@ -9,7 +9,7 @@ import { EntityLink } from '../common/entity-link';
  * @implements {IEntityModel}
  */
 export class RemoteApplication implements IEntityModel{
-    shouldCopy: boolean;
+    shouldCopy: boolean = true;
     public id: String;
     title: String;
     link: EntityLink<any>;

@@ -85,34 +85,35 @@ export class WikiService {
         var result: HttpResponse<any>;
         var wikis: Array<Wiki> = wikiCollection.wikis;
 
-        if (wikis.length > 0) {
-            this.loggingService.LogInfo('Start kopieren von Wikis.');
-            // Create a new wiki widget
-            // todo auslagern in WidgetService
-            var widgetWriter = new WidgetXmlWriter();
-            var xml = widgetWriter.toXmlString("Wiki");
-            var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId);
-            result = await this.apiClient.postXML(xml, url);
-            if (result.ok) {
-                this.loggingService.LogInfo('Wiki Widget erstellt.')
+        // Create a new wiki widget
+        // todo auslagern in WidgetService
+        var widgetWriter = new WidgetXmlWriter();
+        var xml = widgetWriter.toXmlString("Wiki");
+        var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId);
+        result = await this.apiClient.postXML(xml, url);
+        if (result.ok) {
+            this.loggingService.LogInfo('Wiki Widget erstellt.')
+            if (wikis.length > 0) {
+                this.loggingService.LogInfo('Start kopieren von Wikis.');
                 // Create entries/pages
                 const copyWikiEntries = async () => {
                     await asyncForEach(wikis, async (wiki: Wiki) => {
                         if (wiki.shouldCopy) {
                             await this.createWiki(wiki, newCommunityId);
-                        }                        
+                        }
                     });
                 }
                 await copyWikiEntries();
-            } else {
-                this.loggingService.LogInfo('Kopieren von Wikis fehlgeschlagen.')
+
             }
+        } else {
+            this.loggingService.LogInfo('Kopieren von Wikis fehlgeschlagen.')
         }
         return result;
     }
 
     private async createWiki(wiki: Wiki, newCommunityId: string): Promise<HttpResponse<any>> {
-        if (!wiki.shouldCopy) { 
+        if (!wiki.shouldCopy) {
             return; // Abbruchbedinung 
         }
 

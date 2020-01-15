@@ -9,6 +9,7 @@ import { LoggingService } from '../../logging/logging.service';
 import { MemberXmlWriter } from './member-xml-writer';
 import { getConfig } from 'src/app/app-config';
 import { ProcessStatus } from 'src/app/common/process-status';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,7 @@ export class MemberService {
      * @param {MemberCollection} memberCollection
      * @memberof MemberService
      */
-    async create(newCommunityId: string, memberCollection: MemberCollection, processBar:ProcessStatus): Promise<ProcessStatus> {
+    async create(newCommunityId: string, memberCollection: MemberCollection): Promise<HttpResponse<any>> {
         var memberToCopy: Array<Member> = new Array<Member>();
         const getMemberToCopy = async () => {
             await asyncForEach(memberCollection.members, async (member: Member) => {
@@ -38,24 +39,21 @@ export class MemberService {
         if (memberToCopy.length > 0) {
             // Create member
             var memberWriter = new MemberXmlWriter()
+            var result = new HttpResponse<any>();
             const copyMembers = async () => {
                 await asyncForEach(memberToCopy, async (member) => {
                     var xml = memberWriter.toXmlString(member, newCommunityId);
                     var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/members?communityUuid=" + newCommunityId)
-                    var result = await this.apiClient.postXML(xml, url)
+                    result = await this.apiClient.postXML(xml, url)
                     if (result.ok) {
-                        processBar.countUp();
-                        processBar.log('Member ' + member.name + ' wurde hinzugefügt.');
-                        this.loggingService.LogInfo('Member wurde hinzugefügt.');
+                        this.loggingService.LogInfo('Member ' + member.name + ' wurde hinzugefügt.');
                     } else {
-                        processBar.countUp();
-                        processBar.log('Member ' + member.name + ' konnte nicht hinzugefügt werden.');
-                        this.loggingService.LogInfo('Member hinzugefügen fehlgeschlagen.')
+                        this.loggingService.LogInfo('Member ' + member.name + ' hinzugefügen fehlgeschlagen.')
                     }
                 });
             }
             await copyMembers();
-            return processBar;
+            return result;
         }
     }
 

@@ -4,39 +4,54 @@
     </div>
 </div>
 <div *ngIf="remoteApps.model">
-    <div id="remoteAppAccordion">
-        <div *ngFor="let remoteApp of remoteApps.model.remoteApplications" class="card"
-            (click)="onSelect(remoteApp.link)">
-            <div class="card-header" id="{{'heading' + remoteApp.title}}">
-                <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse"
-                        attr.data-target="{{'#collapse' + remoteApp.title}}" aria-expanded="true"
-                        attr.aria-controls="{{'collapse' + remoteApp.title}}">
-                        {{remoteApp.title}}
-                    </button>
-                </h5>
+    <!-- Checkbox um alle Remote-Applikationen auszuwählen -->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" [checked]="copyAllApps"
+                (click)="setShouldCopyAll()">
             </div>
-            <div id="{{'collapse' + remoteApp.title}}" attr.aria-labelledby="{{'heading' + remoteApp.title}}"
-                class="collapse" data-parent="#remoteAppAccordionNone">
-                <div class="card-body">
-                    <div *ngIf="(remoteApp.title === 'Wiki')">                        
-                        <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>                        
+        </div>
+        <input type="text" disabled value="Alle Applications der Community erstellen (ohne Inhalt)" class="form-control"
+            aria-label="Text input with checkbox">
+    </div>
+    <div id="remoteAppAccordion">
+        <div *ngFor="let remoteApp of remoteApps.model.remoteApplications">
+            <div class="card" (click)="onSelect(remoteApp.link)">
+                <div class="card-header" id="{{'heading' + remoteApp.title}}">
+                    <h5 class="mb-0">
+                        <input type="checkbox" id={{remoteApp.uUid}} [checked]="copyAllApps || remoteApp.shouldCopy"
+                            (click)="setShouldCopy(remoteApp)" />
+                        <button class="btn btn-link" data-toggle="collapse"
+                            attr.data-target="{{'#collapse' + remoteApp.title}}" aria-expanded="true"
+                            attr.aria-controls="{{'collapse' + remoteApp.title}}">
+                            {{remoteApp.title}}
+                        </button>
+                    </h5>
+                </div>
+                <div id="{{'collapse' + remoteApp.title}}" attr.aria-labelledby="{{'heading' + remoteApp.title}}"
+                    class="collapse" data-parent="#remoteAppAccordionNone">
+                    <div class="card-body">
+                        <div *ngIf="(remoteApp.title === 'Wiki')">
+                            <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
+                        </div>
+                        <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')">
+                            <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                            <app-files [remoteApplication]="remoteApp.link"></app-files>
+                        </div>
+                        <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')">
+                            <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                            <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
+                        </div>
+                        <div *ngIf="(remoteApp.title === 'Blog') || (remoteApp.title === 'Blog')">
+                            <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                            <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
+                        </div>
+                        <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                     </div>
-                    <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')">
-                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <app-files [remoteApplication]="remoteApp.link"></app-files>
-                    </div>
-                    <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')">
-                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
-                    </div>
-                    <div *ngIf="(remoteApp.title === 'Blog') || (remoteApp.title === 'Blog')">
-                        <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
-                    </div>
-                    <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>
             </div>
+            <br />
         </div>
     </div>
 </div>

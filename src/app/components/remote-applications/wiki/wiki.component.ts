@@ -25,7 +25,6 @@ export class WikiComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadWikiFeed();
-    this.remoteApplication.model.shouldCopy = true; //TODO: nur für Processbar test! Issue #56 soll das steuern!
   }
 
   async loadWikiFeed() {
@@ -36,12 +35,12 @@ export class WikiComponent implements OnInit {
   setShouldCopyAll() {
     this.copyAll = !this.copyAll;
     // Iterate through all wikis and update shouldCopy variable
-    this.wikis.wikis.forEach(wiki => {
+    this.wikis.wikis.forEach((wiki:Wiki) => {
       wiki.shouldCopy = this.copyAll;
     });
   }
 
-  setShouldCopy(wiki) {
+  setShouldCopy(wiki:Wiki) {
     wiki.shouldCopy = !wiki.shouldCopy;
   }
 
