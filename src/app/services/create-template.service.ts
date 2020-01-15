@@ -38,6 +38,13 @@ export class CreateTemplateService {
       if (community.layouts.model.shouldCopy) {
         processStatus.openCounter += community.layouts.model.layouts.length
       }
+      if (community.members.model.members) {
+        await asyncForEach(community.members.model.members, async (member) => {
+          if (member.shouldCopy) {
+            processStatus.openCounter += 1;
+          }
+        })
+      }
 
       if (community.miscApps && community.miscApps.model && community.miscApps.model.remoteApplications) {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
@@ -72,7 +79,8 @@ export class CreateTemplateService {
       // Copy Member
       const copyMember = async () => {
         if (community.members.model) {
-          await this.memberService.create(newCommunityId, community.members.model);
+          var result = await this.memberService.create(newCommunityId, community.members.model,processStatus);
+          processStatus = result;
         }
 
       }
