@@ -16,7 +16,7 @@
     <div *ngFor="let Aktivitaet of Aktivitaeten.aktivitaeten" class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" id={{Aktivitaet.uUid}} [checked]="copyAll || Aktivitaet.shouldCopy" (click)="setShouldCopy(Aktivitaet)">
+                <input type="checkbox" id={{Aktivitaet.uUid}} [checked]="Aktivitaet.shouldCopy" (click)="setShouldCopy(Aktivitaet)">
             </div>
         </div>
         <input type="text" disabled value="{{Aktivitaet.title}} ({{Aktivitaet.ziel}})" class="form-control" aria-label="Text input with checkbox">

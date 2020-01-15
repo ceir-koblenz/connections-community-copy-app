@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Aktivitaet } from 'src/app/models/remote-applications/aktivitaeten.model';
-import { Wiki } from 'src/app/models/remote-applications/wiki.model';
 import { AktivitaetenCollectionXmlParser } from 'src/app/xml-parser/remote-applications/aktivitaeten-collection-xml-parser';
 import { EntityLink } from 'src/app/common/entity-link';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
@@ -9,9 +8,9 @@ import { ApiClientService } from '../../api-client/api-client.service';
 import { LoggingService } from '../../logging/logging.service';
 import { AktivitaetenXmlWriter } from './aktivitaeten-xml-writer';
 import { getConfig } from 'src/app/app-config';
-import { WidgetXmlWriter } from '../widget-xml-writer';
 import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
+import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 
 
 @Injectable({

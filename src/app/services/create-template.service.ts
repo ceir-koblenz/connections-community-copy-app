@@ -27,7 +27,6 @@ export class CreateTemplateService {
   constructor(private commService: CommunityService,
     private wikiService: WikiService,
     private memberService: MemberService,
-    private fileService: FileService,
     private layoutService: LayoutService,
     private aktivitaetenService: AktivitaetenService,
     private folderService: FolderService) { }
@@ -109,7 +108,7 @@ export class CreateTemplateService {
             var result = await this.aktivitaetenService.create(newCommunityId, remoteApp.link.model);
             if (result && result.ok) {
               processStatus.countUp();
-              processStatus.log("Dateien wurden kopiert");
+              processStatus.log("Aktivitäten wurden kopiert");
             }
           }
 
