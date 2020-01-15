@@ -8,10 +8,10 @@ import { User  } from '../models/user.model';
  * XML-Parser für das Parsen des aktuellen Users der Anwendung.
  *
  * @export
- * @class userXmlParser
- * @extends {EntityXmlParserAbstract<Member>}
+ * @class UserXmlParser
+ * @extends {EntityXmlParserAbstract<User>}
  */
-export class userXmlParser extends EntityXmlParserAbstract<User>{
+export class UserXmlParser extends EntityXmlParserAbstract<User>{
     fillFromObject(entity: User, parsedObj: any): void {
         entity.UUid = parsedObj.service.workspace.collection['snx:userid'];
     }

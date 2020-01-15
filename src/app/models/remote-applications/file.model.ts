@@ -9,7 +9,7 @@ import { EntityLink } from 'src/app/common/entity-link';
  * @implements {IEntityModel}
  */
 export class File implements IEntityModel{
-	shouldCopy: boolean;
+	shouldCopy: boolean = false;
 
     uUid:String;
 	title:String;
@@ -17,6 +17,7 @@ export class File implements IEntityModel{
 	label:String;
 	authorUuid:String;
 	communityUuid:String;
-    fileUrl:string;
+	fileUrl:string;
+	isInFolder:Boolean;
     
 }

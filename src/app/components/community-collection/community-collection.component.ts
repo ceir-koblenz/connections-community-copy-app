@@ -14,6 +14,9 @@ export class CommunityCollectionComponent implements OnInit {
   private _collection: EntityLink<CommunityCollection>;
   private selectedCommunity: EntityLink<Community>;
 
+  public pageSize: number = 10;
+  public page: number = 1;
+
   /**
    * Setter-Funktion, um bei geändertem Input das Community-Feed lazy Laden zu können.
    *

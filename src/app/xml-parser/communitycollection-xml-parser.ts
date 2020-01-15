@@ -13,16 +13,18 @@ import { EntityFeedXmlParserAbstract } from './entity-feed-xml-parser-abstract';
 export class CommunityCollectionXmlParser extends EntityFeedXmlParserAbstract<CommunityCollection>{
     fillFromObject(entity: CommunityCollection, parsedObj: any): void {
         var commParser = new CommunityXmlParser();
-        if (parsedObj.feed.entry.length !== undefined){
-        parsedObj.feed.entry.forEach(entry => {
-            var commEntity = new Community();
-            commParser.fillFromObject(commEntity, { entry: entry });
-            entity.communities.push(commEntity);
-        });
-        }else{
+
+        if (Array.isArray(parsedObj.feed.entry)) {
+            parsedObj.feed.entry.forEach(entry => {
+                var commEntity = new Community();
+                commParser.fillFromObject(commEntity, { entry: entry });
+                entity.communities.push(commEntity);
+            });
+        } else {
             var commEntity = new Community();
             commParser.fillFromObject(commEntity, { entry: parsedObj.feed.entry });
             entity.communities.push(commEntity);
         }
+        
     }
 }

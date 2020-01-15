@@ -11,6 +11,7 @@ export class WikiXmlWriter {
         <propagation xmlns="urn:ibm.com/td">false</propagation>
         <summary>${wiki.summary}</summary>
         <content type="text/html"><![CDATA[${wiki.contentXml}]]></content>
+        ${wiki.parent ? '<parentUuid xmlns="urn:ibm.com/td">' + wiki.parent.uUid + '</parentUuid>' : ''}
         </entry>`
     }
 }

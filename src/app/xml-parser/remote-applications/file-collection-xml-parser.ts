@@ -13,7 +13,12 @@ import { EntityFeedXmlParserAbstract } from '../entity-feed-xml-parser-abstract'
 export class FileCollectionXmlParser extends EntityFeedXmlParserAbstract<any>{
 
     fillFromObject(entity: FileCollection, parsedObj: any): void {
-        var entries = parsedObj.feed.entry;
+        var entries:any;
+        if (parsedObj.feed !== undefined) {
+            entries = parsedObj.feed.entry;
+        } else if (parsedObj.entry !== undefined) {
+            entries = parsedObj.entry;
+        }
         var fileParser = new FileXmlParser();
         if (Array.isArray(entries)) {
             entries.forEach(entry => {

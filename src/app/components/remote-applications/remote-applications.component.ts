@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EntityLink } from 'src/app/common/entity-link';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { RemoteApplicationCollection } from 'src/app/models/remoteapplication-collection.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
+import { RemoteApplicationService } from 'src/app/services/community/remoteApplication/remote-application.service';
 
 @Component({
   selector: 'app-remote-applications',
@@ -16,7 +16,7 @@ export class RemoteApplicationsComponent implements OnInit {
   
   selectedRemoteApplication: EntityLink<RemoteApplication>;
 
-  constructor(private apiClient: ApiClientService) {
+  constructor(private service: RemoteApplicationService) {
   }
 
   async ngOnInit() {
@@ -29,7 +29,7 @@ export class RemoteApplicationsComponent implements OnInit {
   }
 
   async loadRemoteApps() {
-    await RemoteApplicationCollection.load(this.apiClient, this.remoteApps)
+    await this.service.loadCollection(this.remoteApps)
   }
 
 }

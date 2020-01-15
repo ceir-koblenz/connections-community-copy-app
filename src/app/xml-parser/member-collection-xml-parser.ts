@@ -18,13 +18,13 @@ export class MemberCollectionXmlParser extends EntityXmlParserAbstract<MemberCol
                 var memEntity = new Member();
                 memberParser.fillFromObject(memEntity, { entry: entry });
 
-                entity.membercollection.push(memEntity);
+                entity.members.push(memEntity);
             });
         } else {
             var memEntity = new Member();
             memberParser.fillFromObject(memEntity, { entry: (parsedObj.feed.entry) });
 
-            entity.membercollection.push(memEntity);
+            entity.members.push(memEntity);
         }
     }
 }

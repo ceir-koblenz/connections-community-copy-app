@@ -17,30 +17,22 @@
                 </h5>
             </div>
             <div id="{{'collapse' + remoteApp.title}}" attr.aria-labelledby="{{'heading' + remoteApp.title}}"
-                class="collapse" data-parent="#remoteAppAccordion">
+                class="collapse" data-parent="#remoteAppAccordionNone">
                 <div class="card-body">
-                    <div *ngIf="selectedRemoteApplication && remoteApp.title === 'Wiki'">
-                        <div *ngIf="selectedRemoteApplication.name === 'Wiki'">
-                            <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>
-                        </div>
+                    <div *ngIf="(remoteApp.title === 'Wiki')">                        
+                        <app-wiki [remoteApplication]="remoteApp.link"></app-wiki>                        
                     </div>
                     <div *ngIf="(remoteApp.title === 'Files') || (remoteApp.title === 'Dateien')">
                         <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <div *ngIf="selectedRemoteApplication.name === 'Files'">
-                            <app-files [remoteApplication]="remoteApp.link"></app-files>
-                        </div>
+                        <app-files [remoteApplication]="remoteApp.link"></app-files>
                     </div>
                     <div *ngIf="(remoteApp.title === 'Aktivitäten') || (remoteApp.title === 'Activities')">
                         <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <div *ngIf="selectedRemoteApplication.name === 'Activities'">
-                            <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
-                        </div>
+                        <app-aktivitaeten [remoteApplication]="remoteApp.link"></app-aktivitaeten>
                     </div>
                     <div *ngIf="(remoteApp.title === 'Blog') || (remoteApp.title === 'Blog')">
                         <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
-                        <div *ngIf="selectedRemoteApplication.name === 'Blog'">
-                            <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
-                        </div>
+                        <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
                     </div>
                     <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>

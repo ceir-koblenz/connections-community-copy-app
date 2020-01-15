@@ -26,13 +26,33 @@ export class ApiClientService {
    * @memberof ApiClientService
    */
   async loadXML(url: URL): Promise<string> {
-    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    var uri = this._getFixedUriString(url);
     this.loggingService.LogInfo('Lade Daten von: ' + uri);
 
     // ResponseType "text" ist gewählt, um das atomXML Format der Connections-API unterstützten zu können
     var resultPromise = this.httpClient.get(uri, { responseType: "text" }).toPromise();
     try {
       var result: string = (await resultPromise).toString();
+      return result;
+    } catch (error) {
+      this.loggingService.LogError(`Fehler beim Laden der Daten. Statustext: ${error.statusText}`);
+      return '';
+    }
+  }
+
+  /**
+   * Lädt asynchron das Dokument der übergebenen URL.
+   * @param {URL} url Url zum Connections-Endpoint, der das zu ladende JSON liefert
+   * @returns {Promise<string>} Promise mit dem geladenen JSON-String
+   * @memberof ApiClientService
+   */
+  async loadJSON(url: URL): Promise<any> {
+    var uri = this._getFixedUriString(url);
+    this.loggingService.LogInfo('Lade Daten von: ' + uri);
+
+    var resultPromise = this.httpClient.get(uri, { responseType: "json" }).toPromise();
+    try {
+      var result = await resultPromise;
       return result;
     } catch (error) {
       this.loggingService.LogError(`Fehler beim Laden der Daten. Statustext: ${error.statusText}`);
@@ -56,7 +76,7 @@ export class ApiClientService {
    * @returns {Promise<string>} Promise mit dem response des PUT 
    */
   async putFile(binary: Blob, url: URL, contentType: string): Promise<HttpResponse<any>> {
-    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    var uri = this._getFixedUriString(url);
     this.loggingService.LogInfo('Sende File an: ' + uri);
 
     var resultPromise = this.httpClient.request("PUT", uri, { body: binary, observe: "response", headers: { "Content-Type": contentType } }).toPromise()
@@ -77,7 +97,7 @@ export class ApiClientService {
    * @returns {Promise<string>} Promise mit dem response des PUT 
    */
   async postFile(binary: Blob, url: URL, header: {}): Promise<HttpResponse<any>> {
-    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    var uri = this._getFixedUriString(url);
     this.loggingService.LogInfo('Sende File an: ' + uri);
 
     var resultPromise = this.httpClient.request("POST", uri, { body: binary, observe: "response", headers: header, responseType: "text" }).toPromise()
@@ -90,7 +110,7 @@ export class ApiClientService {
   }
 
   private async _sendXML(httpVerb: string, xmlString: string, url: URL): Promise<HttpResponse<any>> {
-    var uri = url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    var uri = this._getFixedUriString(url);
     this.loggingService.LogInfo('Sende Daten an: ' + uri);
 
     var resultPromise = this.httpClient.request(httpVerb, uri, { body: xmlString, observe: "response", headers: { "Content-Type": "application/atom+xml" }, responseType: "text" }).toPromise()
@@ -100,5 +120,9 @@ export class ApiClientService {
       this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}`);
       return null;
     }
+  }
+
+  private _getFixedUriString(url: URL): string {
+    return url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
   }
 }

@@ -1,0 +1,32 @@
+<div *ngIf="wiki.childWikis.length === 0" class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            <input type="checkbox" id={{wiki.uUid}} [checked]="wiki.shouldCopy"
+                (click)="setShouldCopy(wiki)">
+        </div>
+    </div>
+    <input type="text" disabled value="{{wiki.title}}" class="form-control" aria-label="Text input with checkbox">
+    <br />
+</div>
+<div *ngIf="wiki.childWikis.length > 0" id="{{'childWikiAppAccordion' + wiki.uUid}}" class="card">
+    <div class="card-header" id="heading">
+        <h5 class="mb-0">
+            <input type="checkbox" id={{wiki.uUid}} [checked]="wiki.shouldCopy || wiki.shouldCopyAll"
+                (click)="setShouldCopy(wiki)" />
+            <button class="btn btn-link" data-toggle="collapse" attr.data-target="{{'#collapse' + wiki.uUid}}"
+                aria-expanded="true" attr.aria-controls="{{'collapse' + wiki.uUid}}">
+                {{wiki.title}}
+            </button>
+        </h5>
+    </div>
+    <div id="{{'collapse' + wiki.uUid}}" attr.aria-labelledby="heading" class="collapse"
+        data-parent="#childWikiAppAccordion">
+        <div class="card-body">
+            <div *ngFor="let wiki of wiki.childWikis" class="mb-12">
+                <!-- Rekursiver Aufruf der möglichen weiteren Wiki Pages -->
+                <app-wiki-child [wiki]="wiki"></app-wiki-child>
+            </div>
+        </div>
+    </div>
+</div>
+<br />

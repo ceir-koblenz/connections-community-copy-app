@@ -3,13 +3,14 @@ import { Community } from '../models/community.model';
 import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
+import { FolderService } from './community/file/folder.service';
 import { MemberService } from './community/member/member.service';
 import { AktivitaetenService } from './community/aktivitaeten/aktivitaeten.service';
 import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
-import { LayoutService } from './community/layout.service';
 import { AktivitaetenCollectionXmlParser } from '../xml-parser/remote-applications/aktivitaeten-collection-xml-parser';
+import { LayoutService } from './community/layout/layout.service';
 
 
 /**
@@ -28,20 +29,22 @@ export class CreateTemplateService {
     private memberService: MemberService,
     private fileService: FileService,
     private layoutService: LayoutService,
-    private aktivitaetenService: AktivitaetenService) { }
+    private aktivitaetenService: AktivitaetenService,
+    private folderService: FolderService) { }
+
 
   async create(community: Community, processStatus: ProcessStatus): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
     result.success = true
 
-    // Count to copy elements TODO auslagern
+    // Count to copy elements TODO: auslagern
     processStatus.openCounter = 1; // Default value. Community wird ab hier immer kopiert.  
     const countToCopyElements = async () => {
       if (community.layouts.model.shouldCopy) {
         processStatus.openCounter += community.layouts.model.layouts.length
       }
 
-      if (community.miscApps.model.shouldCopy) {
+      if (community.miscApps && community.miscApps.model && community.miscApps.model.remoteApplications) {
         await asyncForEach(community.miscApps.model.remoteApplications, async (remoteApp) => {
           if (remoteApp.link.model && remoteApp.link.model.shouldCopy) {
             processStatus.openCounter += 1;
@@ -93,7 +96,7 @@ export class CreateTemplateService {
 
           // try copy files
           if ((remoteApp.link.name == "Files" || "Dateien") && remoteApp.link.model) {
-            var result = await this.fileService.create(newCommunityId, remoteApp.link.model);
+            var result = await this.folderService.create(newCommunityId, remoteApp.link.model);
             if (result && result.ok) {
               processStatus.countUp();
               processStatus.log("Dateien wurden kopiert");

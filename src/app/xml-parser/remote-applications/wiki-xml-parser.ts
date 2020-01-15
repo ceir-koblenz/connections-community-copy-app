@@ -12,11 +12,15 @@ import { Wiki } from 'src/app/models/remote-applications/wiki.model';
  */
 export class WikiXmlParser extends EntityXmlParserAbstract<any>{
     fillFromObject(entity: Wiki, parsedObj: any): void {
-        entity.uUid = parsedObj["td:uuid"];
-        entity.title = parsedObj.title["#text"];
-        entity.label = parsedObj["td:label"];  
-        entity.summary = parsedObj.summary["#text"];
-        entity.authorUuid = parsedObj.author["snx:userid"];      
-        entity.contentUrl = new EntityLink<any>(parsedObj.content["@_src"], "content");
+        var tParsedObj:any = parsedObj;
+        if (tParsedObj && parsedObj.entry !== undefined) {
+            tParsedObj = parsedObj.entry;
+        }
+        entity.uUid = tParsedObj["td:uuid"];
+        entity.title = tParsedObj.title["#text"];
+        entity.label = tParsedObj["td:label"];  
+        entity.summary = tParsedObj.summary["#text"];
+        entity.authorUuid = tParsedObj.author["snx:userid"];      
+        entity.contentUrl = new EntityLink<any>(tParsedObj.content["@_src"], "content");
     }
 }
