@@ -4,6 +4,8 @@ import { AktivitaetenCollectionXmlParser } from 'src/app/xml-parser/remote-appli
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { EntityLink } from 'src/app/common/entity-link';
+import { Aktivitaet } from 'src/app/models/remote-applications/aktivitaeten.model';
+import { AktivitaetenService } from 'src/app/services/community/aktivitaeten/aktivitaeten.service';
 
 @Component({
   selector: 'app-aktivitaeten',
@@ -16,22 +18,32 @@ export class AktivitaetenComponent implements OnInit {
 
   client: ApiClientService;
   Aktivitaeten: AktivitaetenCollection;
+  copyAll: boolean = false;
+  aktivitaeten
 
-  constructor(private apiClient: ApiClientService) {
+  constructor(private apiClient: ApiClientService,private aktivitaetenService:AktivitaetenService) {
     this.client = apiClient;
   }
 
   async ngOnInit() {
-    await this.loadAktivitaeten();    
+    await this.loadAktivitaeten(); 
   }
 
   async loadAktivitaeten() {
-    var xmlString = await this.client.loadXML(this.remoteApplication.url); // Raw XML laden
-
-    var xmlParser: AktivitaetenCollectionXmlParser = new AktivitaetenCollectionXmlParser()
-    this.Aktivitaeten = new AktivitaetenCollection();
-
-    xmlParser.fillFromXml(this.Aktivitaeten, xmlString);
+    this.Aktivitaeten = await this.aktivitaetenService.load(this.remoteApplication);
   }
 
+  setShouldCopyAll() {
+    this.copyAll = !this.copyAll;
+    // Iterate through all Aktivitaeten and update shouldCopy variable
+    this.Aktivitaeten.aktivitaeten.forEach(akt => {
+      akt.shouldCopy = this.copyAll;
+    });
+  }
+
+  setShouldCopy(akt) {
+    akt.shouldCopy = !akt.shouldCopy;
+  }
 }
+
+
