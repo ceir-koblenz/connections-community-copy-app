@@ -4,10 +4,12 @@ import { CommunityService } from './community/community.service';
 import { asyncForEach } from '../common/async-foreach';
 import { WikiService } from './community/wiki/wiki.service';
 import { MemberService } from './community/member/member.service';
+import { AktivitaetenService } from './community/aktivitaeten/aktivitaeten.service';
 import { FileService } from './community/file/file.service';
 import { ProcessStatus } from '../common/process-status';
 import { timeout } from '../common/timeout';
 import { LayoutService } from './community/layout.service';
+import { AktivitaetenCollectionXmlParser } from '../xml-parser/remote-applications/aktivitaeten-collection-xml-parser';
 
 
 /**
@@ -25,7 +27,8 @@ export class CreateTemplateService {
     private wikiService: WikiService,
     private memberService: MemberService,
     private fileService: FileService,
-    private layoutService: LayoutService) { }
+    private layoutService: LayoutService,
+    private aktivitaetenService: AktivitaetenService) { }
 
   async create(community: Community, processStatus: ProcessStatus): Promise<CreateTemplateResult> {
     var result = new CreateTemplateResult()
@@ -91,6 +94,16 @@ export class CreateTemplateService {
           // try copy files
           if ((remoteApp.link.name == "Files" || "Dateien") && remoteApp.link.model) {
             var result = await this.fileService.create(newCommunityId, remoteApp.link.model);
+            if (result && result.ok) {
+              processStatus.countUp();
+              processStatus.log("Dateien wurden kopiert");
+            }
+          }
+
+          // try copy aktivitäten
+
+          if (remoteApp.link.name == "Activities" && remoteApp.link.model) {
+            var result = await this.aktivitaetenService.create(newCommunityId, remoteApp.link.model);
             if (result && result.ok) {
               processStatus.countUp();
               processStatus.log("Dateien wurden kopiert");
