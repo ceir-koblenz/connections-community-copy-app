@@ -9,6 +9,20 @@ import { RemoteApplicationCollectionXmlParser } from 'src/app/xml-parser/remotea
 })
 export class RemoteApplicationService {
 
+  // Apps die mit Inhalt kopiert werden können
+  supportedRemoteApps: Array<String> = [
+    'Files',
+    'Dateien',
+    'Forums',
+    'Foren',
+    'Bookmarks',
+    'Lesezeichen',
+    'Wiki',
+    'Aktivitäten',
+    'Activities',
+    'Blog'
+  ] //TODO: was ist mit anderen Sprache außer Deutsch & Englisch?
+
   constructor(private client: ApiClientService) { }
 
   async loadCollection(link: EntityLink<RemoteApplicationCollection>): Promise<RemoteApplicationCollection> {
@@ -26,5 +40,15 @@ export class RemoteApplicationService {
     link.model = result;
 
     return result;
+  }
+
+  async removeUnsupportedApps(collection: RemoteApplicationCollection) {
+    var remoteApp = collection.remoteApplications;
+    for (let index = 0; index < remoteApp.length; index++) {
+      if (!this.supportedRemoteApps.includes(remoteApp[index].title)) {
+        remoteApp.splice(index, 1);
+        index--;
+      }
+    }
   }
 }

@@ -23,6 +23,7 @@ export class RemoteApplicationsComponent implements OnInit {
   async ngOnInit() {
     await this.loadRemoteApps();
     this.selectedRemoteApplication = this.remoteApps.model.remoteApplications[0].link;
+    this.service.removeUnsupportedApps(this.remoteApps.model);
   }
 
   setShouldCopyAll() {

@@ -11,6 +11,7 @@ import { getConfig } from 'src/app/app-config';
 import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
 import { WidgetXmlWriter } from '../widget/widget-xml-writer';
+import { WidgetService } from '../widget/widget.service';
 
 
 @Injectable({
@@ -19,7 +20,8 @@ import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 export class AktivitaetenService {
 
     constructor(private apiClient: ApiClientService,
-        private loggingService: LoggingService) { }
+        private loggingService: LoggingService,
+        private widgetService: WidgetService) { }
 
     async load(entity: EntityLink<RemoteApplication>): Promise<AktivitaetenCollection> {
         var xmlParser: AktivitaetenCollectionXmlParser = new AktivitaetenCollectionXmlParser();
@@ -49,10 +51,7 @@ export class AktivitaetenService {
         if (aktivitaetenToCopy.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Aktivitäten.')
             // Create a new wiki widget
-            var widgetWriter = new WidgetXmlWriter()
-            var xml = widgetWriter.toXmlString("Activities")
-            var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId)
-            result = await this.apiClient.postXML(xml, url)
+            result = await this.widgetService.createWidget(newCommunityId, "Aktivitäten");
             if (result.ok) {
                 this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
                 // Create entries/pages
@@ -60,7 +59,7 @@ export class AktivitaetenService {
                 const copyAktivitaeten = async () => {
                     await asyncForEach(aktivitaetenToCopy, async (aktivitaet) => {
                         var xml = aktivitaetenWriter.toXmlString(aktivitaet)
-                        url = new URL(getConfig().connectionsUrl + "/activities/service/atom2/activities?commUuid=" + newCommunityId +"&public=yes&authenticate=no")
+                        var url = new URL(getConfig().connectionsUrl + "/activities/service/atom2/activities?commUuid=" + newCommunityId +"&public=yes&authenticate=no")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Aktivität erstellt.')

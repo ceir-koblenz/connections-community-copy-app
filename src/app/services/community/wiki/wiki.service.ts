@@ -12,6 +12,7 @@ import { getConfig } from 'src/app/app-config';
 import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { HttpResponse } from '@angular/common/http';
 import { WikiXmlParser } from 'src/app/xml-parser/remote-applications/wiki-xml-parser';
+import { WidgetService } from '../widget/widget.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +20,8 @@ import { WikiXmlParser } from 'src/app/xml-parser/remote-applications/wiki-xml-p
 export class WikiService {
 
     constructor(private apiClient: ApiClientService,
-        private loggingService: LoggingService) { }
+        private loggingService: LoggingService,
+        private widgetService: WidgetService) { }
 
     async load(entity: EntityLink<RemoteApplication>): Promise<WikiCollection> {
 
@@ -86,28 +88,23 @@ export class WikiService {
         var wikis: Array<Wiki> = wikiCollection.wikis;
 
         // Create a new wiki widget
-        // todo auslagern in WidgetService
-        var widgetWriter = new WidgetXmlWriter();
-        var xml = widgetWriter.toXmlString("Wiki");
-        var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId);
-        result = await this.apiClient.postXML(xml, url);
-        if (result.ok) {
+        result = await this.widgetService.createWidget(newCommunityId, "Wiki");
+        if (result && result.ok) {
             this.loggingService.LogInfo('Wiki Widget erstellt.')
-            if (wikis.length > 0) {
-                this.loggingService.LogInfo('Start kopieren von Wikis.');
-                // Create entries/pages
-                const copyWikiEntries = async () => {
-                    await asyncForEach(wikis, async (wiki: Wiki) => {
-                        if (wiki.shouldCopy) {
-                            await this.createWiki(wiki, newCommunityId);
-                        }
-                    });
-                }
-                await copyWikiEntries();
-
-            }
         } else {
-            this.loggingService.LogInfo('Kopieren von Wikis fehlgeschlagen.')
+            this.loggingService.LogInfo('Erstellung Wiki Widget fehlgeschlagen.')
+        }
+        if (wikis.length > 0) {
+            this.loggingService.LogInfo('Start kopieren von Wikis.');
+            // Create entries/pages
+            const copyWikiEntries = async () => {
+                await asyncForEach(wikis, async (wiki: Wiki) => {
+                    if (wiki.shouldCopy) {
+                        await this.createWiki(wiki, newCommunityId);
+                    }
+                });
+            }
+            await copyWikiEntries();
         }
         return result;
     }

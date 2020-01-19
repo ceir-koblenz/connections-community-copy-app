@@ -3,6 +3,7 @@ import { EntityLink } from 'src/app/common/entity-link';
 import { WidgetCollection } from 'src/app/models/widget-collection.model';
 import { Widget } from 'src/app/models/widget.model';
 import { WidgetService } from 'src/app/services/community/widget/widget.service';
+import { RemoteApplicationCollection } from 'src/app/models/remoteapplication-collection.model';
 
 @Component({
   selector: 'app-widgets',
@@ -12,17 +13,25 @@ import { WidgetService } from 'src/app/services/community/widget/widget.service'
 export class WidgetsComponent implements OnInit {
 
   @Input() remoteWidgets: EntityLink<WidgetCollection>;
+  @Input() remoteApps: RemoteApplicationCollection;
 
-  remoteWidgetcollection: WidgetCollection;
+  remoteWidgetCollection: WidgetCollection;
   selectedWidget: EntityLink<Widget>;
 
   constructor(private widgetService: WidgetService) { }
 
   async ngOnInit() {
-    this.remoteWidgetcollection = await this.widgetService.loadCollection(this.remoteWidgets);
+    this.remoteWidgetCollection = await this.widgetService.loadCollection(this.remoteWidgets);
+    await this.widgetService.removeStandardWidgets(this.remoteWidgetCollection);
+    await this.widgetService.removeRemoteAppWidgets(this.remoteWidgetCollection, this.remoteApps);
   }
 
   onSelect(link) {
     this.selectedWidget = link;
   }
+
+  setShouldCopy(widget: Widget) {
+    widget.shouldCopy = !widget.shouldCopy
+  }
+
 }
