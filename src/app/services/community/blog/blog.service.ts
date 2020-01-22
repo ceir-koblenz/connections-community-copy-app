@@ -24,7 +24,7 @@ export class BlogService {
     async load(entity: EntityLink<RemoteApplication>, communityId: string): Promise<BlogCollection> {
         var xmlParser: BlogCollectionXmlParser = new BlogCollectionXmlParser();
         var blogs = new BlogCollection();
-        var url = new URL(getConfig().connectionsUrl + "blogs/" + communityId + "/feed/entries/atom?ps=10000&amp;lang=de_de");
+        var url = new URL(getConfig().connectionsUrl + "blogs/" + communityId + "/api/entries?ps=10000&amp;lang=de_de");
         var nextPageLink: URL = url;
 
         do {
@@ -64,7 +64,8 @@ export class BlogService {
                 const copyBlogEntries = async () => {
                     await asyncForEach(blogsToCopy, async (blog: Blog) => {
                         var xml = blogWriter.toXmlString(blog)
-                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/feed/entries/atom?ps=10000&amp;lang=de_de")
+                        
+                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/api/entries")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Blog Page erstellt.')
