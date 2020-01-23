@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Community } from 'src/app/models/community.model';
 import { CreateTemplateService, CreateTemplateResult } from 'src/app/services/create-template.service';
 import { ProcessStatus } from 'src/app/common/process-status';
-import { ProcessType, ProcessTypeLabels } from 'src/app/common/process-type';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,17 +13,6 @@ import { Location } from '@angular/common';
 export class CommunityWrapperComponent implements OnInit {
   public commId: string = null;
 
-  
-  /**
-   * Macht die verfügbaren ProcessTypes samt labels fürs Dropdown im Frontend verfügbar
-   *
-   * @memberof CommunityWrapperComponent
-   */
-  public processTypes = ProcessTypeLabels;
-  /**
-   * wird später verwendet, um Voreinstellungen bzgl. des Kopierens von Community-Teilelementen festzulegen
-   */
-  public selectedProcessType: ProcessType = ProcessType.createTemplate;
   /**
    * Die gerade geöffnete Community
    *
