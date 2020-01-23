@@ -26,6 +26,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { WikiChildComponent } from './components/remote-applications/wiki/wiki-child/wiki-child.component';
+import { ForumComponent } from './components/remote-applications/forum/forum.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { WikiChildComponent } from './components/remote-applications/wiki/wiki-c
     SubfolderComponent,
     FilterPipe,
     LayoutComponent,
-    WikiChildComponent
+    WikiChildComponent,
+    ForumComponent
   ],
   imports: [
     BrowserModule,
