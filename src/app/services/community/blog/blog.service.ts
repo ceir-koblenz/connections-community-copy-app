@@ -65,7 +65,7 @@ export class BlogService {
                     await asyncForEach(blogsToCopy, async (blog: Blog) => {
                         var xml = blogWriter.toXmlString(blog)
                         
-                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/api/entries")
+                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/api/entries?Content-Type=application/atom+xml")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Blog Page erstellt.')
