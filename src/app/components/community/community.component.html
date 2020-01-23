@@ -1,11 +1,11 @@
 <div *ngIf="!community">
-    <div class="spinner-grow text-dark" role="status">
+    <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
 <div *ngIf="community">
     <hr class="my-4">
-    <h4>Allgemeine Community Informationen</h4><br />
+    <h3>Allgemeine Community Informationen</h3><br />
     <div class="form-group">
         <label for="commTitle">Titel</label>
         <input type="text" id="commTitle" [(ngModel)]="community.title" class="form-control"

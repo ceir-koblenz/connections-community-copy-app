@@ -33,7 +33,7 @@
     </div>
     <div [hidden]="processRunning || processResult">
         <button class="btn btn-secondary" (click)="backClicked()">Zurück zur Übersicht</button><br/><br/>
-        <h4>Zu kopierende Community Elemente auswählen</h4>
+        <h2>Zu kopierende Community Elemente auswählen</h2>
         <hr class="my-4">
         <app-select-process-type></app-select-process-type>
         <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
