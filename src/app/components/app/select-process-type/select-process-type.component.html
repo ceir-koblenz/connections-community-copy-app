@@ -1,8 +1,9 @@
 <div>
     <label>Vorgang auswählen *</label>
-    <select required [(ngModel)]="selectedProcessType" (ngModelChange)="onChange($event)" class="custom-select custom-select-lg mb-3">
+    <select required [(ngModel)]="selectedProcessType" (ngModelChange)="onChange($event)" class="form-control">
         <option *ngFor="let element of processTypes | keyvalue" [ngValue]="element.key">
             {{element.value}}
         </option>
     </select>
 </div>
+
