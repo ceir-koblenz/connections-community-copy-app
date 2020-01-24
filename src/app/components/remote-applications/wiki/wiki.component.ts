@@ -43,6 +43,7 @@ export class WikiComponent implements OnInit {
     // Iterate through all wikis and update shouldCopy variable
     this.wikis.wikis.forEach((wiki: Wiki) => {
       wiki.shouldCopy = copy;
+      Wiki.markChilds(wiki, copy, true);
     });
   }
 
