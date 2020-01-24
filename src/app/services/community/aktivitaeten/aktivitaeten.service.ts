@@ -52,7 +52,12 @@ export class AktivitaetenService {
             this.loggingService.LogInfo('Start kopieren von Aktivitäten.')
             // Create a new wiki widget
             result = await this.widgetService.createWidget(newCommunityId, "Aktivitäten");
-            if (result.ok) {
+            if (result && result.ok) {
+                this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
+            } else {
+                this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
+            }
+            if (aktivitaetenToCopy.length > 0) {
                 this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
                 // Create entries/pages
                 var aktivitaetenWriter = new AktivitaetenXmlWriter()
@@ -69,8 +74,6 @@ export class AktivitaetenService {
                     });
                 }
                 await copyAktivitaeten();
-            } else {
-                this.loggingService.LogInfo('Kopieren von Aktivitäten fehlgeschlagen.')
             }
         }
         return result;

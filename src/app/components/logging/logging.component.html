@@ -8,7 +8,7 @@
                 </button>
               </h2>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
                 <!-- *ngIf="loggingservice.logs.length" -->
                 <table class="table">
@@ -20,7 +20,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor='let log of loggingservice.logs'
+                    <tr *ngFor='let log of loggingservice.logs | reverse'
                         [class.alert-danger]="log.LogLevel == 'Error'"
                         [class.alert-warning]="log.LogLevel == 'Warning'"
                         [class.alert-success]="log.LogLevel == 'Info'"

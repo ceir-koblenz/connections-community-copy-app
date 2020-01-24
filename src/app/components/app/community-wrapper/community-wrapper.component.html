@@ -35,12 +35,7 @@
         <button class="btn" style="background-color: #5b8ebc; color: #ffffff" (click)="backClicked()">Zurück zur Übersicht</button><br/><br/><br/>
         <h2>Zu kopierende Community Elemente auswählen</h2>
         <hr class="my-4">
-        <label>Vorgang auswählen *</label>
-        <select required [(ngModel)]="selectedProcessType" class="form-control">
-            <option *ngFor="let element of processTypes | keyvalue" [ngValue]="element.key">
-                {{element.value}}
-            </option>
-        </select>
+        <app-select-process-type></app-select-process-type>
         <app-community [hidden]="processRunning" [commId]="commId" [commLoaded]="commLoaded"></app-community>
         <hr class="my-4">
         <p class="font-weight-light">Beim Klick auf "Vorgang starten" wird die neue Community erstellt, ist aber nicht
