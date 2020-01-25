@@ -31,13 +31,82 @@
     <h4>Mitglieder der Community</h4><br />
     <app-members [members]="community.members"></app-members>
     <hr class="my-4">
-    <h4>Layout der Community</h4><br />
+    <h4>Layout der Community
+    <!-- Infobox -->
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="padding: 5px">
+        <i class="fa fa-info-circle"></i>
+      </button>
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Hinweis</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+              ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren,
+            </div>
+          </div>
+        </div>
+      </div>
+    </h4><br />
+
     <app-layout [layoutCollection]="community.layouts"></app-layout>
     <hr class="my-4">
-    <h4>Applications der Community</h4><br />
+    <h4>Applications der Community
+    <!-- Infobox -->
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="padding: 5px">
+        <i class="fa fa-info-circle"></i>
+      </button>
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Hinweis</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+              ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren,
+            </div>
+          </div>
+        </div>
+      </div>
+    </h4><br />
+
     <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
     <hr class="my-4">
-    <h4>Widgets der Community</h4><br />
+    <h4>Widgets der Community
+      <!-- Infobox -->
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="padding: 5px">
+        <i class="fa fa-info-circle"></i>
+      </button>
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Hinweis</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+              ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+              dolores et ea rebum. Stet clita kasd gubergren,
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </h4><br />
     <app-widgets *ngIf="community.miscApps.model" [remoteWidgets]="community.widgets"
         [remoteApps]="community.miscApps.model"></app-widgets>
 </div>

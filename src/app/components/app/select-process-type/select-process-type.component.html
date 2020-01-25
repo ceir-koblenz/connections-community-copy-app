@@ -1,5 +1,29 @@
 <div>
-    <label>Vorgang auswählen *</label>
+    <label>Vorgang auswählen *
+      <!-- Infobox -->
+          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="padding: 5px">
+            <i class="fa fa-info-circle"></i>
+          </button>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Hinweis</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+                dolores et ea rebum. Stet clita kasd gubergren,
+              </div>
+            </div>
+          </div>
+        </div>
+    </label>
+
+
     <select required [(ngModel)]="selectedProcessType" (ngModelChange)="onChange($event)" class="form-control">
         <option *ngFor="let element of processTypes | keyvalue" [ngValue]="element.key">
             {{element.value}}
