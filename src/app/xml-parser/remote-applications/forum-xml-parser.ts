@@ -12,7 +12,11 @@ import { Forum } from 'src/app/models/remote-applications/forum.model';
  */
 export class ForumXmlParser extends EntityXmlParserAbstract<any>{
     fillFromObject(entity: Forum, parsedObj: any): void {
-        entity.title = parsedObj.title["#text"];
-        entity.content = parsedObj.content["#text"];
+        var tParsedObj: any = parsedObj;
+        if (tParsedObj && parsedObj.entry !== undefined) {
+            tParsedObj = parsedObj.entry;
+        }
+        entity.title = tParsedObj.title["#text"];
+        entity.content = tParsedObj.content["#text"];
     }
 }

@@ -27,10 +27,18 @@ export class ForumService {
         var xmlParser: ForumCollectionXmlParser = new ForumCollectionXmlParser();
         var foren = new ForumCollection();
 
-        var url = new URL(getConfig().connectionsUrl + "forums/atom/topics?communityUuid=" + communityUUid);
+       // var url = new URL(getConfig().connectionsUrl + "forums/atom/topics?communityUuid=" + communityUUid);
+        var url = entity.url;
+        var nextPageLink: URL = entity.url;
 
-        var currentXml = await this.apiClient.loadXML(url);
-        xmlParser.fillFromXml(foren, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+        //xmlParser.fillFromXml(foren, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+
+        do {
+            var currentXml = await this.apiClient.loadXML(nextPageLink);
+            nextPageLink = xmlParser.getNextPageUrlHack(entity.url, currentXml);
+            xmlParser.fillFromXml(foren, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+        } while (nextPageLink !== null);
+
 
         entity.model = foren;
         return foren;

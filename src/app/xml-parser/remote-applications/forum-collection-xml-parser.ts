@@ -10,9 +10,10 @@ import { EntityFeedXmlParserAbstract } from '../entity-feed-xml-parser-abstract'
  * @class ForumCollectionXmlParser
  * @extends {EntityFeedXmlParserAbstract<any>}
  */
-export class ForumCollectionXmlParser extends EntityFeedXmlParserAbstract<any>{
+export class ForumCollectionXmlParser extends EntityFeedXmlParserAbstract<ForumCollection>{
     fillFromObject(entity: ForumCollection, parsedObj: any): void {
         var entries = parsedObj.feed.entry;
+        entity.id = parsedObj.feed['td:uuid'];
         var forumParser = new ForumXmlParser();
         if (Array.isArray(entries)) {
             entries.forEach(entry => {

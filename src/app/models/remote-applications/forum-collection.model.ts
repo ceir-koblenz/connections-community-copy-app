@@ -13,7 +13,7 @@ export class ForumCollection implements IEntityModel {
 
     shouldCopy: boolean;
     public foren: Array<Forum> = new Array<Forum>();
-    public id: String;
+    id: String;
     title: String;
     link: EntityLink<any>;
 

@@ -51,7 +51,9 @@
                         <div *ngIf="(remoteApp.title === 'Foren') || (remoteApp.title === 'Forums') || (remoteApp.title === 'Forum')">
                             <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                             <div *ngIf="selectedRemoteApplication.name === 'Foren'"></div>
+                            Test
                             <app-forum [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-forum>
+                            yay
                         </div>
                     </div> 
                     <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->

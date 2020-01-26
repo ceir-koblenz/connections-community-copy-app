@@ -18,13 +18,7 @@ export class Forum implements IEntityModel {
     contentUrl: EntityLink<any>;
     contentXml: String;
     uUid: String;
-	published: String;
-	updated: String;
-	authorUuid: String;
-	duedate: String;
-	ziel: String;
-	priority: String;
-	group: String;
+
 
     static async loadContentXml(client: ApiClientService, entity:Forum): Promise<String> {
 		var result = await client.loadXML(entity.contentUrl.url);
