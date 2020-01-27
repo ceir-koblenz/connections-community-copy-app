@@ -7,16 +7,13 @@ import { LoggingService } from '../../logging/logging.service';
 import { getConfig } from 'src/app/app-config';
 import { FileCollection } from 'src/app/models/remote-applications/file-collection.model';
 import { File } from 'src/app/models/remote-applications/file.model';
-import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FileService } from './file.service';
 import { FolderCollection } from 'src/app/models/remote-applications/folder-collection.model';
 import { FolderCollectionXmlParser } from 'src/app/xml-parser/remote-applications/folder-collection-xml-parser';
 import { Folder } from 'src/app/models/remote-applications/folder.model';
-import { async } from '@angular/core/testing';
 import { FolderXmlWriter } from './folder-xml-writer';
 import { FolderXmlParser } from 'src/app/xml-parser/remote-applications/folder-xml-parser';
-import { FileXmlParser } from 'src/app/xml-parser/remote-applications/file-xml-parser';
 import { FileMappingXmlWriter } from './file-mapping-xml-writer';
 
 @Injectable({
@@ -83,7 +80,7 @@ export class FolderService {
 
         do {
             var currentXml = await this.apiClient.loadXML(nextPageLink)
-            nextPageLink = xmlParser.getNextPageUrl(url, currentXml)
+            nextPageLink = xmlParser.getNextPageUrlHack(url, currentXml)
             xmlParser.fillFromXml(tFolders, currentXml)
         } while (nextPageLink !== null);
 
