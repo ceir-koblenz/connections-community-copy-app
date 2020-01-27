@@ -8,8 +8,8 @@
         <div *ngIf="wiki.childWikis.length === 0" class="input-group mb-3">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="checkbox" id={{wiki.uUid}} [checked]="copyAll || wiki.shouldCopy"
-                        (click)="setShouldCopy(wiki)">
+                    <input type="checkbox" id={{wiki.uUid}} [checked]="wiki.shouldCopy"
+                        (click)="toggleShouldCopy(wiki)">
                 </div>
             </div>
             <input type="text" disabled value="{{wiki.title}}" class="form-control"

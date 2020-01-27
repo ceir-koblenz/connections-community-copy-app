@@ -26,7 +26,12 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { WikiChildComponent } from './components/remote-applications/wiki/wiki-child/wiki-child.component';
+<<<<<<< HEAD
 import { ForumComponent } from './components/remote-applications/forum/forum.component';
+=======
+import { SelectProcessTypeComponent } from './components/app/select-process-type/select-process-type.component';
+import { ReversePipe } from './pipes/reverse.pipe';
+>>>>>>> master
 
 @NgModule({
   declarations: [
@@ -48,7 +53,12 @@ import { ForumComponent } from './components/remote-applications/forum/forum.com
     FilterPipe,
     LayoutComponent,
     WikiChildComponent,
+<<<<<<< HEAD
     ForumComponent
+=======
+    SelectProcessTypeComponent,
+    ReversePipe
+>>>>>>> master
   ],
   imports: [
     BrowserModule,
