@@ -75,7 +75,7 @@ export class CreateTemplateService {
     await countToCopyElements();
 
     var commResult = await this.commService.create(community)
-    if (commResult.ok) {
+    if (commResult && commResult.ok) {
       processStatus.countUp();
       processStatus.log("Community wurde erstellt");
 

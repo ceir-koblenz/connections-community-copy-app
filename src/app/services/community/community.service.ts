@@ -96,7 +96,7 @@ export class CommunityService {
     var url = new URL(getConfig().connectionsUrl + this.createPath)
 
     var result = await this.apiClient.postXML(xml, url)
-    if (result.ok) {
+    if (result && result.ok) {
       // get new community id
       var location = new URL(result.headers.get('Location'));
       var newCommunityId = location.searchParams.get("communityUuid")
@@ -104,7 +104,7 @@ export class CommunityService {
       if (community.logo.model.shouldCopy && community.logo.model.blob) {
         url = new URL(getConfig().connectionsUrl + "/communities/service/html/image?communityUuid=" + newCommunityId)
         result = await this.apiClient.putFile(community.logo.model.blob, url, "image/jpeg")
-        if (result.ok) {
+        if (result && result.ok) {
           this.loggingService.LogInfo('Logo update erfolgreich.')
         } else {
           this.loggingService.LogInfo('Logo update fehlgeschlagen.')
