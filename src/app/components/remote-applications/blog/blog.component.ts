@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { BlogCollectionXmlParser } from 'src/app/xml-parser/remote-applications/blog-collection-xml-parser';
 import { BlogCollection } from 'src/app/models/remote-applications/blog-collection.model';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { EntityLink } from 'src/app/common/entity-link';

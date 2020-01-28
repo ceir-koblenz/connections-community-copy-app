@@ -1,5 +1,4 @@
 import { EntityXmlParserAbstract } from '../entity-xml-parser-abstract';
-import { EntityLink } from '../../common/entity-link';
 import { Forum } from 'src/app/models/remote-applications/forum.model';
 
 /**

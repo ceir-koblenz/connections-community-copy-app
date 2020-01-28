@@ -11,6 +11,7 @@ import { EntityFeedXmlParserAbstract } from '../entity-feed-xml-parser-abstract'
  * @extends {EntityFeedXmlParserAbstract<any>}
  */
 export class ForumCollectionXmlParser extends EntityFeedXmlParserAbstract<ForumCollection>{
+    
     fillFromObject(entity: ForumCollection, parsedObj: any): void {
         var entries = parsedObj.feed.entry;
         entity.id = parsedObj.feed['td:uuid'];
@@ -21,7 +22,7 @@ export class ForumCollectionXmlParser extends EntityFeedXmlParserAbstract<ForumC
                 forumParser.fillFromObject(forum, entry);
                 entity.foren.push(forum);
             });
-        } else {
+        } else if (entries) {
             // Aufgrund der pagination kann es vorkommen, dass entries kein array sondern ein object ist.
             var forum = new Forum();
             forumParser.fillFromObject(forum, entries);

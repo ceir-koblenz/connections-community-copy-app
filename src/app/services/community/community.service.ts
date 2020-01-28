@@ -103,8 +103,8 @@ export class CommunityService {
       // try update community with old or new image if necessary
       if (community.logo.model.shouldCopy && community.logo.model.blob) {
         url = new URL(getConfig().connectionsUrl + "/communities/service/html/image?communityUuid=" + newCommunityId)
-        result = await this.apiClient.putFile(community.logo.model.blob, url, "image/jpeg")
-        if (result && result.ok) {
+        var imageResult = await this.apiClient.putFile(community.logo.model.blob, url, "image/jpeg")
+        if (imageResult && imageResult.ok) {
           this.loggingService.LogInfo('Logo update erfolgreich.')
         } else {
           this.loggingService.LogInfo('Logo update fehlgeschlagen.')

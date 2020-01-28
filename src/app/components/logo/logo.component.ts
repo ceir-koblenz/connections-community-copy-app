@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
 import { Logo } from 'src/app/models/logo.model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { rewriteConnectionsUrl } from 'src/app/dev-http-interceptor';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ProcessTypeService } from 'src/app/services/process-type.service';
+import { ProcessType } from 'src/app/common/process-type';
 
 @Component({
   selector: 'app-logo',
@@ -23,7 +24,7 @@ export class LogoComponent implements OnInit {
 
   private httpClient: HttpClient;
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, private processTypeService: ProcessTypeService) {
     this.httpClient = httpClient;
   }
 
@@ -36,6 +37,15 @@ export class LogoComponent implements OnInit {
     this.getImage(this.imageBlobUrl).subscribe(
       blob => this.logo.model.blob = blob
     )
+    this.processTypeService.getProcessType().subscribe(x => {
+      var doCopy = false;
+      if (x === ProcessType.copy) {
+        doCopy = true;
+      } else if (x === ProcessType.createTemplate) {
+        doCopy = false;
+      }
+      this.logo.model.shouldCopy = doCopy;
+    });
   }
 
   setShouldCopy() {
@@ -59,6 +69,8 @@ export class LogoComponent implements OnInit {
   */
   logoChanged(event: any) {
     if (event.target.files && event.target.files[0]) {
+      // Automatisch auf kopieren setzten, wenn ein Bild ausgewählt wurde
+      this.logo.model.shouldCopy = true;
       let file = event.target.files[0];
       let fr = new FileReader();
       fr.onloadend = (event: any) => {
