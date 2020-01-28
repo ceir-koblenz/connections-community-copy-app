@@ -142,19 +142,18 @@ export class FolderService {
     async create(newCommunityId: string, folderCollection: FolderCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
 
-        const startCreateFolder = async () => {
-            await asyncForEach(folderCollection.folders, async (folder: Folder) => {
-                if (folder.shouldCopy) {
-                    result = await this.createFolder(newCommunityId, folder);
-                    if (result.ok) {
-                        this.loggingService.LogInfo('Alle Folder wurde erstellt.')
-                    } else {
-                        this.loggingService.LogInfo('Alle Folder erstellen fehlgeschlagen.')
-                    }
+        // start creating folders & files reverse, because we won't start with filed without folder to prevent douplicate conflict
+        for (let index = folderCollection.folders.length - 1; index >= 0; index--) {
+            var folder:Folder = folderCollection.folders[index];
+            if (folder.shouldCopy) {
+                result = await this.createFolder(newCommunityId, folder);
+                if (result.ok) {
+                    this.loggingService.LogInfo('Alle Folder wurde erstellt.')
+                } else {
+                    this.loggingService.LogInfo('Alle Folder erstellen fehlgeschlagen.')
                 }
-            });
+            }            
         }
-        await startCreateFolder();
 
         return result;
     }
@@ -171,6 +170,7 @@ export class FolderService {
         }
 
         // Folder erstellen
+        var newFolder: Folder = null;
         if (!(folder.title === "Dateien ohne Ordner")) { // skip first folder (root)            
             var folderXmlWriter = new FolderXmlWriter();
             var xml = folderXmlWriter.toXmlString(folder);
@@ -179,7 +179,7 @@ export class FolderService {
                 this.loggingService.LogInfo('Folder wurde erstellt.')
                 // get new folder id
                 var folderXmlParser: FolderXmlParser = new FolderXmlParser();
-                var newFolder: Folder = new Folder();
+                newFolder = new Folder();
                 folderXmlParser.fillFromXml(newFolder, result.body);
             } else {
                 this.loggingService.LogInfo('Folder erstellen fehlgeschlagen.')
@@ -192,18 +192,20 @@ export class FolderService {
             newFileCollection.files = folder.files;
             newFileCollection.shouldCopy = true;
             result = await this.fileService.create(newCommunityId, newFileCollection);
-            if (result.ok) {
+            if (result && result.ok) {
                 this.loggingService.LogInfo('Alle Files wurde erstellt.')
-                const startMappingFilesIntoSubfolder = async () => {
-                    await asyncForEach(newFileCollection.files, async (tFile: File) => {
-                        var fileMappingXmlWriter: FileMappingXmlWriter = new FileMappingXmlWriter();
-                        var xml = fileMappingXmlWriter.toXmlString(tFile); // while create of files we receive the new uuid of the new file!
-                        url = new URL(getConfig().connectionsUrl + "/files/basic/api/collection/" + newFolder.uUid + "/feed");
-                        // map file into folder
-                        result = await this.apiClient.postXML(xml, url);
-                    });
+                if (newFolder != null) {
+                    const startMappingFilesIntoSubfolder = async () => {
+                        await asyncForEach(newFileCollection.files, async (tFile: File) => {
+                            var fileMappingXmlWriter: FileMappingXmlWriter = new FileMappingXmlWriter();
+                            var xml = fileMappingXmlWriter.toXmlString(tFile); // while create of files we receive the new uuid of the new file!
+                            url = new URL(getConfig().connectionsUrl + "/files/basic/api/collection/" + newFolder.uUid + "/feed");
+                            // map file into folder
+                            result = await this.apiClient.postXML(xml, url);
+                        });
+                    }
+                    await startMappingFilesIntoSubfolder();
                 }
-                await startMappingFilesIntoSubfolder();
             } else {
                 this.loggingService.LogInfo('Alle Folder erstellen fehlgeschlagen.')
             }
@@ -213,15 +215,17 @@ export class FolderService {
         if (folder.childFolders.length == 0) {
             return result; // Abbruchbedingung
         } else {
-            const startCreateSubfolder = async () => {
-                await asyncForEach(folder.childFolders, async (tFolder: Folder) => {
-                    if (tFolder.shouldCopy) {
-                        tFolder.parent = newFolder; // assign new folder as parent to create subfolder in next steps
-                        result = await this.createFolder(newCommunityId, tFolder);
-                    }
-                });
+            if (newFolder != null) {
+                const startCreateSubfolder = async () => {
+                    await asyncForEach(folder.childFolders, async (tFolder: Folder) => {
+                        if (tFolder.shouldCopy) {
+                            tFolder.parent = newFolder; // assign new folder as parent to create subfolder in next steps
+                            result = await this.createFolder(newCommunityId, tFolder);
+                        }
+                    });
+                }
+                await startCreateSubfolder();
             }
-            await startCreateSubfolder();
             return result;
         }
     }
