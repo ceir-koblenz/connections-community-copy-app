@@ -22,7 +22,7 @@ export class BlogCollectionXmlParser extends EntityFeedXmlParserAbstract<BlogCol
                 blogParser.fillFromObject(blog, entry);
                 entity.blogs.push(blog);
             });
-        } else {
+        } else if (entries) {
             // Aufgrund der pagination kann es vorkommen, dass entries kein array sondern ein object ist.
             var blog = new Blog();
             blogParser.fillFromObject(blog, entries);

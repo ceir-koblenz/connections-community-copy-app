@@ -104,10 +104,10 @@ export class CreateTemplateService {
       }
 
       // Create Widgets
-      await asyncForEach(community.widgets.model.Widgets, async (widget:Widget) => {
+      await asyncForEach(community.widgets.model.Widgets, async (widget: Widget) => {
         if (widget.shouldCopy) {
           var tResult = await this.widgetService.createWidget(newCommunityId, widget.title as string);
-          if (tResult && tResult.ok) {            
+          if (tResult && tResult.ok) {
             processStatus.countUp();
             processStatus.log(widget.title + ' Widget wurde hinzugefügt.');
           }
@@ -126,10 +126,8 @@ export class CreateTemplateService {
           // try copy blog
           if (remoteApp.link.name == "Blog" && remoteApp.link.model) {
             var result = await this.blogService.create(newCommunityId, remoteApp.link.model);
-            if (result.ok) {
-              processStatus.countUp();
-              processStatus.log("Blog wurde kopiert");
-            }
+            processStatus.countUp();
+            processStatus.log("Blog wurde kopiert");
           }
 
           // try copy files

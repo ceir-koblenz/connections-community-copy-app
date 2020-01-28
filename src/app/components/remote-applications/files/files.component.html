@@ -32,7 +32,10 @@
                         <app-subfolder [folder]="subfolder"></app-subfolder>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>            
+        </div>    
+        <div *ngIf="folder.folders.length === 0">
+            <p>Keine Dateien vorhanden.</p>
+        </div>    
     </div>
 </div>

@@ -47,6 +47,9 @@
                             <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                             <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
                         </div>
+                        <div *ngIf="(remoteApp.title === 'Lesezeichen') || (remoteApp.title === 'Bookmarks')">
+                            <p>Inhalte von Lesezeichen können nicht angezeigt werden.</p>
+                        </div>
                         <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                     </div>
                 </div>

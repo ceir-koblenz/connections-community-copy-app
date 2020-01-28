@@ -26,7 +26,10 @@ export class FilesComponent implements OnInit {
 
   async ngOnInit() {
     this.folder = await this.folderService.load(this.remoteApplication);
-
+    if (this.folder.folders[0].title == "Dateien ohne Ordner" && this.folder.folders[0].files.length === 1 && this.folder.folders[0].files[0].title === undefined) {
+      // if condition is true, there is actually no file existing.
+      this.folder.folders = new Array<Folder>();
+    }
     this.processTypeService.getProcessType().subscribe(x => {
       var doCopy = false;
       if (x === ProcessType.copy) {

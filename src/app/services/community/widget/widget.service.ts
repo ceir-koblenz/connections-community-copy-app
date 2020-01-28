@@ -76,7 +76,9 @@ export class WidgetService {
       for (let rIndex = 0; rIndex < remoteApps.length; rIndex++) {
         if (remoteApps[rIndex].title == widgets[wIndex].title) {
           widgets.splice(wIndex, 1);
-          wIndex--;
+          if (wIndex!=0) {
+            wIndex--;
+          }          
         }
       }      
     }
