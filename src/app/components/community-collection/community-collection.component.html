@@ -10,7 +10,7 @@
 <div *ngIf="collection.model" class="list-group">
     <ng-container *ngIf="collection.model.communities | filter : searchText : 'title' as filtered">
         <a *ngFor="let comm of filtered | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
-            [class.bg-secondary]="comm === selectedCommunity" class="list-group-item list-group-item-action"
+            class="list-group-item list-group-item-action"
             [routerLink]="['/community-selection/', comm.id]" routerLinkActive="active">
             {{comm.title}}
         </a>
