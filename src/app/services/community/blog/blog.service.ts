@@ -50,6 +50,12 @@ export class BlogService {
         }
         await getBlogsToCopy();
 
+        var blogsToCopyReverse: Array<Blog> = new Array<Blog>();
+        const getBlogsToCopyReverse = async () => {
+            blogsToCopyReverse = blogsToCopy.reverse();
+        }
+        await getBlogsToCopyReverse();
+        
         if (blogsToCopy.length > 0) {
             this.loggingService.LogInfo('Start Kopieren von Blogs.')
             // Create a new blog widget
