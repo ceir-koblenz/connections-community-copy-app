@@ -12,6 +12,7 @@ import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
 import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { WidgetService } from '../widget/widget.service';
+import { WidgetDefIds } from '../widget/widget-ids';
 
 
 @Injectable({
@@ -36,11 +37,11 @@ export class AktivitaetenService {
         return aktivitaeten;
     }
 
-    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection):Promise<HttpResponse<any>> {
+    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
         var aktivitaetenToCopy: Array<Aktivitaet> = new Array<Aktivitaet>();
         const getAktivitaetenToCopy = async () => {
-            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet:Aktivitaet) => {
+            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet: Aktivitaet) => {
                 if (aktivitaet.shouldCopy) {
                     aktivitaetenToCopy.push(aktivitaet);
                 }
@@ -50,31 +51,28 @@ export class AktivitaetenService {
 
         if (aktivitaetenToCopy.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Aktivitäten.')
-            // Create a new wiki widget
-            result = await this.widgetService.createWidget(newCommunityId, "Aktivitäten");
+
+            result = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.activities);
             if (result && result.ok) {
                 this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
             } else {
                 this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
             }
-            if (aktivitaetenToCopy.length > 0) {
-                this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
-                // Create entries/pages
-                var aktivitaetenWriter = new AktivitaetenXmlWriter()
-                const copyAktivitaeten = async () => {
-                    await asyncForEach(aktivitaetenToCopy, async (aktivitaet) => {
-                        var xml = aktivitaetenWriter.toXmlString(aktivitaet)
-                        var url = new URL(getConfig().connectionsUrl + "/activities/service/atom2/activities?commUuid=" + newCommunityId +"&public=yes&authenticate=no")
-                        result = await this.apiClient.postXML(xml, url)
-                        if (result.ok) {
-                            this.loggingService.LogInfo('Aktivität erstellt.')
-                        } else {
-                            this.loggingService.LogInfo('Aktivität erstellen fehlgeschlagen.')
-                        }
-                    });
-                }
-                await copyAktivitaeten();
+            // Create entries/pages
+            var aktivitaetenWriter = new AktivitaetenXmlWriter()
+            const copyAktivitaeten = async () => {
+                await asyncForEach(aktivitaetenToCopy, async (aktivitaet : Aktivitaet) => {
+                    var xml = aktivitaetenWriter.toXmlString(aktivitaet)
+                    var url = new URL(getConfig().connectionsUrl + "/activities/service/atom2/activities?commUuid=" + newCommunityId + "&public=yes&authenticate=no")
+                    result = await this.apiClient.postXML(xml, url)
+                    if (result.ok) {
+                        this.loggingService.LogInfo('Aktivität erstellt.')
+                    } else {
+                        this.loggingService.LogInfo('Aktivität erstellen fehlgeschlagen.')
+                    }
+                });
             }
+            await copyAktivitaeten();
         }
         return result;
     }

@@ -38,6 +38,5 @@
     <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
     <hr class="my-4">
     <h4>Widgets der Community</h4><br />
-    <app-widgets *ngIf="community.miscApps.model" [remoteWidgets]="community.widgets"
-        [remoteApps]="community.miscApps.model"></app-widgets>
+    <app-widgets *ngIf="community.miscApps.model" [remoteWidgets]="community.widgets"></app-widgets>
 </div>

@@ -6,7 +6,7 @@ import { WidgetCollectionXmlParser } from 'src/app/xml-parser/widget-collection-
 import { HttpResponse } from '@angular/common/http';
 import { WidgetXmlWriter } from './widget-xml-writer';
 import { getConfig } from 'src/app/app-config';
-import { RemoteApplicationCollection } from 'src/app/models/remoteapplication-collection.model';
+import { WidgetDefIds, defaultWidgets, appDependentWidgets } from './widget-ids';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +14,6 @@ import { RemoteApplicationCollection } from 'src/app/models/remoteapplication-co
 export class WidgetService {
 
   constructor(private client: ApiClientService) { }
-
-  // Widgets die bei jeder initialen Erstellung einer Community erstellt werden!
-  standardWidgets: Array<String> = [
-    'Files',
-    'Dateien',
-    'Tags',
-    'description',
-    'Forums',
-    'Foren',
-    'Bookmarks',
-    'Lesezeichen',
-    'ImportantBookmarks',
-    'MembersSummary',
-    'Status Updates',
-    'Statusaktualisierungen',
-    'RichContent',
-  ] //TODO: was ist mit anderen Sprache außer Deutsch & Englisch?
 
   /**
  * Lädt die Widgets anhand des übergebenen EntityLinks und gibt sie zurück
@@ -51,37 +34,63 @@ export class WidgetService {
     return result;
   }
 
-  async createWidget(communityId: string, title: string): Promise<HttpResponse<any>> {
-    // Create a new wiki widget
+  /**
+   * Erstellt das Widget der übergebenen WidgetId
+   *
+   * @param {string} communityId
+   * @param {WidgetDefIds} widgetId
+   * @returns {Promise<HttpResponse<any>>}
+   * @memberof WidgetService
+   */
+  async createWidget(communityId: string, widgetId: WidgetDefIds): Promise<HttpResponse<any>> {
+    return await this.createGenericWidget(communityId, widgetId);
+  }
+
+  /**
+   * Erstellt das Widget der übergebenen WidgetId. Akzeptiert die Id des Widgets als String, um auch
+   * custom Widgets, die nicht im WidgetDefIds-Enum deklariert sind, zu unterstützen.
+   *
+   * @param {string} communityId
+   * @param {string} widgetId
+   * @returns {Promise<HttpResponse<any>>}
+   * @memberof WidgetService
+   */
+  async createGenericWidget(communityId: string, widgetId: string): Promise<HttpResponse<any>> {
     var widgetWriter = new WidgetXmlWriter();
-    var xml = widgetWriter.toXmlString(title);
+    var xml = widgetWriter.toXmlString(widgetId);
     var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + communityId);
     return await this.client.postXML(xml, url);
   }
 
+  /**
+   * Entfert Widgets, die standardmäßig in einer neuen Community enthalten sind, aus der Collection,
+   * um zu vermeiden, dass versucht wird, Widgets doppelt hinzuzufügen.
+   *
+   * @param {WidgetCollection} collection
+   * @memberof WidgetService
+   */
   async removeStandardWidgets(collection: WidgetCollection) {
     var widgets = collection.Widgets;
     for (let index = 0; index < collection.Widgets.length; index++) {
-      if (this.standardWidgets.includes(widgets[index].title)) {
+      if (defaultWidgets.map(x => x as string).includes(widgets[index].widgetDefId)) {
         widgets.splice(index, 1);
         index--;
       }
     }
   }
 
-  async removeRemoteAppWidgets(collection: WidgetCollection, remoteAppsCollection: RemoteApplicationCollection) {
+  /**
+   * Entfernt Widgets, deren Funktion von einer installierten RemoteApp abhängig sind, aus der WidgetCollection.
+   *
+   * @param {WidgetCollection} collection
+   * @memberof WidgetService
+   */
+  async removeRemoteAppWidgets(collection: WidgetCollection) {
     var widgets = collection.Widgets;
-    var remoteApps = remoteAppsCollection.remoteApplications;
-    for (let wIndex = 0; wIndex < collection.Widgets.length; wIndex++) {
-      for (let rIndex = 0; rIndex < remoteApps.length; rIndex++) {
-        if (remoteApps[rIndex].title == widgets[wIndex].title) {
-          widgets.splice(wIndex, 1);
-          if (wIndex!=0) {
-            wIndex--;
-          }          
-        }
-      }      
+    for (let wIndex = collection.Widgets.length - 1; wIndex >= 0; wIndex--) {
+      if (appDependentWidgets.map(x => x as string).includes(widgets[wIndex].widgetDefId)) {
+        widgets.splice(wIndex, 1);
+      }
     }
   }
-
 }

@@ -13,6 +13,7 @@ import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { HttpResponse } from '@angular/common/http';
 import { WikiXmlParser } from 'src/app/xml-parser/remote-applications/wiki-xml-parser';
 import { WidgetService } from '../widget/widget.service';
+import { WidgetDefIds } from '../widget/widget-ids';
 
 @Injectable({
     providedIn: 'root'
@@ -88,7 +89,7 @@ export class WikiService {
         var wikis: Array<Wiki> = wikiCollection.wikis;
 
         // Create a new wiki widget
-        result = await this.widgetService.createWidget(newCommunityId, "Wiki");
+        result = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.wiki);
         if (result && result.ok) {
             this.loggingService.LogInfo('Wiki Widget erstellt.')
         } else {
