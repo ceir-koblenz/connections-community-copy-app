@@ -76,8 +76,7 @@ export class CreateTemplateService {
 
     var commResult = await this.commService.create(community)
     if (commResult && commResult.ok) {
-      processStatus.countUp();
-      processStatus.log("Community wurde erstellt");
+      processStatus.countUp("Community wurde erstellt");
 
       var location = new URL(commResult.headers.get("Location"))
       // get new community id
@@ -86,20 +85,17 @@ export class CreateTemplateService {
       if (community.layouts.model.shouldCopy) {
         var layoutResult = await this.layoutService.createCollection(newCommunityId, community.layouts.model);
         if (layoutResult) {
-          processStatus.log("Layouts wurden kopiert");
+          processStatus.countUp("Layouts wurden kopiert");
         } else {
-          processStatus.log("Beim Kopieren der Layouts sind Fehler aufgetreten");
-        }
-
-        processStatus.countUp();
+          processStatus.countUp("Beim Kopieren der Layouts sind Fehler aufgetreten");
+        }       
       }
 
       // Copy Member
       if (community.members.model) {
         var tResult = await this.memberService.create(newCommunityId, community.members.model);
         if (tResult && tResult.ok) {
-          processStatus.countUp();
-          processStatus.log('Member wurden hinzugefügt.');
+          processStatus.countUp('Member wurden hinzugefügt.');
         }
       }
 
@@ -108,8 +104,7 @@ export class CreateTemplateService {
         if (widget.shouldCopy) {
           var tResult = await this.widgetService.createWidget(newCommunityId, widget.title as string);
           if (tResult && tResult.ok) {
-            processStatus.countUp();
-            processStatus.log(widget.title + ' Widget wurde hinzugefügt.');
+            processStatus.countUp(widget.title + ' Widget wurde hinzugefügt.');
           }
         }
       })
@@ -119,53 +114,46 @@ export class CreateTemplateService {
           // try copy wiki
           if (remoteApp.shouldCopy && remoteApp.title == "Wiki" && remoteApp.link.model) {
             var result = await this.wikiService.create(newCommunityId, remoteApp.link.model);
-            processStatus.countUp();
-            processStatus.log("Wiki wurde kopiert");
+            processStatus.countUp("Wiki wurde kopiert");
           }
 
           // try copy blog
           if (remoteApp.link.name == "Blog" && remoteApp.link.model) {
             var result = await this.blogService.create(newCommunityId, remoteApp.link.model);
-            processStatus.countUp();
-            processStatus.log("Blog wurde kopiert");
+            processStatus.countUp("Blog wurde kopiert");
           }
 
           // try copy files
           if (remoteApp.shouldCopy && (remoteApp.title == "Files" || remoteApp.title == "Dateien") && remoteApp.link.model) {
             var result = await this.folderService.create(newCommunityId, remoteApp.link.model);
-            processStatus.countUp();
-            processStatus.log("Dateien wurden kopiert");
+            processStatus.countUp("Dateien wurden kopiert");
           }
 
           // try copy aktivitäten
           if (remoteApp.shouldCopy && (remoteApp.title == "Aktivitäten" || remoteApp.title == "Activities") && remoteApp.link.model) {
             var result = await this.aktivitaetenService.create(newCommunityId, remoteApp.link.model);
-            processStatus.countUp();
-            processStatus.log("Aktivitäten wurden kopiert");
+            processStatus.countUp("Aktivitäten wurden kopiert");
           }
 
           // try copy Blog
           if (remoteApp.shouldCopy && remoteApp.title == "Blog") {
             //TODO: bitte in create von blog.service aufnehmen!
             this.widgetService.createWidget(newCommunityId, remoteApp.title as string);
-            processStatus.countUp();
-            processStatus.log("Blog wurde kopiert");
+            processStatus.countUp("Blog wurde kopiert");
           }
 
           // try copy Lesezeichen
           if (remoteApp.shouldCopy && (remoteApp.title == "Lesezeichen" || remoteApp.title == "Bookmarks")) {
             //TODO: bitte in create von bookmark.service aufnehmen!
             this.widgetService.createWidget(newCommunityId, remoteApp.title as string);
-            processStatus.countUp();
-            processStatus.log("Lesezeichen wurden kopiert");
+            processStatus.countUp("Lesezeichen wurden kopiert");
           }
 
           // try copy Foren
           if (remoteApp.shouldCopy && (remoteApp.title == "Foren" || remoteApp.title == "Forums")) {
             //TODO: bitte in create von forum.service aufnehmen!
             this.widgetService.createWidget(newCommunityId, remoteApp.title as string);
-            processStatus.countUp();
-            processStatus.log("Foren wurden kopiert");
+            processStatus.countUp("Foren wurden kopiert");
           }
 
         })
