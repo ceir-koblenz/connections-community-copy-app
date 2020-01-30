@@ -20,7 +20,8 @@ export class RemoteApplicationService {
     'Wiki',
     'Aktivitäten',
     'Activities',
-    'Blog'
+    'Blog',
+    'Forum'
   ] //TODO: was ist mit anderen Sprache außer Deutsch & Englisch?
 
   constructor(private client: ApiClientService) { }

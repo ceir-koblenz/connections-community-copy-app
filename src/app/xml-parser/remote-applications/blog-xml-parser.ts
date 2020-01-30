@@ -11,8 +11,12 @@ import { Blog } from 'src/app/models/remote-applications/blog.model';
  */
 export class BlogXmlParser extends EntityXmlParserAbstract<any>{
     fillFromObject(entity: Blog, parsedObj: any): void {
-        entity.title = parsedObj.title["#text"];
-        entity.summary = parsedObj.summary["#text"];
-        entity.content = parsedObj.content["#text"];
+        var tParsedObj:any = parsedObj;
+        if (tParsedObj && parsedObj.entry !== undefined) {
+            tParsedObj = parsedObj.entry;
+        }
+        entity.title = tParsedObj.title["#text"];
+        entity.summary = tParsedObj.summary["#text"];
+        entity.content = tParsedObj.content["#text"];
     }
 }

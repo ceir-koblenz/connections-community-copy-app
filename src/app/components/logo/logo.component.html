@@ -6,7 +6,7 @@
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" value="" (click)="setShouldCopy(this)">
+                <input type="checkbox" [checked]="logo.model.shouldCopy" (click)="setShouldCopy(this)">
             </div>
         </div>
         <div class="custom-file">

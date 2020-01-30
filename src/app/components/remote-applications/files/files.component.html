@@ -1,5 +1,5 @@
 <div *ngIf="!folder">
-    <div class="spinner-grow text-dark" role="status">
+    <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
@@ -32,7 +32,10 @@
                         <app-subfolder [folder]="subfolder"></app-subfolder>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>            
+        </div>    
+        <div *ngIf="folder.folders.length === 0">
+            <p>Keine Dateien vorhanden.</p>
+        </div>    
     </div>
 </div>

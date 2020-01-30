@@ -14,6 +14,7 @@ import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
 import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { WidgetService } from '../widget/widget.service';
+import { WidgetDefIds } from '../widget/widget-ids';
 
 
 @Injectable({
@@ -39,11 +40,11 @@ export class AktivitaetenService {
         return aktivitaeten;
     }
 
-    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection):Promise<HttpResponse<any>> {
+    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
         var aktivitaetenToCopy: Array<Aktivitaet> = new Array<Aktivitaet>();
         const getAktivitaetenToCopy = async () => {
-            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet:Aktivitaet) => {
+            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet: Aktivitaet) => {
                 if (aktivitaet.shouldCopy) {
                     aktivitaetenToCopy.push(aktivitaet);
                 }
@@ -53,10 +54,11 @@ export class AktivitaetenService {
 
         if (aktivitaetenToCopy.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Aktivitäten.')
-            // Create a new wiki widget
-            result = await this.widgetService.createWidget(newCommunityId, "Activities");
-            if (result.ok) {
+
+            result = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.activities);
+            if (result && result.ok) {
                 this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
+
                 // Create entries/pages
                 var aktivitaetenWriter = new AktivitaetenXmlWriter()
                 const copyAktivitaeten = async () => {
@@ -77,7 +79,7 @@ export class AktivitaetenService {
                 }
                 await copyAktivitaeten();
             } else {
-                this.loggingService.LogInfo('Kopieren von Aktivitäten fehlgeschlagen.')
+                this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
             }
         }
         return result;

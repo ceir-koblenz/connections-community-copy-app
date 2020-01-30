@@ -1,25 +1,27 @@
 <div *ngIf="!blogs">
-    <div class="spinner-grow text-dark" role="status">
+    <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
 <div *ngIf="blogs">
-    <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" [checked]="copyAll"
-                    (click)="setShouldCopyAll()">
-                </div>
+    <div *ngIf="blogs.blogs.length > 0" class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" [checked]="copyAll" (click)="toggleShouldCopyAll()">
             </div>
-            <input type="text" disabled value="Alle Blogs" class="form-control" aria-label="Text input with checkbox">
         </div>
-        <div *ngFor="let blog of blogs.blogs" class="input-group mb-3">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="checkbox" id={{blog.UUid}} [checked]="copyAll || blog.shouldCopy" (click)="setShouldCopy(blog)">
-                </div>
+        <input type="text" disabled value="Alle Blogs" class="form-control" aria-label="Text input with checkbox">
+    </div>
+    <div *ngIf="blogs.blogs.length === 0">
+        <p>Kein Blogs vorhanden.</p>
+    </div>
+    <div *ngFor="let blog of blogs.blogs" class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" id={{blog.UUid}} [checked]="copyAll || blog.shouldCopy"
+                    (click)="toggleShouldCopy(blog)">
             </div>
-            <input type="text" disabled value="{{blog.title}}" class="form-control"
-                aria-label="Text input with checkbox">
         </div>
+        <input type="text" disabled value="{{blog.title}}" class="form-control" aria-label="Text input with checkbox">
+    </div>
 </div>

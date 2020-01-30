@@ -1,5 +1,5 @@
 <div *ngIf="!remoteApps.model">
-    <div class="spinner-grow text-dark" role="status">
+    <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
@@ -47,8 +47,17 @@
                             <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                             <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
                         </div>
+                        <div *ngIf="(remoteApp.title === 'Lesezeichen') || (remoteApp.title === 'Bookmarks')">
+                            <p>Inhalte von Lesezeichen können nicht angezeigt werden.</p>
+                        </div>
                         <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
-                    </div>
+                        <div *ngIf="(remoteApp.title === 'Foren') || (remoteApp.title === 'Forums') || (remoteApp.title === 'Forum')">
+                            <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
+                            <div *ngIf="selectedRemoteApplication.name === 'Foren'"></div>
+                            <app-forum [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-forum>
+                        </div>
+                    </div> 
+                    <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>
             </div>
             <br />

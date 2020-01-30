@@ -1,5 +1,5 @@
 <div *ngIf="!collection.model">
-    <div class="spinner-grow text-dark" role="status">
+    <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
@@ -10,12 +10,15 @@
 <div *ngIf="collection.model" class="list-group">
     <ng-container *ngIf="collection.model.communities | filter : searchText : 'title' as filtered">
         <a *ngFor="let comm of filtered | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
-            [class.bg-secondary]="comm === selectedCommunity" class="list-group-item list-group-item-action"
+            class="list-group-item list-group-item-action"
             [routerLink]="['/community-selection/', comm.id]" routerLinkActive="active">
             {{comm.title}}
         </a>
 
-        <ngb-pagination [collectionSize]="filtered.length" [(page)]="page" [pageSize]="pageSize"
-            [directionLinks]="false"></ngb-pagination>
+      <div class="pagination justify-content-center" style="padding-top: 10px">
+      <ngb-pagination [collectionSize]="filtered.length" [(page)]="page" [pageSize]="pageSize"
+            [directionLinks]="false">
+      </ngb-pagination>
+      </div>
     </ng-container>
 </div>
