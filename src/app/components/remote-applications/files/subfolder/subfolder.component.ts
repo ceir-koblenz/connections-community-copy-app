@@ -10,25 +10,27 @@ import { File } from 'src/app/models/remote-applications/file.model';
 export class SubfolderComponent implements OnInit {
 
   @Input() folder: Folder;
+  @Input() selectionChangedCallback: () => void;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  setShouldCopy(folder:Folder, file:File) {
+  setShouldCopy(folder: Folder, file: File) {
     file.shouldCopy = !file.shouldCopy;
     if (file.shouldCopy) {
       // check if it is necessary to copy folder
       folder.shouldCopy = folder.isFileSelected();
       Folder.markParentShouldCopy(folder, true);
-    }   
+    }
+    this.selectionChangedCallback();
   }
 
-  setShouldCopyFolder(xFolder:Folder) {
+  setShouldCopyFolder(xFolder: Folder) {
     // Iterate through all files and folders in folder and update shouldCopy variable
     Folder.markAllShouldCopy(xFolder, !xFolder.shouldCopy);
+    this.selectionChangedCallback();
   }
 
 }

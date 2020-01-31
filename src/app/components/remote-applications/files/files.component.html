@@ -29,13 +29,19 @@
                             aria-label="Text input with checkbox">
                     </div>
                     <div *ngFor="let subfolder of tFolder.childFolders">
-                        <app-subfolder [folder]="subfolder"></app-subfolder>
+                        <app-subfolder [folder]="subfolder" [selectionChangedCallback]="onSelectionChangedBound"></app-subfolder>
                     </div>
                 </div>
             </div>            
         </div>    
         <div *ngIf="folder.folders.length === 0">
             <p>Keine Dateien vorhanden.</p>
-        </div>    
+        </div>
+        <br>
+        <div *ngIf="selectedFileSizeMb">
+            <div class="alert alert-warning" role="alert">
+                Die ausgewählten Dateien haben eine Gesamtgröße von: {{selectedFileSizeMb}} MB.
+            </div>
+        </div>        
     </div>
 </div>

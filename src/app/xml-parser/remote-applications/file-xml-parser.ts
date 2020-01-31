@@ -23,6 +23,7 @@ export class FileXmlParser extends EntityXmlParserAbstract<any>{
             entity.summary = tParsedObj.summary["#text"];
             entity.authorUuid = tParsedObj.author["snx:userid"];
             entity.isInFolder = tParsedObj["td:isFiledInFolder"];
+            entity.mediaSize = tParsedObj["td:totalMediaSize"];
             var link_list = tParsedObj.link;
             link_list.forEach(link => {
                 // file download link

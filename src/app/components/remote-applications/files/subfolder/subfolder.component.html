@@ -23,7 +23,7 @@
             </div>
             <div *ngFor="let subfolder of folder.childFolders">
                 <!-- Rekursiver Aufruf der möglichen weiteren Subfolder -->
-                <app-subfolder [folder]="subfolder"></app-subfolder>
+                <app-subfolder [folder]="subfolder" [selectionChangedCallback]="onSelectionChanged"></app-subfolder>
             </div>
         </div>
     </div>
