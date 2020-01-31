@@ -36,6 +36,12 @@
         </div>    
         <div *ngIf="folder.folders.length === 0">
             <p>Keine Dateien vorhanden.</p>
-        </div>    
+        </div>
+        <br>
+        <div *ngIf="fileSizeService.sizeInKB !== 0">
+            <div class="alert alert-warning" role="alert">
+                Die ausgewählten Dateien haben eine Gesamtgröße von: {{fileSizeService.sizeInKB}} kB.
+            </div>
+        </div>        
     </div>
 </div>

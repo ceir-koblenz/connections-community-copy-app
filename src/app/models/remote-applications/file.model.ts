@@ -1,5 +1,6 @@
 import { IEntityModel } from '../i-entity-model';
 import { EntityLink } from 'src/app/common/entity-link';
+import { NumberValueAccessor } from '@angular/forms';
 
 /**
  * EntityModel einer File App.
@@ -19,5 +20,6 @@ export class File implements IEntityModel{
 	communityUuid:String;
 	fileUrl:string;
 	isInFolder:Boolean;
+	mediaSize: number;
     
 }

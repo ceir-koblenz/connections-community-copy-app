@@ -2,6 +2,7 @@ import { IEntityModel } from '../i-entity-model';
 import { EntityLink } from 'src/app/common/entity-link';
 import { File } from './file.model';
 import { ThrowStmt } from '@angular/compiler';
+import { FileSizeService } from 'src/app/services/community/file/file-size.service';
 
 /**
  * EntityModel eines Folders.
@@ -35,20 +36,21 @@ export class Folder implements IEntityModel {
 		return false;
 	}
 
-	static markAllShouldCopy(folder: Folder, value:boolean) {		
+	static markAllShouldCopy(fileSizeService:FileSizeService,folder: Folder, value:boolean) {		
 		// mark folder itself
 		folder.shouldCopy = value;
 		folder.shouldCopyAll = value;
 		// go through all files in this folder an set shouldCopy = !shouldCopy
 		for (let index = 0; index < folder.files.length; index++) {
 			folder.files[index].shouldCopy = value;
+			fileSizeService.changeSize(folder.files[index]);
 		}	
 		if (folder.childFolders.length == 0) {
 			return; // Abbruchbedingung, wenn keine childFolders mehr vorhanden sind
 		} else {
 			folder.shouldCopy = value;
 			for (let index = 0; index < folder.childFolders.length; index++) {
-				this.markAllShouldCopy(folder.childFolders[index], value);
+				this.markAllShouldCopy(fileSizeService,folder.childFolders[index], value);
 			}
 		}
 	}
