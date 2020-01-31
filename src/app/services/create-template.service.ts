@@ -131,7 +131,6 @@ export class CreateTemplateService {
 
           // try copy blog
           if (remoteApp.title == "Blog") {
-            await this.widgetService.createWidget(newCommunityId, WidgetDefIds.blog);
             var result = await this.blogService.create(newCommunityId, remoteApp.link.model);
             processStatus.countUp("Blog wurde kopiert");
           }

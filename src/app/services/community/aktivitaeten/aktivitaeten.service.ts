@@ -12,7 +12,6 @@ import { NodeService } from './node.service';
 import { getConfig } from 'src/app/app-config';
 import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
-import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { WidgetService } from '../widget/widget.service';
 import { WidgetDefIds } from '../widget/widget-ids';
 
