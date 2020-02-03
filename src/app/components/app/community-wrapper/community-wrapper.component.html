@@ -1,4 +1,4 @@
-<div class="jumbotron" style="margin-top: 20px;">
+<div class="jumbotron">
     <div [hidden]="!processResult || (processResult && !processResult.success)">
         <div class="alert alert-success" role="alert">
             <h4 class="alert-heading">Vorgang erfolgreich</h4>
@@ -25,14 +25,14 @@
             <ngb-progressbar type="success" [value]="processStatus.value" [striped]="true" [animated]="true">
                 {{processStatus.value > 0 ? (processStatus.value + "%") : ("")}}</ngb-progressbar>
         </p>
-        <ul style="list-style-type:none">
+        <ul>
             <li *ngFor="let log of processStatus.logList">
                 &#10003; {{log}}
             </li>
         </ul>
     </div>
     <div [hidden]="processRunning || processResult">
-        <button class="btn" style="background-color: #5b8ebc; color: #ffffff" (click)="backClicked()">Zurück zur Übersicht</button><br/><br/><br/>
+        <button class="btn btn-back" (click)="backClicked()">Zurück zur Übersicht</button><br/><br/><br/>
         <h2>Zu kopierende Community Elemente auswählen</h2>
         <hr class="my-4">
         <app-select-process-type></app-select-process-type>

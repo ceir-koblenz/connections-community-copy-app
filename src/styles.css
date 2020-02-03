@@ -1,21 +1,46 @@
+* {
+  font-family: Arial, Helvetica,sans-serif;
+}
+
 .progress {
     background-color: white;
 }
 
 .jumbotron {
-  font-family: Arial, Helvetica,sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding-top: 32px;
   padding-bottom: 32px;
 }
 
-.div {
-  font-family: Arial, Helvetica,sans-serif;
+.pagination.justify-content-center {
+  padding-top: 10px;
 }
 
-.table {
-  font-family: Arial, Helvetica,sans-serif;
+.btn-back {
+  background-color: #5b8ebc;
+  color: white;
 }
 
-.accordion {
-  font-family: Arial, Helvetica,sans-serif;
+.col-Logs {
+  width: 100%;
 }
+
+.card-header.custom {
+  background-color: #5b8ebc;
+  color: white;
+}
+
+.card-header.custom h5 {
+  margin: 4px;
+}
+
+#progressbar.custom {
+  list-style-type: none;
+
+}
+
+app-community-wrapper ul {
+  list-style-type: none;
+}
+
