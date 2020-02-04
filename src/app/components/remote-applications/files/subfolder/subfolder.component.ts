@@ -30,6 +30,7 @@ export class SubfolderComponent implements OnInit {
   setShouldCopyFolder(xFolder: Folder) {
     // Iterate through all files and folders in folder and update shouldCopy variable
     Folder.markAllShouldCopy(xFolder, !xFolder.shouldCopy);
+    Folder.markParentShouldCopy(xFolder, xFolder.shouldCopy);
     this.selectionChangedCallback();
   }
 
