@@ -12,6 +12,9 @@ import { getConfig } from 'src/app/app-config';
 import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { HttpResponse } from '@angular/common/http';
 import { BlogXmlParser } from 'src/app/xml-parser/remote-applications/blog-xml-parser';
+import { WidgetService } from '../widget/widget.service';
+import { Widget } from 'src/app/models/widget.model';
+import { WidgetDefIds } from '../widget/widget-ids';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +22,8 @@ import { BlogXmlParser } from 'src/app/xml-parser/remote-applications/blog-xml-p
 export class BlogService {
 
     constructor(private apiClient: ApiClientService,
-        private loggingService: LoggingService) { }
+        private loggingService: LoggingService,
+        private widgetService: WidgetService) { }
 
     async load(entity: EntityLink<RemoteApplication>, communityId: string): Promise<BlogCollection> {
         var xmlParser: BlogCollectionXmlParser = new BlogCollectionXmlParser();
@@ -38,34 +42,35 @@ export class BlogService {
         return blogs;
     }
 
-    async create(newCommunityId: string, blogCollection: BlogCollection):Promise<HttpResponse<any>> {
+    async create(newCommunityId: string, blogCollection: BlogCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
         var blogsToCopy: Array<Blog> = new Array<Blog>();
-        const getBlogsToCopy = async () => {
-            await asyncForEach(blogCollection.blogs, async (blog:Blog) => {
-                if (blog.shouldCopy) {
-                    blogsToCopy.push(blog);
-                }
-            });
+
+        await asyncForEach(blogCollection.blogs, async (blog: Blog) => {
+            if (blog.shouldCopy) {
+                blogsToCopy.push(blog);
+            }
+        });
+
+        var blogsToCopyReverse: Array<Blog> = new Array<Blog>();
+        const getBlogsToCopyReverse = async () => {
+            blogsToCopyReverse = blogsToCopy.reverse();
         }
-        await getBlogsToCopy();
+        await getBlogsToCopyReverse();
 
         if (blogsToCopy.length > 0) {
             this.loggingService.LogInfo('Start Kopieren von Blogs.')
             // Create a new blog widget
-            var widgetWriter = new WidgetXmlWriter()
-            var xml = widgetWriter.toXmlString("Blog")
-            var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + newCommunityId)
-            result = await this.apiClient.postXML(xml, url)
-            if (result.ok) {
+            var widgetResult = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.blog);
+            if (widgetResult.ok) {
                 this.loggingService.LogInfo('Blog Widget erstellt.')
                 // Create entries/pages
                 var blogWriter = new BlogXmlWriter()
                 const copyBlogEntries = async () => {
                     await asyncForEach(blogsToCopy, async (blog: Blog) => {
                         var xml = blogWriter.toXmlString(blog)
-                        
-                        url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/api/entries?Content-Type=application/atom+xml")
+
+                        var url = new URL(getConfig().connectionsUrl + "blogs/" + newCommunityId + "/api/entries?Content-Type=application/atom+xml")
                         result = await this.apiClient.postXML(xml, url)
                         if (result.ok) {
                             this.loggingService.LogInfo('Blog Page erstellt.')

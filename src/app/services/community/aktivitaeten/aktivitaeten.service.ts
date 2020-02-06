@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Aktivitaet } from 'src/app/models/remote-applications/aktivitaeten.model';
 import { AktivitaetenCollectionXmlParser } from 'src/app/xml-parser/remote-applications/aktivitaeten-collection-xml-parser';
+import { AktivitaetXmlParser } from 'src/app/xml-parser/remote-applications/aktivitaeten-xml-parser';
 import { EntityLink } from 'src/app/common/entity-link';
 import { RemoteApplication } from 'src/app/models/remoteapplication.model';
 import { asyncForEach } from 'src/app/common/async-foreach';
 import { ApiClientService } from '../../api-client/api-client.service';
 import { LoggingService } from '../../logging/logging.service';
 import { AktivitaetenXmlWriter } from './aktivitaeten-xml-writer';
+import { NodeService } from './node.service';
 import { getConfig } from 'src/app/app-config';
 import { HttpResponse } from '@angular/common/http';
 import { AktivitaetenCollection } from 'src/app/models/remote-applications/aktivitaeten-collection.model';
-import { WidgetXmlWriter } from '../widget/widget-xml-writer';
 import { WidgetService } from '../widget/widget.service';
+import { WidgetDefIds } from '../widget/widget-ids';
 
 
 @Injectable({
@@ -21,7 +23,8 @@ export class AktivitaetenService {
 
     constructor(private apiClient: ApiClientService,
         private loggingService: LoggingService,
-        private widgetService: WidgetService) { }
+        private widgetService: WidgetService,
+        private nodeService: NodeService) { }
 
     async load(entity: EntityLink<RemoteApplication>): Promise<AktivitaetenCollection> {
         var xmlParser: AktivitaetenCollectionXmlParser = new AktivitaetenCollectionXmlParser();
@@ -36,11 +39,11 @@ export class AktivitaetenService {
         return aktivitaeten;
     }
 
-    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection):Promise<HttpResponse<any>> {
+    async create(newCommunityId: string, aktivitaetenCollection: AktivitaetenCollection): Promise<HttpResponse<any>> {
         var result: HttpResponse<any>;
         var aktivitaetenToCopy: Array<Aktivitaet> = new Array<Aktivitaet>();
         const getAktivitaetenToCopy = async () => {
-            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet:Aktivitaet) => {
+            await asyncForEach(aktivitaetenCollection.aktivitaeten, async (aktivitaet: Aktivitaet) => {
                 if (aktivitaet.shouldCopy) {
                     aktivitaetenToCopy.push(aktivitaet);
                 }
@@ -50,15 +53,11 @@ export class AktivitaetenService {
 
         if (aktivitaetenToCopy.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Aktivitäten.')
-            // Create a new wiki widget
-            result = await this.widgetService.createWidget(newCommunityId, "Aktivitäten");
+
+            result = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.activities);
             if (result && result.ok) {
                 this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
-            } else {
-                this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
-            }
-            if (aktivitaetenToCopy.length > 0) {
-                this.loggingService.LogInfo('Aktivitäten Widget erstellt.')
+
                 // Create entries/pages
                 var aktivitaetenWriter = new AktivitaetenXmlWriter()
                 const copyAktivitaeten = async () => {
@@ -71,9 +70,15 @@ export class AktivitaetenService {
                         } else {
                             this.loggingService.LogInfo('Aktivität erstellen fehlgeschlagen.')
                         }
+                        var xmlParser: AktivitaetXmlParser = new AktivitaetXmlParser();
+                        var Activity = new Aktivitaet();
+                        xmlParser.fillFromXml(Activity, result.body);
+                        await this.nodeService.copyNodes(aktivitaet.uUid.toString(), Activity.uUid.toString(),Activity.idUnchanged);
                     });
                 }
                 await copyAktivitaeten();
+            } else {
+                this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
             }
         }
         return result;

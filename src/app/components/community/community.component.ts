@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
 import { getConfig } from './../../app-config';
 import { Community } from 'src/app/models/community.model';
 import { CommunityService } from 'src/app/services/community/community.service';
@@ -10,22 +9,45 @@ import { CommunityService } from 'src/app/services/community/community.service';
   styleUrls: ['./community.component.css']
 })
 export class CommunityComponent implements OnInit {
+  /**
+   * die Id der anzuzeigenden Community
+   *
+   * @type {string}
+   * @memberof CommunityComponent
+   */
   @Input() commId: string = null;
+  /**
+   * Callback-Funktion für das Ereignis, dass die Community geladen wurde.
+   *
+   * @memberof CommunityComponent
+   */
   @Input() commLoaded: (x: Community) => void = null
+  /**
+   * Die anzuzeigende Community; ist Null bis sie von der API geladen wird.
+   *
+   * @private
+   * @type {Community}
+   * @memberof CommunityComponent
+   */
   private community: Community = null;
 
-  constructor(private apiClient: ApiClientService,
-    private commService: CommunityService
-  ) { }
+  /**
+   *Creates an instance of CommunityComponent.
+   * @param {CommunityService} commService
+   * @memberof CommunityComponent
+   */
+  constructor(private commService: CommunityService) { }
 
+  /**
+   * Initialisierungslogik der Komponente; Lädt die Community anhand des Id-Parameters.
+   *
+   * @memberof CommunityComponent
+   */
   async ngOnInit() {
-    var apiUrl = getConfig().connectionsUrl;
-    var commUrl = new URL(apiUrl + "/communities/service/atom/community/instance?communityUuid=" + this.commId);
-    this.community = await this.commService.load(this.apiClient, commUrl);
+    this.community = await this.commService.loadById(this.commId);
     if (this.community) {
       // Default-Communitytitel mit Suffix setzen
       this.community.title += " - Copy"
-
       this.commLoaded(this.community)
     }
   }

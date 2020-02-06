@@ -17,7 +17,7 @@
     </div>
     <div id="remoteAppAccordion">
         <div *ngFor="let remoteApp of remoteApps.model.remoteApplications">
-            <div class="card" (click)="onSelect(remoteApp.link)">
+            <div class="card">
                 <div class="card-header" id="{{'heading' + remoteApp.title}}">
                     <h5 class="mb-0">
                         <input type="checkbox" id={{remoteApp.uUid}} [checked]="copyAllApps || remoteApp.shouldCopy"
@@ -47,8 +47,15 @@
                             <!--TODO: Checken wie das besser zu prüfen ist... Manchmal englisch manchmal deutsch?!-->
                             <app-blog [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-blog>
                         </div>
+                        <div *ngIf="(remoteApp.title === 'Lesezeichen') || (remoteApp.title === 'Bookmarks')">
+                            <p>Inhalte von Lesezeichen können nicht angezeigt werden.</p>
+                        </div>
                         <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
-                    </div>
+                        <div *ngIf="(remoteApp.title === 'Foren') || (remoteApp.title === 'Forums') || (remoteApp.title === 'Forum')">
+                            <app-forum [communityId]="communityId" [remoteApplication]="remoteApp.link"></app-forum>
+                        </div>
+                    </div> 
+                    <!-- TODO: Hier können weitere Remote Application Collections hinzugefügt werden -->
                 </div>
             </div>
             <br />

@@ -1,48 +1,57 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommunityCollection } from 'src/app/models/community-collection.model';
 import { EntityLink } from 'src/app/common/entity-link';
-import { ApiClientService } from 'src/app/services/api-client/api-client.service';
-import { Community } from 'src/app/models/community.model';
+import { CommunityService } from 'src/app/services/community/community.service';
 
-
+/**
+ * Komponente zum Anzeigen einer Community-Collection
+ *
+ * @export
+ * @class CommunityCollectionComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-community-collection',
   templateUrl: './community-collection.component.html',
   styleUrls: ['./community-collection.component.css']
 })
 export class CommunityCollectionComponent implements OnInit {
-  private _collection: EntityLink<CommunityCollection>;
-  private selectedCommunity: EntityLink<Community>;
-
+  /**
+   * Größe einer Page für das gepagete Darstellen von Communities
+   *
+   * @type {number}
+   * @memberof CommunityCollectionComponent
+   */
   public pageSize: number = 10;
+  /**
+   * Die aktuell anzuzeigende Page
+   *
+   * @type {number}
+   * @memberof CommunityCollectionComponent
+   */
   public page: number = 1;
 
   /**
-   * Setter-Funktion, um bei geändertem Input das Community-Feed lazy Laden zu können.
+   * EntityLink, welcher auf die anzuzeigende Communitycollection verweist.
    *
    * @memberof CommunityCollectionComponent
    */
-  @Input() set collection(value: EntityLink<CommunityCollection>) {
-    if(this._collection != value){
-      this._collection = value;
-      if (!value.entityLoaded()) {
-        CommunityCollection.load(this.apiClient, value);
-      }
-      this.selectedCommunity = null;
-    }
-  }
+  @Input() collection: EntityLink<CommunityCollection>
 
-  get collection(): EntityLink<CommunityCollection> {
-    return this._collection;
-  }
+  /**
+   *Creates an instance of CommunityCollectionComponent.
+   * @param {CommunityService} communityService
+   * @memberof CommunityCollectionComponent
+   */
+  constructor(private communityService: CommunityService) { }
 
-  constructor(private apiClient: ApiClientService) { }
-
-  onSelect(link: EntityLink<Community>) {
-    this.selectedCommunity = link;
-  }
-
+  /**
+   * Initialisierungslogik der Komponente; Lädt die Collection anhand des EntityLinks.
+   *
+   * @memberof CommunityCollectionComponent
+   */
   ngOnInit() {
+    this.communityService.loadCollection(this.collection);
   }
 
 }

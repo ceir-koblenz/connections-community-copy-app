@@ -26,6 +26,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { LayoutComponent } from './components/layout/layout.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { WikiChildComponent } from './components/remote-applications/wiki/wiki-child/wiki-child.component';
+import { ForumComponent } from './components/remote-applications/forum/forum.component';
 import { SelectProcessTypeComponent } from './components/app/select-process-type/select-process-type.component';
 import { ReversePipe } from './pipes/reverse.pipe';
 
@@ -49,6 +50,7 @@ import { ReversePipe } from './pipes/reverse.pipe';
     FilterPipe,
     LayoutComponent,
     WikiChildComponent,
+    ForumComponent,
     SelectProcessTypeComponent,
     ReversePipe
   ],

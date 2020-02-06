@@ -61,7 +61,7 @@ export class FileService {
                         // Create file
                         var url = new URL(getConfig().connectionsUrl + "/files/basic/api/communitylibrary/" + newCommunityId + "/feed")
                         result = await this.apiClient.postFile(blob, url, { "Slug": file.title, "X-Update-Nonce": nonceResult });
-                        if (result.ok) {
+                        if (result && result.ok) {
                             this.loggingService.LogInfo('File wurde erstellt.')
                             // parse new file and get new uuid
                             var fileXmlParser: FileXmlParser = new FileXmlParser();

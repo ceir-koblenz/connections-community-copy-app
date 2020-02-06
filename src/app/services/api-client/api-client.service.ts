@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { LoggingService } from 'src/app/services/logging/logging.service';
 
 /**
@@ -15,6 +15,12 @@ import { LoggingService } from 'src/app/services/logging/logging.service';
 export class ApiClientService {
   private httpClient: HttpClient
 
+  /**
+   *Creates an instance of ApiClientService.
+   * @param {HttpClient} httpClient
+   * @param {LoggingService} loggingService
+   * @memberof ApiClientService
+   */
   constructor(httpClient: HttpClient, private loggingService: LoggingService) {
     this.httpClient = httpClient;
   }
@@ -60,10 +66,26 @@ export class ApiClientService {
     }
   }
 
+  /**
+   * Sendet den übergebenen XmlString per POST an die API
+   *
+   * @param {string} xmlString
+   * @param {URL} url
+   * @returns {Promise<HttpResponse<any>>}
+   * @memberof ApiClientService
+   */
   async postXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
     return this._sendXML("POST", xmlString, url);
   }
 
+  /**
+   * Sendet den übergebenen XmlString per PUT an die API
+   *
+   * @param {string} xmlString
+   * @param {URL} url
+   * @returns {Promise<HttpResponse<any>>}
+   * @memberof ApiClientService
+   */
   async putXML(xmlString: string, url: URL): Promise<HttpResponse<any>> {
     return this._sendXML("PUT", xmlString, url);
   }
@@ -86,7 +108,6 @@ export class ApiClientService {
       this.loggingService.LogError(`Fehler beim Senden des Files. Statustext: ${error.statusText}`);
       return null;
     }
-
   }
 
   /**
@@ -109,6 +130,16 @@ export class ApiClientService {
     }
   }
 
+  /**
+   * Sendet den übergebenen XML-String mit dem spezifizierten HttpVerb an die API.
+   *
+   * @private
+   * @param {string} httpVerb http-Verb der auszuführenden Aktion (PUT, POST, ...)
+   * @param {string} xmlString zu sendender XMLString
+   * @param {URL} url
+   * @returns {Promise<HttpResponse<any>>}
+   * @memberof ApiClientService
+   */
   private async _sendXML(httpVerb: string, xmlString: string, url: URL): Promise<HttpResponse<any>> {
     var uri = this._getFixedUriString(url);
     this.loggingService.LogInfo('Sende Daten an: ' + uri);
@@ -117,12 +148,45 @@ export class ApiClientService {
     try {
       return <HttpResponse<any>>(await resultPromise)
     } catch (error) {
-      this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}`);
+      if (error instanceof HttpErrorResponse) {
+        var errorMessage = this._parseApiErrorMessage(error);
+        this.loggingService.LogError(`Fehler beim Senden der Daten. Statustext: ${error.statusText}. ` + errorMessage);
+      } else {
+        this.loggingService.LogError(`Fehler beim Senden der Daten.`);
+      }     
       return null;
     }
   }
 
+  /**
+   *Workaround für Encoding der Response der API... 
+   *
+   * @private
+   * @param {URL} url
+   * @returns {string}
+   * @memberof ApiClientService
+   */
   private _getFixedUriString(url: URL): string {
-    return url.toString().replace("&amp;", "&") // Workaround für Encoding der Response der API... 
+    return url.toString().replace("&amp;", "&")
+  }
+
+  /**
+   * Versucht, aus der übergebenen ErrorResponse die Message der Api herauszuparsen um ggf.
+   * weitere Fehlerinformationen zu erhalten.
+   * Der Member "message" liefert leider nur generische Informationen, daher lieber den Body des Errors parsen...
+   * @private
+   * @param {HttpErrorResponse} error
+   * @returns {string}
+   * @memberof ApiClientService
+   */
+  private _parseApiErrorMessage(error: HttpErrorResponse): string{
+    var result = '';
+    if(typeof (error.error) === 'string'){
+      const regex = /<message>(.*)<\/message>/s;
+      var match = regex.exec(error.error);
+      if(match) return match[1].trim();
+    }
+   
+    return result
   }
 }

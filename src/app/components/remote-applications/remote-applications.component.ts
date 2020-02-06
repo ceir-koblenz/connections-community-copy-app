@@ -13,8 +13,7 @@ export class RemoteApplicationsComponent implements OnInit {
 
   @Input() remoteApps: EntityLink<RemoteApplicationCollection>;
   @Input() communityId: string;
-  
-  selectedRemoteApplication: EntityLink<RemoteApplication>;
+
   copyAllApps: boolean = true;
 
   constructor(private service: RemoteApplicationService) {
@@ -22,7 +21,6 @@ export class RemoteApplicationsComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadRemoteApps();
-    this.selectedRemoteApplication = this.remoteApps.model.remoteApplications[0].link;
     this.service.removeUnsupportedApps(this.remoteApps.model);
   }
 
@@ -35,10 +33,6 @@ export class RemoteApplicationsComponent implements OnInit {
 
   setShouldCopy(remoteApp: RemoteApplication) {
     remoteApp.shouldCopy = !remoteApp.shouldCopy;
-  }
-
-  onSelect(link) {
-    this.selectedRemoteApplication = link;
   }
 
   async loadRemoteApps() {

@@ -1,5 +1,4 @@
 import { IEntityModel } from '../i-entity-model';
-
 /**
  * EntityModel einer Aktivitaet App.
  *
@@ -9,7 +8,7 @@ import { IEntityModel } from '../i-entity-model';
  */
 export class Aktivitaet implements IEntityModel {
 	shouldCopy: boolean;
-
+	idUnchanged: string;
 	uUid: String;
 	title: String;
 	published: String;

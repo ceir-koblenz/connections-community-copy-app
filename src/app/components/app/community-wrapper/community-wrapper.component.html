@@ -32,7 +32,7 @@
         </ul>
     </div>
     <div [hidden]="processRunning || processResult">
-        <button class="btn btn-back" (click)="backClicked()">Zurück zur Übersicht</button><br/><br/><br/>
+        <button class="btn btn-back" [routerLink]="['/service']">Zurück zur Übersicht</button><br /><br /><br />
         <h2>Zu kopierende Community Elemente auswählen</h2>
         <hr class="my-4">
         <app-select-process-type></app-select-process-type>

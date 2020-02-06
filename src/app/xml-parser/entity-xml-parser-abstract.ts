@@ -45,9 +45,10 @@ export abstract class EntityXmlParserAbstract<T extends IEntityModel> {
  * @memberof EntityXmlParserAbstract
  */
   fillFromXml(entity: T, xmlString: string): void {
-    var json = this.parse(xmlString);
-
-    this.fillFromObject(entity, json);
+    if (xmlString.length > 0) {
+      var json = this.parse(xmlString);
+      this.fillFromObject(entity, json);
+    }
   }
 
   /**

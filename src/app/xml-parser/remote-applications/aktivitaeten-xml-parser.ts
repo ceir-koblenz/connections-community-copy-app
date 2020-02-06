@@ -12,6 +12,7 @@ import { Aktivitaet } from 'src/app/models/remote-applications/aktivitaeten.mode
  */
 export class AktivitaetXmlParser extends EntityXmlParserAbstract<any>{
     fillFromObject(entity: Aktivitaet, parsedObj: any): void {
+        entity.idUnchanged = parsedObj.entry.id.toLocaleString();
         entity.uUid = parsedObj.entry["snx:activity"];
         entity.title = parsedObj.entry.title["#text"];
         entity.authorUuid = parsedObj.entry.author["snx:userid"]; 
