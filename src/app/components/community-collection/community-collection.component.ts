@@ -8,7 +8,7 @@ import { Community } from 'src/app/models/community.model';
 @Component({
   selector: 'app-community-collection',
   templateUrl: './community-collection.component.html',
-  styleUrls: ['./community-collection.component.sass']
+  styleUrls: ['./community-collection.component.css']
 })
 export class CommunityCollectionComponent implements OnInit {
   private _collection: EntityLink<CommunityCollection>;

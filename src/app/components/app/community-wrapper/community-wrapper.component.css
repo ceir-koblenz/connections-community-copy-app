@@ -1,0 +1,26 @@
+
+app-community-wrapper ul {
+  list-style-type: none;
+}
+
+.btn-back {
+  background-color: #5b8ebc;
+  color: white;
+  text-align-all: center;
+}
+
+#progressbar.custom {
+  list-style-type: none;
+
+}
+
+.progress {
+  background-color: white;
+}
+
+.jumbotron {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}

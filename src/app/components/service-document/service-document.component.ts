@@ -10,7 +10,7 @@ import { CommunityCollection } from 'src/app/models/community-collection.model';
 @Component({
   selector: 'app-service-document',
   templateUrl: './service-document.component.html',
-  styleUrls: ['./service-document.component.sass']
+  styleUrls: ['./service-document.component.css']
 })
 export class ServiceDocumentComponent implements OnInit {
 
