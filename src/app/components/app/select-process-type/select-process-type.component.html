@@ -1,5 +1,33 @@
-<div>
-    <label>Vorgang auswählen *</label>
+<div xmlns="http://www.w3.org/1999/html">
+  <label><h4>Vorgang auswählen
+      <!-- Infobox -->
+          <button type="button" class="btn" data-toggle="modal" data-target="#vorgangModal">
+            <i class="fa fa-info-circle fa-lg"></i>
+          </button>
+  </h4>
+      <div class="modal fade" id="vorgangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="vorgangLabel">H I N W E I S</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h6><b>Community kopieren</b></h6>
+              Die ausgewählte Community wird mit Inhalten kopiert die weiter unten auszuwählen sind.
+              <hr>
+              <h6><b>Template aus Community erstellen</b></h6>
+              Die neue Community wird über die selben Bestandteile verfügen wie die zu kopierende. <br>
+              Inhalte werden nicht kopiert.
+            </div>
+          </div>
+        </div>
+      </div>
+    </label>
+
+
     <select required [(ngModel)]="selectedProcessType" (ngModelChange)="onChange($event)" class="form-control">
         <option *ngFor="let element of processTypes | keyvalue" [ngValue]="element.key">
             {{element.value}}

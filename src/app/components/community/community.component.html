@@ -1,42 +1,140 @@
-<div *ngIf="!community">
-    <div class="spinner-border text-dark" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
+<div *ngIf="!community" xmlns="http://www.w3.org/1999/html">
+  <div class="spinner-border text-dark" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </div>
 <div *ngIf="community">
-    <hr class="my-4">
-    <h3>Allgemeine Community Informationen</h3><br />
-    <div class="form-group">
-        <label for="commTitle">Titel</label>
-        <input type="text" id="commTitle" [(ngModel)]="community.title" class="form-control"
-            placeholder="Community Titel">
-    </div>
-    <div class="form-group">
-        <label for="commType">Type:</label>
-        <select class="form-control" id="commType" [(ngModel)]="community.type">
-            <option value="private">Eingeschränkt</option>
-            <option value="public">Öffentlich</option>
-            <option value="publicInviteOnly">Moderiert</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="commDescHtml">Beschreibung</label>
-        <editor [init]="{
+  <hr class="my-4">
+  <h3>Allgemeine Community Informationen</h3><br />
+  <div class="form-group">
+    <label for="commTitle">Titel</label>
+    <input type="text" id="commTitle" [(ngModel)]="community.title" class="form-control" placeholder="Community Titel">
+  </div>
+  <div class="form-group">
+    <label for="commType">Type:</label>
+    <select class="form-control" id="commType" [(ngModel)]="community.type">
+      <option value="private">Eingeschränkt</option>
+      <option value="public">Öffentlich</option>
+      <option value="publicInviteOnly">Moderiert</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="commDescHtml">Beschreibung</label>
+    <editor [init]="{
             base_url: '/tinymce',
             suffix: '.min'}" [(ngModel)]="community.contentHtml" id="commDescHtml"></editor>
-    </div>
+  </div>
 
-    <app-logo [logo]="community.logo"></app-logo>
-    <hr class="my-4">
-    <h4>Mitglieder der Community</h4><br />
-    <app-members [members]="community.members"></app-members>
-    <hr class="my-4">
-    <h4>Layout der Community</h4><br />
-    <app-layout [layoutCollection]="community.layouts"></app-layout>
-    <hr class="my-4">
-    <h4>Applications der Community</h4><br />
-    <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
-    <hr class="my-4">
-    <h4>Widgets der Community</h4><br />
-    <app-widgets *ngIf="community.miscApps.model" [remoteWidgets]="community.widgets"></app-widgets>
+  <app-logo [logo]="community.logo"></app-logo>
+  <hr class="my-4">
+  <h4>Mitglieder der Community <button type="button" class="btn" data-toggle="modal" data-target="#mitgliederModal">
+      <i class="fa fa-info-circle fa-lg"></i>
+    </button>
+  </h4><br />
+  <div class="modal fade" id="mitgliederModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mitgliederLabel">H I N W E I S</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Mitglieder und Eigentümer/-innen der zu kopierenden Commmunity können zur neuen Community hinzugefügt werden.
+          <br>
+          <hr>
+          Der/Die Kopierende wird Eigentümer/-in der neuen Community.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-members [members]="community.members"></app-members>
+  <hr class="my-4">
+  <h4>Layout der Community
+    <!-- Infobox -->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn" data-toggle="modal" data-target="#layoutModal">
+      <i class="fa fa-info-circle fa-lg"></i>
+    </button>
+  </h4><br />
+
+  <!-- Modal -->
+  <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="layoutLabel">H I N W E I S</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Das Layout entscheidet über die Anordnung einzelner Communitybestandteile auf der Benutzeroberfläche. <br>
+          Das Layout hat keinen Einfluss auf Inhalte der Community.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <app-layout [layoutCollection]="community.layouts"></app-layout>
+  <hr class="my-4">
+  <h4>Applications der Community
+    <!-- Infobox -->
+
+    <button type="button" class="btn" data-toggle="modal" data-target="#applicationsModal">
+      <i class="fa fa-info-circle fa-lg"></i>
+    </button>
+  </h4><br />
+  <!-- Modal -->
+  <div class="modal fade" id="applicationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="applicationsLabel">H I N W E I S</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Es werden nur Applikationen angezeigt die in der zu kopierenden Community bereits verwendet werden. <br>
+          Zusätzliche Applikationen können nach dem Kopieren der Community hinzugefügt werden.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <app-remote-applications [communityId]="commId" [remoteApps]="community.miscApps"></app-remote-applications>
+  <hr class="my-4">
+  <h4>Widgets der Commmunity
+    <!-- Infobox -->
+    <button type="button" class="btn" data-toggle="modal" data-target="#widgetModal">
+      <i class="fa fa-info-circle fa-lg"></i>
+    </button>
+  </h4><br />
+  <!-- Modal -->
+  <div class="modal fade" id="widgetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="widgetLabel">H I N W E I S</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Es werden nur Wigets angezeigt die in der zu kopierenden Community bereits verwendet werden. <br>
+          Zusätzliche Widgets können nach dem Kopieren der Community hinzugefügt werden.
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-widgets *ngIf="community.miscApps.model" [remoteWidgets]="community.widgets"></app-widgets>
 </div>

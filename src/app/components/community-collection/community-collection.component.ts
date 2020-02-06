@@ -13,7 +13,7 @@ import { CommunityService } from 'src/app/services/community/community.service';
 @Component({
   selector: 'app-community-collection',
   templateUrl: './community-collection.component.html',
-  styleUrls: ['./community-collection.component.sass']
+  styleUrls: ['./community-collection.component.css']
 })
 export class CommunityCollectionComponent implements OnInit {
   /**

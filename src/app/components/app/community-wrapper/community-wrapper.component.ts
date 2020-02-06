@@ -15,7 +15,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-community-wrapper',
   templateUrl: './community-wrapper.component.html',
-  styleUrls: ['./community-wrapper.component.sass']
+  styleUrls: ['./community-wrapper.component.css']
 })
 export class CommunityWrapperComponent implements OnInit {
   /**

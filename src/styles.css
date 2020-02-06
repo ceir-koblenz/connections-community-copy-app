@@ -1,21 +1,4 @@
-.progress {
-    background-color: white;
-}
-
-.jumbotron {
-  font-family: Arial, Helvetica,sans-serif;
-  padding-top: 32px;
-  padding-bottom: 32px;
-}
-
-.div {
+* {
   font-family: Arial, Helvetica,sans-serif;
 }
 
-.table {
-  font-family: Arial, Helvetica,sans-serif;
-}
-
-.accordion {
-  font-family: Arial, Helvetica,sans-serif;
-}

@@ -1,0 +1,16 @@
+
+.card-header.custom {
+  background-color: #5b8ebc;
+  color: white;
+}
+
+.card-header.custom h5 {
+  margin: 4px;
+}
+
+.jumbotron {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
