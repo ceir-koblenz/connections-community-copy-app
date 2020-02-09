@@ -44,19 +44,19 @@ export class ForumTopicService {
             return result;
 
             }
-              async loadTopic(entity: EntityLink<RemoteApplication>, forumUUid: String): Promise<ForumTopicCollection> {
-                var xmlParser: ForumTopicCollectionXmlParser = new ForumTopicCollectionXmlParser();
-                var topics = new ForumTopicCollection();
-                var url = new URL(getConfig().connectionsUrl + "forums/atom/topics?forumUuid=" + forumUUid);
-                var nextPageLink: URL = url;
-                do {
-                    var currentXml = await this.apiClient.loadXML(nextPageLink);
-                    nextPageLink = xmlParser.getNextPageUrlHack(url, currentXml);
-                    xmlParser.fillFromXml(topics, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
-                } while (nextPageLink !== null);
+        async loadTopic(entity: EntityLink<RemoteApplication>, forumUUid: String): Promise<ForumTopicCollection> {
+            var xmlParser: ForumTopicCollectionXmlParser = new ForumTopicCollectionXmlParser();
+            var topics = new ForumTopicCollection();
+            var url = new URL(getConfig().connectionsUrl + "forums/atom/topics?forumUuid=" + forumUUid);
+            var nextPageLink: URL = url;
+            do {
+                var currentXml = await this.apiClient.loadXML(nextPageLink);
+                nextPageLink = xmlParser.getNextPageUrlHack(url, currentXml);
+                xmlParser.fillFromXml(topics, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
+            } while (nextPageLink !== null);
 
-                //entity.model = topics;  //conflict in create-template.service otherwise
-                return topics;
+            //entity.model = topics;  //conflict in create-template.service otherwise
+            return topics;
             }
 
 

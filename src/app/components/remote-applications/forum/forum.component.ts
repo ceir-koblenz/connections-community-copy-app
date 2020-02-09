@@ -66,9 +66,21 @@ export class ForumComponent implements OnInit {
     });
   }
 
-  toggleShouldCopy(forum: Forum) {
+  toggleShouldCopy(forum: Forum) { //used from forums
     forum.shouldCopy = !forum.shouldCopy;
-    forum.topics.shouldCopy = !forum.topics.shouldCopy;
+    forum.topics.topics.forEach((forumtopic: ForumTopic) => {
+      forumtopic.shouldCopy = forum.shouldCopy;
+    });
+  }
+
+  async setShouldCopy(forum: Forum, topic: ForumTopic) { // used from topics
+    topic.shouldCopy = !topic.shouldCopy;
+
+    // If topic is marked, associated forum has to be marked too
+    if (topic.shouldCopy) {
+      forum.shouldCopy = true;
+    }
+
   }
 
   _setShouldCopyAll() {
