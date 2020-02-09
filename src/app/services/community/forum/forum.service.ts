@@ -31,10 +31,7 @@ export class ForumService {
             var foren = new ForumCollection();
 
             var url = new URL(getConfig().connectionsUrl + "forums/atom/forums?communityUuid=" + communityUUid);
-            //var url = entity.url;
             var nextPageLink: URL = url;
-
-            //xmlParser.fillFromXml(foren, currentXml);  // RemoteApplicationCollection Instanz anhand des XMLs befüllen
 
             do {
                 var currentXml = await this.apiClient.loadXML(nextPageLink);
@@ -83,18 +80,13 @@ export class ForumService {
                             await asyncForEach(forum.topics.topics, async (tForumTopic: ForumTopic) => {
                                  await TopicService.createTopic(newForumId, tForumTopic);
                             });
-
                         }
-
                     } else {
                             this.loggingService.LogInfo('Forum Page erstellen fehlgeschlagen.');
                     }
-
-
-                    });
-                };
+                });
+            };
             await copyForumEntries();
-
         }
         return result;
     }
