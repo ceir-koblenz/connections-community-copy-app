@@ -7,6 +7,9 @@ import { ForumService } from 'src/app/services/community/forum/forum.service';
 import { Forum } from 'src/app/models/remote-applications/forum.model';
 import { ProcessTypeService } from 'src/app/services/process-type.service';
 import { ProcessType } from 'src/app/common/process-type';
+import { asyncForEach } from 'src/app/common/async-foreach';
+import { ForumTopicService } from 'src/app/services/community/forum/forumtopic.service';
+import { ForumTopic } from 'src/app/models/remote-applications/forumtopic.model';
 
 @Component({
   selector: 'app-forum',
@@ -20,9 +23,10 @@ export class ForumComponent implements OnInit {
 
   client: ApiClientService;
   foren: ForumCollection;
-  copyAll: boolean = false;
+  copyAll = false;
 
-  constructor(private apiClient: ApiClientService, private forumService: ForumService, private processTypeService: ProcessTypeService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private apiClient: ApiClientService, private forumService: ForumService, private forumTopicService: ForumTopicService, private processTypeService: ProcessTypeService) {
     this.client = apiClient;
   }
 
@@ -43,25 +47,37 @@ export class ForumComponent implements OnInit {
   }
 
   async loadForumFeed() {
-    this.foren = await this.forumService.load(this.remoteApplication, this.communityId);
+    this.foren = await this.forumService.loadForum(this.remoteApplication, this.communityId);
+
+    await asyncForEach(this.foren.foren, async (forum: Forum) => {
+      forum.topics = await this.forumTopicService.loadTopic(this.remoteApplication, forum.id);
+    });
+
   }
 
   toggleShouldCopyAll() {
     this.copyAll = !this.copyAll;
-    // Iterate through all wikis and update shouldCopy variable
-    this.foren.foren.forEach((forum:Forum) => {
+    // Iterate through all forums and associated topics and update shouldCopy variable
+    this.foren.foren.forEach((forum: Forum) => {
       forum.shouldCopy = this.copyAll;
+      forum.topics.topics.forEach((forumTopic: ForumTopic) => {
+        forumTopic.shouldCopy = this.copyAll;
+      });
     });
   }
 
-  toggleShouldCopy(forum:Forum) {
+  toggleShouldCopy(forum: Forum) {
     forum.shouldCopy = !forum.shouldCopy;
+    forum.topics.shouldCopy = !forum.topics.shouldCopy;
   }
 
   _setShouldCopyAll() {
-    // Iterate through all blogs and update shouldCopy variable
-    this.foren.foren.forEach((forum:Forum) => {
+    // Iterate through all forums and associated topics and update shouldCopy variable
+    this.foren.foren.forEach((forum: Forum) => {
       forum.shouldCopy = this.copyAll;
+      forum.topics.topics.forEach((forumTopic: ForumTopic) => {
+        forumTopic.shouldCopy = this.copyAll;
+      });
     });
   }
 
