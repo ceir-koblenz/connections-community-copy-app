@@ -1,5 +1,5 @@
 import { IEntityModel } from '../i-entity-model';
-import { Forum } from './forum.model';
+import { ForumTopic } from './forumtopic.model';
 import { EntityLink } from 'src/app/common/entity-link';
 
 /**
@@ -9,12 +9,11 @@ import { EntityLink } from 'src/app/common/entity-link';
  * @class ForumCollection
  * @implements {IEntityModel}
  */
-export class ForumCollection implements IEntityModel {
+export class ForumTopicCollection implements IEntityModel {
 
     shouldCopy: boolean;
-    foren: Array<Forum> = new Array<Forum>();
+    topics: Array<ForumTopic> = new Array<ForumTopic>();
     id: String;
     title: String;
     link: EntityLink<any>;
-
 }

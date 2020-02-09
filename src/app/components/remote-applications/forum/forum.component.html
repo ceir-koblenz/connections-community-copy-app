@@ -19,7 +19,7 @@
     <div *ngFor="let Forum of foren.foren" class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" id={{Forum.uUid}} [checked]="copyAll || Forum.shouldCopy" (click)="toggleShouldCopy(Forum)">
+                <input type="checkbox" id={{Forum.id}} [checked]="copyAll || Forum.shouldCopy" (click)="toggleShouldCopy(Forum)">
             </div>
         </div>
         <input type="text" disabled value="{{Forum.title}}" class="form-control" aria-label="Text input with checkbox">

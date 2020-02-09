@@ -16,6 +16,7 @@ import { WidgetService } from './community/widget/widget.service';
 import { Widget } from '../models/widget.model';
 import { WidgetDefIds } from './community/widget/widget-ids';
 import { LoggingService } from './logging/logging.service';
+import { ForumService } from './community/forum/forum.service';
 
 
 /**
@@ -37,6 +38,7 @@ export class CreateTemplateService {
     private layoutService: LayoutService,
     private aktivitaetenService: AktivitaetenService,
     private folderService: FolderService,
+    private forumService: ForumService,
     private widgetService: WidgetService) { }
 
 
@@ -156,7 +158,7 @@ export class CreateTemplateService {
 
           // try copy Foren
           if (remoteApp.title == "Foren" || remoteApp.title == "Forums") {
-            // TODO Foren auch tatsächlich kopieren...
+            var result = await this.forumService.createForum(newCommunityId, remoteApp.link.model);
             processStatus.countUp("Foren wurden kopiert");
           }
 

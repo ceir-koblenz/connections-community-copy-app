@@ -29,5 +29,6 @@ export class ForumCollectionXmlParser extends EntityFeedXmlParserAbstract<ForumC
             entity.foren.push(forum);
         }
     }
+
 }
 
