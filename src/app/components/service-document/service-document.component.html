@@ -10,31 +10,14 @@
         <h2>Zu kopierende Community auswählen</h2>
 
         <hr class="my-4">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header custom">
-                        <h5> {{serviceDoc.myCommunitiesLink.name}} </h5>
-                    </div>
-                    <div *ngIf="myCommunityCollection" class="card-body">
-                        <div class="card-body">
-                            <app-community-collection [collection]="myCommunityCollection">
-                            </app-community-collection>
-                        </div>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="card-header custom">
+                <h5> {{serviceDoc.myCommunitiesLink.name}} </h5>
             </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header custom">
-                        <h5>{{serviceDoc.allCommunitiesLink.name}}</h5>
-                    </div>
-                    <div *ngIf="allCommunityCollection" class="card-body">
-                      <div class="card-body">
-                        <app-community-collection [collection]="allCommunityCollection">
-                        </app-community-collection>
-                      </div>
-                    </div>
+            <div *ngIf="myCommunityCollection" class="card-body">
+                <div class="card-body">
+                    <app-community-collection [collection]="myCommunityCollection">
+                    </app-community-collection>
                 </div>
             </div>
         </div>

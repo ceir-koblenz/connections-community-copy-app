@@ -23,14 +23,6 @@ export class ServiceDocument implements IEntityModel {
      * @memberof ServiceDocument
      */
     myCommunitiesLink: EntityLink<CommunityCollection>
-    /**
-     *Link, mit dem sich die Liste aller zugänglichen Communities
-     in IBM Connections laden lassen
-     *
-     * @type {EntityLink<CommunityCollection>}
-     * @memberof ServiceDocument
-     */
-    allCommunitiesLink: EntityLink<CommunityCollection>
 
     /**
      * Lädt das ServiceDokument anhand der übergebenen Url von der Api.

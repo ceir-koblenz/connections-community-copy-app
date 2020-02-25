@@ -15,7 +15,6 @@ import { CommunityCollection } from 'src/app/models/community-collection.model';
 export class ServiceDocumentComponent implements OnInit {
 
   serviceDoc: ServiceDocument;
-  allCommunityCollection: EntityLink<CommunityCollection>;
   myCommunityCollection: EntityLink<CommunityCollection>;
 
   constructor(private apiClient: ApiClientService) {
@@ -28,8 +27,6 @@ export class ServiceDocumentComponent implements OnInit {
     // ergibt sich aus den Links.
     var serviceDocUrl = new URL(apiUrl + "communities/service/atom/service")
     this.serviceDoc = await ServiceDocument.load(this.apiClient, serviceDocUrl)
-
-    this.allCommunityCollection = this.serviceDoc.allCommunitiesLink;
     this.myCommunityCollection = this.serviceDoc.myCommunitiesLink;
 
   }
