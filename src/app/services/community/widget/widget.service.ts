@@ -7,11 +7,19 @@ import { HttpResponse } from '@angular/common/http';
 import { WidgetXmlWriter } from './widget-xml-writer';
 import { getConfig } from 'src/app/app-config';
 import { WidgetDefIds, defaultWidgets, appDependentWidgets } from './widget-ids';
+import { Widget } from 'src/app/models/widget.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WidgetService {
+  /**
+   * Cache für WidgetIds der Widgets, die zu einer Community bereits erstellt wurden
+   *
+   * @private
+   * @memberof WidgetService
+   */
+  private _widgetCache = new Map<string, Array<string>>();
 
   constructor(private client: ApiClientService) { }
 
@@ -23,12 +31,8 @@ export class WidgetService {
  * @memberof WidgetService
  */
   async loadCollection(link: EntityLink<WidgetCollection>): Promise<WidgetCollection> {
-    var xmlString = await this.client.loadXML(link.url);
-
-    var xmlParser: WidgetCollectionXmlParser = new WidgetCollectionXmlParser()
     var result = new WidgetCollection;
-
-    xmlParser.fillFromXml(result, xmlString);
+    await this._loadCollectionByUrl(link.url, result);
     link.model = result
 
     return result;
@@ -56,27 +60,26 @@ export class WidgetService {
    * @memberof WidgetService
    */
   async createGenericWidget(communityId: string, widgetId: string): Promise<HttpResponse<any>> {
+    if (!this._widgetCache.has(communityId)) {
+      await this._buildWidgetCache(communityId);
+    }
+
+    // Wenn widget schon vorhanden
+    var cached = this._widgetCache.get(communityId);
+    if (cached.indexOf(widgetId) > -1) {
+      return;
+    }
+
     var widgetWriter = new WidgetXmlWriter();
     var xml = widgetWriter.toXmlString(widgetId);
-    var url = new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + communityId);
-    return await this.client.postXML(xml, url);
-  }
+    var url = this._getUrl(communityId);
+    const apiResult = await this.client.postXML(xml, url);
 
-  /**
-   * Entfert Widgets, die standardmäßig in einer neuen Community enthalten sind, aus der Collection,
-   * um zu vermeiden, dass versucht wird, Widgets doppelt hinzuzufügen.
-   *
-   * @param {WidgetCollection} collection
-   * @memberof WidgetService
-   */
-  async removeStandardWidgets(collection: WidgetCollection) {
-    var widgets = collection.Widgets;
-    for (let index = 0; index < collection.Widgets.length; index++) {
-      if (defaultWidgets.map(x => x as string).includes(widgets[index].widgetDefId)) {
-        widgets.splice(index, 1);
-        index--;
-      }
+    if (apiResult.ok) {
+      this._widgetCache.get(communityId).push(widgetId);
     }
+
+    return apiResult
   }
 
   /**
@@ -85,12 +88,55 @@ export class WidgetService {
    * @param {WidgetCollection} collection
    * @memberof WidgetService
    */
-  async removeRemoteAppWidgets(collection: WidgetCollection) {
+  removeRemoteAppWidgets(collection: WidgetCollection) {
     var widgets = collection.Widgets;
     for (let wIndex = collection.Widgets.length - 1; wIndex >= 0; wIndex--) {
       if (appDependentWidgets.map(x => x as string).includes(widgets[wIndex].widgetDefId)) {
         widgets.splice(wIndex, 1);
       }
     }
+  }
+
+  /**
+  *Lädt die Widgets anhand der übergebenen Url
+  * @private
+  * @param {URL} url URL des Widget-Endpoints
+  * @param {WidgetCollection} collection zu befüllende WidgetCollection
+  * @memberof WidgetService
+  */
+  private async _loadCollectionByUrl(url: URL, collection: WidgetCollection): Promise<void> {
+    var xmlString = await this.client.loadXML(url);
+
+    var xmlParser: WidgetCollectionXmlParser = new WidgetCollectionXmlParser()
+    var result = new WidgetCollection;
+
+    xmlParser.fillFromXml(result, xmlString);
+  }
+
+  /**
+   *Ermittelt die URL des Widget-Endpoints für die Community der übergebenen ID
+   *
+   * @private
+   * @param {string} communityId
+   * @returns {URL}
+   * @memberof WidgetService
+   */
+  private _getUrl(communityId: string): URL {
+    return new URL(getConfig().connectionsUrl + "/communities/service/atom/community/widgets?communityUuid=" + communityId);
+  }
+
+  /**
+   * Initialisiert den Widgetcache für die Community der übergebenen Id; lädt deren Widgets und hinterlegt sie im Cache.
+   *
+   * @private
+   * @param {string} communityId
+   * @memberof WidgetService
+   */
+  private async _buildWidgetCache(communityId: string): Promise<void> {
+    var result = new WidgetCollection;
+
+    await this._loadCollectionByUrl(this._getUrl(communityId), result);
+
+    this._widgetCache.set(communityId, result.Widgets.map(x => x.widgetDefId));
   }
 }

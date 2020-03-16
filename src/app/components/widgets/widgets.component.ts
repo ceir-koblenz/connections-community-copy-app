@@ -20,7 +20,6 @@ export class WidgetsComponent implements OnInit {
 
   async ngOnInit() {
     this.remoteWidgetCollection = await this.widgetService.loadCollection(this.remoteWidgets);
-    await this.widgetService.removeStandardWidgets(this.remoteWidgetCollection);
     await this.widgetService.removeRemoteAppWidgets(this.remoteWidgetCollection);
   }
 
