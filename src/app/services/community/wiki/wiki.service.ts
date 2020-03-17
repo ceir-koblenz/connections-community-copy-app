@@ -93,7 +93,7 @@ export class WikiService {
         if (result && result.ok) {
             this.loggingService.LogInfo('Wiki Widget erstellt.')
         } else {
-            this.loggingService.LogInfo('Erstellung Wiki Widget fehlgeschlagen.')
+            this.loggingService.LogInfo('Es wurde kein Wiki Widget erstellt.')
         }
         if (wikis.length > 0) {
             this.loggingService.LogInfo('Start kopieren von Wikis.');

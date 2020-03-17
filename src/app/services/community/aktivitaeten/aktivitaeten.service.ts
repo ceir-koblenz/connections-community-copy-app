@@ -78,7 +78,7 @@ export class AktivitaetenService {
                 }
                 await copyAktivitaeten();
             } else {
-                this.loggingService.LogInfo('Erstellung Aktivitäten Widget fehlgeschlagen.')
+                this.loggingService.LogInfo('Es wurde kein Aktivitäten Widget erstellt.')
             }
         }
         return result;

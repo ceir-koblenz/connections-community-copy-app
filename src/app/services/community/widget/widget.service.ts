@@ -6,8 +6,7 @@ import { WidgetCollectionXmlParser } from 'src/app/xml-parser/widget-collection-
 import { HttpResponse } from '@angular/common/http';
 import { WidgetXmlWriter } from './widget-xml-writer';
 import { getConfig } from 'src/app/app-config';
-import { WidgetDefIds, defaultWidgets, appDependentWidgets } from './widget-ids';
-import { Widget } from 'src/app/models/widget.model';
+import { WidgetDefIds, appDependentWidgets } from './widget-ids';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +65,7 @@ export class WidgetService {
 
     // Wenn widget schon vorhanden
     var cached = this._widgetCache.get(communityId);
+
     if (cached.indexOf(widgetId) > -1) {
       return;
     }
@@ -108,9 +108,8 @@ export class WidgetService {
     var xmlString = await this.client.loadXML(url);
 
     var xmlParser: WidgetCollectionXmlParser = new WidgetCollectionXmlParser()
-    var result = new WidgetCollection;
 
-    xmlParser.fillFromXml(result, xmlString);
+    xmlParser.fillFromXml(collection, xmlString);
   }
 
   /**
