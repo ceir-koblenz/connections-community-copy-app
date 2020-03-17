@@ -10,6 +10,7 @@ import { File } from 'src/app/models/remote-applications/file.model';
 import { FileCollectionXmlParser } from 'src/app/xml-parser/remote-applications/file-collection-xml-parser';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { FileXmlParser } from 'src/app/xml-parser/remote-applications/file-xml-parser';
+import * as rfc2047 from 'rfc2047';
 
 @Injectable({
     providedIn: 'root'
@@ -60,8 +61,8 @@ export class FileService {
                         var blob = await this.httpClient.get(file.fileUrl, { responseType: 'blob' }).toPromise();
                         // Create file
                         var url = new URL(getConfig().connectionsUrl + "/files/basic/api/communitylibrary/" + newCommunityId + "/feed")
-                        // Make url-safe string for slug
-                        var slug = encodeURI(file.title.toString());
+                        // Encode Slug according to RFC2047 (no ASCII Characters in Header allowed)
+                        var slug = rfc2047.encode(file.title.toString());
                         result = await this.apiClient.postFile(blob, url, { "Slug": slug, "X-Update-Nonce": nonceResult });
                         if (result && result.ok) {
                             this.loggingService.LogInfo('File wurde erstellt.')

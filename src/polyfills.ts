@@ -57,7 +57,11 @@
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
-
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+(window as any).global = window;
+// Buffer-Polyfill ist notwendig für die rfc2047-library
+// @ts-ignore
+window.Buffer = window.Buffer || require('buffer').Buffer;
