@@ -62,7 +62,7 @@ export class BlogService {
             this.loggingService.LogInfo('Start Kopieren von Blogs.')
             // Create a new blog widget
             var widgetResult = await this.widgetService.createWidget(newCommunityId, WidgetDefIds.blog);
-            if (widgetResult.ok) {
+            if (widgetResult && widgetResult.ok) {
                 this.loggingService.LogInfo('Blog Widget erstellt.')
                 // Create entries/pages
                 var blogWriter = new BlogXmlWriter()

@@ -67,7 +67,7 @@ export class WidgetService {
     var cached = this._widgetCache.get(communityId);
 
     if (cached.indexOf(widgetId) > -1) {
-      return;
+      return new HttpResponse({status: 200});
     }
 
     var widgetWriter = new WidgetXmlWriter();
