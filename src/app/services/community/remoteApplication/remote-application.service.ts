@@ -15,8 +15,6 @@ export class RemoteApplicationService {
     'Dateien',
     'Forums',
     'Foren',
-    'Bookmarks',
-    'Lesezeichen',
     'Wiki',
     'Aktivitäten',
     'Activities',
