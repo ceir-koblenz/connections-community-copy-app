@@ -95,23 +95,25 @@ export class FolderService {
     private async loadSubfolder(folder: Folder) {
         // Load xml to check if there are subfolders
         var tFolders = new FolderCollection();
-        await this.loadFolder(tFolders, new URL(folder.feed_link));
-        // Abbruchbedingung
-        if (tFolders.folders.length === 0) {
-            return
-        } else {
-            // save subfolder to folder
-            folder.childFolders.push(...tFolders.folders);
-            // save parent in each subfolder
-            for (let index = 0; index < folder.childFolders.length; index++) {
-                folder.childFolders[index].parent = folder;
+        if (folder.feed_link) {
+            await this.loadFolder(tFolders, new URL(folder.feed_link));
+            // Abbruchbedingung
+            if (tFolders.folders.length === 0) {
+                return
+            } else {
+                // save subfolder to folder
+                folder.childFolders.push(...tFolders.folders);
+                // save parent in each subfolder
+                for (let index = 0; index < folder.childFolders.length; index++) {
+                    folder.childFolders[index].parent = folder;
+                }
+                const loadNewSubfolder = async () => {
+                    await asyncForEach(folder.childFolders, async (folder: Folder) => {
+                        await this.loadSubfolder(folder);
+                    });
+                }
+                await loadNewSubfolder();
             }
-            const loadNewSubfolder = async () => {
-                await asyncForEach(folder.childFolders, async (folder: Folder) => {
-                    await this.loadSubfolder(folder);
-                });
-            }
-            await loadNewSubfolder();
         }
     }
 
@@ -121,17 +123,19 @@ export class FolderService {
                 // skip first folder (root)
                 if (!(folder.title === "Dateien ohne Ordner")) {
                     // category=document loads folder on root level only!
-                    var nextPageLink = new URL(folder.feed_link + "?category=document");
-                    var tEntity = new EntityLink<any>(nextPageLink, "files");
-                    var files = await this.fileService.load(tEntity);
-                    if (files.files.length > 0 && files.files[0].uUid !== undefined) {
-                        folder.files.push(...files.files as any);
-                    }
-                    if (folder.childFolders.length > 0) {
-                        await this.loadFilesOfFolder(folder.childFolders);
-                    } else {
-                        // Abbruchbedingung
-                        return // wenn kein childFolder mehr vorhanden ist.
+                    if (folder.feed_link) {
+                        var nextPageLink = new URL(folder.feed_link + "?category=document");
+                        var tEntity = new EntityLink<any>(nextPageLink, "files");
+                        var files = await this.fileService.load(tEntity);
+                        if (files.files.length > 0 && files.files[0].uUid !== undefined) {
+                            folder.files.push(...files.files as any);
+                        }
+                        if (folder.childFolders.length > 0) {
+                            await this.loadFilesOfFolder(folder.childFolders);
+                        } else {
+                            // Abbruchbedingung
+                            return // wenn kein childFolder mehr vorhanden ist.
+                        }
                     }
                 }
             })

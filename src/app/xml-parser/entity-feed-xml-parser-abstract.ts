@@ -48,9 +48,42 @@ export abstract class EntityFeedXmlParserAbstract<T extends IEntityModel> extend
         // Quick & dirty ...                
         if (result.search == "?&amp;sI=11") {
           result.search = "?page=2";
+        } else if (result.search == "?category=document&amp;sI=11") {
+          result.search = "?category=document&page=2";
+        } else if (result.search == "?category=collection&amp;sI=11") {
+          result.search = "?category=collection&page=2";
         } else {
-          var pageNumber = parseInt(result.search.charAt(result.search.length - 1));
-          result.search = "?page=" + pageNumber;
+          if (result.search) {
+            var pageNumber = 0;
+            if (result.search.substr(0, 28) === "?category=document%3Fpage%3D") {
+              pageNumber = parseInt(result.search.charAt(result.search.length - 11));
+              if (pageNumber > 0) {
+                result.search = "?category=document&page=" + pageNumber;
+              } else {
+                result = null;
+                return;
+              }
+            } else if (result.search.substr(0, 30) === "?category=collection%3Fpage%3D") {
+              pageNumber = parseInt(result.search.charAt(result.search.length - 11));
+              if (pageNumber > 0) {
+                result.search = "?category=collection&page=" + pageNumber;
+              } else {
+                result = null;
+                return;
+              }
+            } else {
+              pageNumber = parseInt(result.search.charAt(result.search.length - 1));
+              if (pageNumber > 0) {
+                result.search = "?page=" + pageNumber;
+              } else {
+                result = null;
+                return;
+              }
+            }            
+          } else {
+            result = null;
+            return;
+          }
         }
         result.href = originUrl + result.search;
       }
