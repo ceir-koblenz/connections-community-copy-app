@@ -144,7 +144,7 @@ export class FolderService {
 
         // start creating folders & files reverse, because we won't start with filed without folder to prevent douplicate conflict
         for (let index = folderCollection.folders.length - 1; index >= 0; index--) {
-            var folder:Folder = folderCollection.folders[index];
+            var folder: Folder = folderCollection.folders[index];
             if (folder.shouldCopy) {
                 result = await this.createFolder(newCommunityId, folder);
                 if (result.ok) {
@@ -152,7 +152,7 @@ export class FolderService {
                 } else {
                     this.loggingService.LogInfo('Alle Folder erstellen fehlgeschlagen.')
                 }
-            }            
+            }
         }
 
         return result;
@@ -197,11 +197,13 @@ export class FolderService {
                 if (newFolder != null) {
                     const startMappingFilesIntoSubfolder = async () => {
                         await asyncForEach(newFileCollection.files, async (tFile: File) => {
-                            var fileMappingXmlWriter: FileMappingXmlWriter = new FileMappingXmlWriter();
-                            var xml = fileMappingXmlWriter.toXmlString(tFile); // while create of files we receive the new uuid of the new file!
-                            url = new URL(getConfig().connectionsUrl + "/files/basic/api/collection/" + newFolder.uUid + "/feed");
-                            // map file into folder
-                            result = await this.apiClient.postXML(xml, url);
+                            if (tFile.shouldCopy) {
+                                var fileMappingXmlWriter: FileMappingXmlWriter = new FileMappingXmlWriter();
+                                var xml = fileMappingXmlWriter.toXmlString(tFile); // while create of files we receive the new uuid of the new file!
+                                url = new URL(getConfig().connectionsUrl + "/files/basic/api/collection/" + newFolder.uUid + "/feed");
+                                // map file into folder
+                                result = await this.apiClient.postXML(xml, url);
+                            }
                         });
                     }
                     await startMappingFilesIntoSubfolder();
