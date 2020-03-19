@@ -34,7 +34,7 @@ export function rewriteConnectionsUrl(url: string): string {
         newUrl.protocol = "http"
         newUrl.port = "4200"
         newUrl.host = "localhost"
-        newUrl.pathname = "api/" + newUrl.pathname
+        newUrl.pathname = "api" + newUrl.pathname
 
         return newUrl.toString();
     }
