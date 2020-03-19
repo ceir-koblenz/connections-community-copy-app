@@ -29,7 +29,7 @@ export class CommunityComponent implements OnInit {
    * @type {Community}
    * @memberof CommunityComponent
    */
-  private community: Community = null;
+  community: Community = null;
 
   /**
    *Creates an instance of CommunityComponent.

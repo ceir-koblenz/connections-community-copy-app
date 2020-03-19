@@ -33,7 +33,7 @@ export class CommunityWrapperComponent implements OnInit {
    * @type {Community}
    * @memberof CommunityWrapperComponent
    */
-  private community: Community = null;
+  community: Community = null;
   /**
    * Flag, welches beschreibt, ob gerade ein Prozess (kopieren der community...) läuft
    *
@@ -55,7 +55,7 @@ export class CommunityWrapperComponent implements OnInit {
    * @type {ProcessStatus}
    * @memberof CommunityWrapperComponent
    */
-  private processStatus: ProcessStatus = new ProcessStatus();
+  processStatus: ProcessStatus = new ProcessStatus();
 
   /**
    *Creates an instance of CommunityWrapperComponent.
