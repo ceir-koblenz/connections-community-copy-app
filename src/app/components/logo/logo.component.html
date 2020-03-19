@@ -2,11 +2,11 @@
 <br />
 <img [src]="imageBlobUrl" class="rounded" alt="NoLogo" width="15%" height="15%" />
 <br /><br />
-<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+<form #form="ngForm" novalidate>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <div class="input-group-text">
-                <input type="checkbox" [checked]="logo.model.shouldCopy" (click)="setShouldCopy(this)">
+                <input type="checkbox" [checked]="logo.model.shouldCopy" (click)="setShouldCopy()">
             </div>
         </div>
         <div class="custom-file">
