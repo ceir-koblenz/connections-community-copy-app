@@ -29,6 +29,18 @@ import { WikiChildComponent } from './components/remote-applications/wiki/wiki-c
 import { ForumComponent } from './components/remote-applications/forum/forum.component';
 import { SelectProcessTypeComponent } from './components/app/select-process-type/select-process-type.component';
 import { ReversePipe } from './pipes/reverse.pipe';
+import { environment } from 'src/environments/environment';
+
+/**
+ * HttpInterceptor, welcher in der Entwicklungsumgebung die Connections-URL umschreibt,
+ * um CORS-Problematik zu umgehen und Authentifizierung per node-Proxy bereitstellt.
+ * Wird NICHT eingehangen, wenn die environment-Variable auf Production eingestellt ist.
+ */
+const devProviders = [{
+  provide: HTTP_INTERCEPTORS,
+  useClass: DevHttpInterceptor,
+  multi: true
+}];
 
 @NgModule({
   declarations: [
@@ -63,11 +75,7 @@ import { ReversePipe } from './pipes/reverse.pipe';
     EditorModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: DevHttpInterceptor,
-      multi: true
-    }
+    ...!environment.production ? devProviders : []
   ],
   bootstrap: [AppComponent]
 })

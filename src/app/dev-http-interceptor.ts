@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { getConfig } from './app-config';
+import { environment } from 'src/environments/environment';
 
 /**
  * Interceptor, welcher Requests gegen die Connections-Api über den internen Entwicklungs-Proxy leitet.
@@ -29,14 +30,18 @@ export class DevHttpInterceptor implements HttpInterceptor {
 }
 
 export function rewriteConnectionsUrl(url: string): string {
-    if (url.startsWith(getConfig().connectionsUrl.toString())) {
-        var newUrl = new URL(url);
-        newUrl.protocol = "http"
-        newUrl.port = "4200"
-        newUrl.host = "localhost"
-        newUrl.pathname = "api" + newUrl.pathname
+    if (!environment.production) {
+        if (url.startsWith(getConfig().connectionsUrl.toString())) {
+            var newUrl = new URL(url);
+            newUrl.protocol = "http"
+            newUrl.port = "4200"
+            newUrl.host = "localhost"
+            newUrl.pathname = "api" + newUrl.pathname
 
-        return newUrl.toString();
+            return newUrl.toString();
+        }
+        return url;
+    } else {
+        return url;
     }
-    return url;
 }

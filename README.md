@@ -10,10 +10,15 @@ Dies installiert alle in der package.json definierten Abhängigkeiten.
 Um die Anwendung lokal laufen lassen zu können, muss der Entwicklungs-Proxyserver konfiguriert werden.
 Dazu die Datei "proxy.conf.json.template" kopieren, die Kopie "proxy.conf.json" nennen und ein gültiges 
 Authentifizierungstoken eintragen. Dazu bspw. https://www.blitter.se/utils/basic-authentication-header-generator/ verwenden
-(Nutzername+Passwort sind die, mit denen ihr euch auf https://c55.bas.uni-koblenz.de einloggt. Diese entsprechen NICHT
+(Nutzername+Passwort sind die, mit denen ihr euch auf dem IBM Connections-Testsystem einloggt. Diese entsprechen NICHT
 euren Anmeldedaten bei uniconnect!)
 
-Gestartet wird der Entwicklungsserver mit `npm start`.
+Gestartet wird der Entwicklungsserver mit `npm start`. Bei Änderungen an den Quelldateien lädt die Anwendung automatisch neu.
+
+## Ändern der URL des Testsystems
+
+Die Url des Testsystems wird unter `src/assets` in der `config.json` eingetragen, sowie an 3 Stellen in der `proxy.conf.json`.
+Zudem ist, angepasst an das Testsystem, das Basic Auth Token erneut zu generieren (siehe oben)
 
 ## Projektstruktur
 
@@ -22,25 +27,15 @@ in `/components` zu verschieben. Hilfsklassen für bestimmte Funktionen (bspw. X
 Models, welche Entitäten der Connections-Api repräsentieren (bspw. eine Community), sind unter `/models` zu finden, Angular Services unter
 `/services`.
 
-## Development server
+## Build
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+`ng build` führt den Build aus; die erstellten Artefakte landen im `dist/`-Ordner. Das `--prod` Flag führt einen Produktivbuild aus.
+Die relative Pfad, unter dem die Anwendung produktiv gehostet wird, ist in der `angular.json` in der configuration des production-Builds
+unter `baseHref` einzutragen.
 
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
