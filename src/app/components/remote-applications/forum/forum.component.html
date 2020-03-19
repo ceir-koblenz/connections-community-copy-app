@@ -26,17 +26,17 @@
     <div *ngFor="let Forum of foren.foren" class="input-group mb-3">
 
         <!--If the Forum has no topics-->
-        <div *ngIf="Forum.topics.topics.length === 0" class="input-group mb-3"> 
+        <div *ngIf="Forum.topics.topics.length === 0" class="input-group mb-3">
             <div class="input-group-prepend">
                 <div class="input-group-text">
                     <input type="checkbox" id={{Forum.id}} [checked]="copyAll || Forum.shouldCopy" (click)="toggleShouldCopy(Forum)">
                 </div>
             </div>
             <input type="text" disabled value="{{Forum.title}}" class="form-control" aria-label="Text input with checkbox">
-        </div> 
+        </div>
 
         <!--otherwise Accordion to be able to select single topics-->
-        <div *ngIf="Forum.topics.topics.length > 0" id="{{'ForumTopicAppAccordion' + Forum.id}}" class="card">
+        <div *ngIf="Forum.topics.topics.length > 0" id="{{'ForumTopicAppAccordion' + Forum.id}}" class="card" >
             <div class="card-header" id="heading">
                <h5 class="mb-0">
                    <input type="checkbox" id={{Forum.id}} [checked]="Forum.shouldCopy || Forum.shouldCopyAll"
@@ -47,16 +47,15 @@
                    </button>
                 </h5>
             </div>
-            
+
             <div id="{{'collapse' + Forum.id}}" attr.aria-labelledby="heading" class="collapse"
-            data-parent="#ForumTopicAppAccordion"> 
+            data-parent="#ForumTopicAppAccordion">
                 <div class="card-body">
                     <!--display of the single topics-->
-                    <div *ngFor="let forumTopic of Forum.topics.topics" class="mb-12">
+                    <div *ngFor="let forumTopic of Forum.topics.topics" class="input-group mb-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                            <input type="checkbox" id={{forumTopic.id}} [checked]="forumTopic.shouldCopy"
-                            (click)="setShouldCopy(Forum, forumTopic)">
+                                <input type="checkbox" id={{forumTopic.id}} [checked]="forumTopic.shouldCopy" (click)="setShouldCopy(Forum, forumTopic)">
                             </div>
                         </div>
                         <input type="text" disabled value="{{forumTopic.title}}" class="form-control" aria-label="Text input with checkbox">
@@ -64,6 +63,6 @@
                     </div>
                 </div>
             </div>
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>
