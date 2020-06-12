@@ -57,7 +57,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }                
               ],
-              "baseHref": "/community-templating/",
+              "baseHref": "/fgbas/communitytemplating.nsf/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
