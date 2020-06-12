@@ -2,7 +2,7 @@
  
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
-## Projekt einrichten
+## Projekt lokal einrichten zum Entwickeln
 
 Nachdem das Repository geklont wurde, im Repositoryverzeichnis über die Konsole `npm install` ausführen.
 Dies installiert alle in der package.json definierten Abhängigkeiten.
@@ -29,8 +29,8 @@ Models, welche Entitäten der Connections-Api repräsentieren (bspw. eine Commun
 
 ## Build
 
-`ng build` führt den Build aus; die erstellten Artefakte landen im `dist/`-Ordner. Das `--prod` Flag führt einen Produktivbuild aus.
-Die relative Pfad, unter dem die Anwendung produktiv gehostet wird, ist in der `angular.json` in der configuration des production-Builds
+`ng build --prod` führt den Build aus; die erstellten Artefakte landen im `dist/`-Ordner. Das `--prod` Flag führt einen Produktivbuild aus.
+Der relative Pfad, unter dem die Anwendung produktiv gehostet wird, ist in der `angular.json` in der Configuration des production-Builds
 unter `baseHref` einzutragen.
 
 ## Code scaffolding
