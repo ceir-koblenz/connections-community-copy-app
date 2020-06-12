@@ -1,0 +1,8 @@
+{
+    "/api/*": {
+      "target": "https://koco.bas.uni-koblenz.de",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {"^/api" : ""}
+    }
+  }
