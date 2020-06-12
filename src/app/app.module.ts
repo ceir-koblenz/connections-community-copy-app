@@ -9,6 +9,7 @@ import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceDocumentComponent } from './components/service-document/service-document.component';
 import { DevHttpInterceptor } from './dev-http-interceptor';
+import { ProdHttpInterceptor } from './prod-http-interceptor';
 import { CommunityCollectionComponent } from './components/community-collection/community-collection.component';
 import { LoggingComponent } from './components/logging/logging.component';
 import { CommunityComponent } from './components/community/community.component';
@@ -39,6 +40,15 @@ import { environment } from 'src/environments/environment';
 const devProviders = [{
   provide: HTTP_INTERCEPTORS,
   useClass: DevHttpInterceptor,
+  multi: true
+}];
+/**
+ * HttpInterceptor, welcher in der Produktionsumgebung den Connections-Requests
+ * withCredential: true mitgibt, damit das LTPA Token des SSOs verwendet wird.
+ */
+const prodProviders = [{
+  provide: HTTP_INTERCEPTORS,
+  useClass: ProdHttpInterceptor,
   multi: true
 }];
 
@@ -75,7 +85,7 @@ const devProviders = [{
     EditorModule
   ],
   providers: [
-    ...!environment.production ? devProviders : []
+    ...!environment.production ? devProviders : prodProviders
   ],
   bootstrap: [AppComponent]
 })
