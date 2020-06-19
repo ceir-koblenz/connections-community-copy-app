@@ -57,7 +57,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }                
               ],
-              "baseHref": "/pp-ss19-ct/communitytemplating.nsf/",
+              "baseHref": "/ct/communitytemplating.nsf/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

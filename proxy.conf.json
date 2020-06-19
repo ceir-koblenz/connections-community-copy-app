@@ -1,6 +1,6 @@
 {
     "/api/*": {
-      "target": "https://devco.fgbas.uni-koblenz.de",
+      "target": "https://www.uniconnect.de",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {"^/api" : ""}
