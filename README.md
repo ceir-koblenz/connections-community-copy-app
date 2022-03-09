@@ -1,37 +1,34 @@
-# CommunityTemplating
+# HCL Connections Community Templating
  
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
+This project was developed by a team of students at the Center for Enterprise Information Research and the University of Koblenz. The HCL Connections Community Templating is a Node.js application for copying communities and their content in HCL Connections. It makes use of Connections' APIs and basic authentication.
 
-## Projekt lokal einrichten zum Entwickeln
+![image](https://user-images.githubusercontent.com/40888514/157401964-a7f54d50-878c-4b8b-80a6-b09c27b2a8be.png)
 
-Nachdem das Repository geklont wurde, im Repositoryverzeichnis über die Konsole `npm install` ausführen.
-Dies installiert alle in der package.json definierten Abhängigkeiten.
 
-Um die Anwendung lokal laufen lassen zu können, muss der Entwicklungs-Proxyserver konfiguriert werden.
-Dazu die Datei "proxy.conf.json.template" kopieren, die Kopie "proxy.conf.json" nennen und ein gültiges 
-Authentifizierungstoken eintragen. Dazu bspw. https://www.blitter.se/utils/basic-authentication-header-generator/ verwenden
-(Nutzername+Passwort sind die, mit denen ihr euch auf dem IBM Connections-Testsystem einloggt. Diese entsprechen NICHT
-euren Anmeldedaten bei uniconnect!)
+All credit goes to the students Janos Justen, Lisa Küppers, Dominik Lienen, Tim Merzhäuser, Lennard Metzler, Manuel Musialik and Andreas Weber. The project was supervised by Julian Mosen and Prof. Dr. Petra Schubert.
 
-Gestartet wird der Entwicklungsserver mit `npm start`. Bei Änderungen an den Quelldateien lädt die Anwendung automatisch neu.
+## Set up project locally for development
 
-## Ändern der URL des Testsystems
+Set up project locally for development
+After the repository has been cloned, execute `npm install` in the repository directory via the console. This will install all dependencies defined in the package.json.
 
-Die Url des Testsystems wird unter `src/assets` in der `config.json` eingetragen, sowie an 3 Stellen in der `proxy.conf.json`.
-Zudem ist, angepasst an das Testsystem, das Basic Auth Token erneut zu generieren (siehe oben)
+To run the application locally, the development proxy server must be configured. To do this, copy the file "proxy.conf.json.template", name the copy "proxy.conf.json" and enter a valid authentication for the copied version. To do this, use for example https://www.blitter.se/utils/basic-authentication-header-generator/ (username+password are those you use to log in to the IBM Connections test system.
 
-## Projektstruktur
+Start the development server with `npm start`. If changes are made to the source files, the application reloads automatically.
 
-Entwickelt wird im `src/app` Verzeichnis. Neu erstellte Komponenten (`ng generate component xyz`) sind in den entsprechenden Unterordner
-in `/components` zu verschieben. Hilfsklassen für bestimmte Funktionen (bspw. XML-Parser) sind im `/helpers` Verzeichnis untergebracht.
-Models, welche Entitäten der Connections-Api repräsentieren (bspw. eine Community), sind unter `/models` zu finden, Angular Services unter
-`/services`.
+
+
+## Change the URL of the test system
+
+The url of the test system is entered under `src/assets` in the `config.json`, and in 3 places in the `proxy.conf.json`. Furthermore, adapted to the test system, the Basic Auth Token has to be regenerated (see above)
+
+## Project structure
+
+Development is done in the `src/app` directory. Newly created components (`ng generate component xyz`) have to be moved to the corresponding subfolder in `/components`. Auxiliary classes for certain functions (e.g. XML parser) are located in the `/helpers` directory. Models, which represent entities of the Connections-Api (e.g. a community) can be found in` /models`, Angular Services in `/services`.
 
 ## Build
 
-`ng build --prod` führt den Build aus; die erstellten Artefakte landen im `dist/`-Ordner. Das `--prod` Flag führt einen Produktivbuild aus.
-Der relative Pfad, unter dem die Anwendung produktiv gehostet wird, ist in der `angular.json` in der Configuration des production-Builds
-unter `baseHref` einzutragen.
+`ng build --prod` executes the build; the created artifacts end up in the `dist/` folder The `--prod` flag executes a production build. The relative path under which the application is productively hosted must be entered in the `angular.json` in the configuration of the production build under `baseHref`.
 
 ## Code scaffolding
 
@@ -40,3 +37,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+The project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
+
