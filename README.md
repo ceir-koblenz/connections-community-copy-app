@@ -1,10 +1,11 @@
 # HCL Connections Community Templating
  
-This project was developed by a team of students at the Center for Enterprise Information Research and the University of Koblenz. The HCL Connections Community Templating is a Node.js application for copying communities including the content (e.g. wiki pages, blog posts, files, ...) in HCL Connections. It makes use of Connections' APIs and basic authentication. 
+This project was developed by a team of students at the [Center for Enterprise Information Research](https://ceir.de/) at the [University of Koblenz](https://www.uni-koblenz-landau.de/en/campus-koblenz/fb4/iwvi/rgschubert). The *HCL Connections Community Templating App* is a Node.js application for copying communities including the content, such as wiki pages, blog posts, files and others. It makes use of Connections' APIs and basic authentication. 
 
-![image](https://user-images.githubusercontent.com/40888514/157401964-a7f54d50-878c-4b8b-80a6-b09c27b2a8be.png)
+<img src="https://user-images.githubusercontent.com/40888514/157401964-a7f54d50-878c-4b8b-80a6-b09c27b2a8be.png" height="200px"/> <img src="https://user-images.githubusercontent.com/40888514/157451777-6f5b1471-0d05-4a42-a29a-8237bebea814.png" height="200px"/> <img src="https://user-images.githubusercontent.com/40888514/157451797-867e407f-7ba6-46fe-a58b-126a676ffb4e.png" height="200px"/> <img src="https://user-images.githubusercontent.com/40888514/157451811-4a647e9c-5a7b-45de-bef9-cac3a4088f2a.png" height="200px"/>
 
-All credit goes to the students, who developed this application: Janos Justen, Lisa Küppers, Dominik Lienen, Tim Merzhäuser, Lennard Metzler, Manuel Musialik and Andreas Weber. The project was supervised by Julian Mosen and Prof. Dr. Petra Schubert.
+
+All credit goes to the students, who developed this application: Janos Justen, Lisa Küppers, Dominik Lienen, Tim Merzhäuser, Lennard Metzler, Manuel Musialik and Andreas Weber. The project was supervised by [Julian Mosen](https://www.uni-koblenz-landau.de/en/campus-koblenz/fb4/iwvi/rgschubert/team/julian-mosen/julian-mosen) and [Prof. Dr. Petra Schubert](https://www.uni-koblenz-landau.de/en/campus-koblenz/fb4/iwvi/rgschubert/team/petra-schubert).
 
 ## Set up project locally for development
 
