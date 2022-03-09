@@ -1,12 +1,12 @@
 {
     "/api/*": {
-      "target": "https://devco.fgbas.uni-koblenz.de",
+      "target": "https://your.cnx.url.com",
       "secure": false,
       "logLevel": "debug",
-      "pathRewrite": {"^/api" : "https://devco.fgbas.uni-koblenz.de/"},
+      "pathRewrite": {"^/api" : "https://your.cnx.url.com/"},
       "changeOrigin": true,
       "headers": {
-        "Origin": "https://devco.fgbas.uni-koblenz.de/",
-        "Authorization": "Basic DEIN-AUTH-TOKEN="}
+        "Origin": "https://your.cnx.url.com/",
+        "Authorization": "Basic YOUR-AUTH-TOKEN="}
     }
   }
