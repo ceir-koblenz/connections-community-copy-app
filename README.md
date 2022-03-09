@@ -1,11 +1,10 @@
 # HCL Connections Community Templating
  
-This project was developed by a team of students at the Center for Enterprise Information Research and the University of Koblenz. The HCL Connections Community Templating is a Node.js application for copying communities and their content in HCL Connections. It makes use of Connections' APIs and basic authentication.
+This project was developed by a team of students at the Center for Enterprise Information Research and the University of Koblenz. The HCL Connections Community Templating is a Node.js application for copying communities including the content (e.g. wiki pages, blog posts, files, ...) in HCL Connections. It makes use of Connections' APIs and basic authentication. 
 
 ![image](https://user-images.githubusercontent.com/40888514/157401964-a7f54d50-878c-4b8b-80a6-b09c27b2a8be.png)
 
-
-All credit goes to the students Janos Justen, Lisa Küppers, Dominik Lienen, Tim Merzhäuser, Lennard Metzler, Manuel Musialik and Andreas Weber. The project was supervised by Julian Mosen and Prof. Dr. Petra Schubert.
+All credit goes to the students, who developed this application: Janos Justen, Lisa Küppers, Dominik Lienen, Tim Merzhäuser, Lennard Metzler, Manuel Musialik and Andreas Weber. The project was supervised by Julian Mosen and Prof. Dr. Petra Schubert.
 
 ## Set up project locally for development
 
